@@ -49,11 +49,59 @@ dimensions:
   floor_area: 10.90      # m² (4.78 x 2.28)
   volume: 23.54          # m³ (4.78 x 2.28 x 2.16)
 
-# Defined Features (to be populated after STEP analysis)
+# Defined Features
 features:
-  walls: []
-  windows: []
-  doors: []
+  walls:
+    - id: WALL-FRONT
+      location: front
+      length: 2280  # mm (width of habitat)
+    - id: WALL-REAR
+      location: rear
+      length: 2280  # mm
+      features: [WIN-01, WIN-02]  # Two RA-40 windows
+    - id: WALL-DRIVER
+      location: driver-side
+      length: 4780  # mm (length of habitat)
+    - id: WALL-PASSENGER
+      location: passenger-side
+      length: 4780  # mm
+      features: [DOOR-01]  # Entry door
+
+  windows:
+    - id: WIN-01
+      model: RA-40
+      location: rear-driver-side
+      wall: WALL-REAR
+      opening_width: 637   # mm visible
+      opening_height: 1027  # mm visible
+      cutout_width: 670    # mm
+      cutout_height: 1063  # mm
+    - id: WIN-02
+      model: RA-40
+      location: rear-passenger-side
+      wall: WALL-REAR
+      opening_width: 637   # mm visible
+      opening_height: 1027  # mm visible
+      cutout_width: 670    # mm
+      cutout_height: 1063  # mm
+    - id: WIN-03
+      model: DR-20
+      location: roof
+      opening_width: 400   # mm visible
+      opening_height: 650  # mm visible
+      cutout_width: 554    # mm
+      cutout_height: 698   # mm
+
+  doors:
+    - id: DOOR-01
+      model: DE-15
+      location: passenger-side
+      wall: WALL-PASSENGER
+      opening_width: 637   # mm
+      opening_height: 1027  # mm
+      swing: outward
+      hinge_side: right
+
   mounting_surfaces: []
   fixed_elements: []
 

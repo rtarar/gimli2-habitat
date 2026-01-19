@@ -1,0 +1,166 @@
+# Product Selections
+# This file tracks which products we have selected from supplier catalogs
+# Each catalog may contain multiple products - this documents our choices
+
+metadata:
+  project: Gimli2 Habitat Interior Design
+  last_updated: 2025-01-19
+
+# Habitat Shell
+habitat:
+  supplier: Osterath
+  catalog: habitat/  # folder containing supplier PDFs
+  selected_product:
+    name: Habitat 1225 AF
+    model: "1225 AF"
+    description: Truck-mounted habitat shell
+    spec_page: null  # Page number in PDF if applicable
+    selection_date: 2025-01-19
+    selection_rationale: |
+      Base habitat shell for interior design project.
+      Mounted on truck chassis.
+  key_specs:
+    exterior_length: 4900  # mm - to be filled from PDF
+    exterior_width: 2400
+    exterior_height: 2300
+    interior_length: 4780  # mm - measured from STEP
+    interior_width: 2280
+    interior_height: 2160
+    wall_thickness: 60
+
+# Door
+door:
+  supplier: Outbound  # or separate supplier
+  catalog: doors/
+  selected_product:
+    name: Habitat Entry Door DE-15
+    model: DE-15
+    description: Entry door - passenger side
+    spec_page: null
+    selection_date: null
+    selection_rationale: null
+  key_specs:
+    width: 637  # mm - opening width
+    height: 1027  # mm - opening height
+    swing: outward  # inward | outward
+    hinge_side: right  # left | right  when viewed from outside
+    threshold_height: null  # mm from floor
+
+# Windows
+windows:
+  supplier: Outbound
+  catalog: windows/
+  spec_document: Window-dimensions.pdf
+  selected_products:
+    - id: WIN-01
+      name: RA-40 Rear Window (Driver Side)
+      model: RA-40
+      quantity: 1
+      location: rear-driver-side
+      spec_page: 1
+      selection_date: 2025-01-19
+      key_specs:
+        # Overall window dimensions
+        overall_width: 722   # mm (dimension A)
+        overall_height: 1113  # mm (dimension B)
+        # Visible glass opening
+        visible_width: 637   # mm (dimension D)
+        visible_height: 1027  # mm (dimension E)
+        # Cutout dimensions (for wall opening)
+        cutout_width: 670    # mm
+        cutout_height: 1063  # mm
+        # Installation
+        frame_depth: 36      # mm (dimension C)
+        weight: 17.5         # kg
+        sill_height: null    # mm from floor - TBD
+        position_from_corner: null  # mm - TBD
+        operable: true
+        type: sliding  # or awning - confirm
+
+    - id: WIN-02
+      name: RA-40 Rear Window (Passenger Side)
+      model: RA-40
+      quantity: 1
+      location: rear-passenger-side
+      spec_page: 1
+      selection_date: 2025-01-19
+      key_specs:
+        # Overall window dimensions
+        overall_width: 722   # mm (dimension A)
+        overall_height: 1113  # mm (dimension B)
+        # Visible glass opening
+        visible_width: 637   # mm (dimension D)
+        visible_height: 1027  # mm (dimension E)
+        # Cutout dimensions (for wall opening)
+        cutout_width: 670    # mm
+        cutout_height: 1063  # mm
+        # Installation
+        frame_depth: 36      # mm (dimension C)
+        weight: 17.5         # kg
+        sill_height: null    # mm from floor - TBD
+        position_from_corner: null  # mm - TBD
+        operable: true
+        type: sliding  # or awning - confirm
+
+# Roof Windows
+roof_windows:
+  supplier: Outbound
+  catalog: windows/
+  spec_document: Roof-window-dimensions.pdf
+  selected_products:
+    - id: WIN-03
+      name: DR-20 Roof Window
+      model: DR-20
+      quantity: 1
+      location: roof
+      spec_page: 1
+      selection_date: 2025-01-19
+      key_specs:
+        # Overall window dimensions
+        overall_width: 570   # mm (dimension A)
+        overall_height: 780  # mm (dimension B)
+        # Visible glass opening
+        visible_width: 400   # mm (dimension E)
+        visible_height: 650  # mm (dimension F)
+        # Cutout dimensions (for roof opening)
+        cutout_width: 554    # mm
+        cutout_height: 698   # mm
+        # Installation
+        frame_height: 502    # mm (dimension C)
+        weight: 12.7         # kg
+        position_from_front: null  # mm from front wall - TBD
+        position_from_side: null   # mm from side wall - TBD
+        operable: true
+        type: roof-hatch
+        has_roller_blinds: true
+
+# HVAC
+hvac:
+  supplier: null
+  catalog: hvac/
+  selected_products: []
+
+# Electrical
+electrical:
+  supplier: null
+  catalog: electrical/
+  selected_products: []
+
+# Plumbing
+plumbing:
+  supplier: null
+  catalog: plumbing/
+  selected_products: []
+
+# Furniture / Built-ins
+furniture:
+  supplier: null
+  catalog: furniture/
+  selected_products: []
+
+# Notes
+notes:
+  - Update this file when adding supplier PDFs
+  - Reference specific page numbers where possible
+  - Document rationale for product selection
+  - Keep key_specs in sync with habitat.yml
