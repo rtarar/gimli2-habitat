@@ -1,0 +1,24 @@
+# Work Item Template
+# Copy this template when creating new work items
+
+- id: WI-XXX  # Get next available ID
+  title: Short descriptive title
+  type: requirement | design | validation | documentation
+  description: |
+    Detailed description of the work to be done.
+    Include acceptance criteria if applicable.
+  created: YYYY-MM-DD
+  created_by: name or agent
+  priority: critical | high | medium | low
+  dependencies:
+    - WI-XXX  # List IDs of items that must complete first
+  blocks:
+    - WI-XXX  # List IDs of items that cannot start until this completes
+  requirements:
+    - REQ-XXX  # Related requirement IDs
+  decisions:
+    - DEC-XXX  # Related decision IDs
+  assigned_to: null  # Name when assigned
+  status: backlog  # Initial status
+  notes: |
+    Additional context, constraints, or considerations.

@@ -1,0 +1,111 @@
+# Habitat Reference Definition
+# This file defines metadata for the immutable habitat shell geometry
+
+metadata:
+  project: Gimli2 Habitat Interior Design
+  version: 0.1.0
+  created: 2025-01-19
+  last_updated: 2025-01-19
+
+# Reference Geometry
+reference:
+  # Location of the immutable STEP file
+  step_file: reference/habitat-shell.step
+
+  # Status - this file is NEVER modified directly
+  status: immutable
+
+  # Source of the geometry
+  source:
+    provider: builder  # Builder-supplied geometry
+    received_date: null  # To be filled when STEP is imported
+    revision: null  # Builder's revision number
+
+  # Change control
+  change_control:
+    owner: human  # Only humans can authorize changes
+    process: See GOVERNANCE.md for change control protocol
+    last_change: null
+
+# Coordinate System
+coordinate_system:
+  origin: builder_defined  # Origin as defined in STEP file
+  units: millimeters
+  up_axis: Z
+  forward_axis: Y
+
+  # Reference points (to be populated after STEP import)
+  reference_points:
+    floor_level: null
+    ceiling_level: null
+    entry_door_center: null
+
+# Habitat Dimensions (to be populated after STEP import)
+dimensions:
+  interior_length: null
+  interior_width: null
+  interior_height: null
+  floor_area: null
+  volume: null
+
+# Defined Features (to be populated after STEP analysis)
+features:
+  walls: []
+  windows: []
+  doors: []
+  mounting_surfaces: []
+  fixed_elements: []
+
+# Allowed Operations on Reference Geometry
+allowed_operations:
+  - read
+  - measure
+  - reference
+  - derive_constraints
+  - extract_surfaces_for_mounting
+  - generate_keep_out_zones
+
+# Forbidden Operations
+forbidden_operations:
+  - edit
+  - regenerate
+  - override
+  - delete
+  - modify_topology
+  - add_features
+
+# Constraints Derived from Habitat
+constraints:
+  # All interior elements must fit within these bounds
+  interior_bounds:
+    type: derived_from_step
+    status: pending_step_import
+
+  # Clearance requirements
+  clearances:
+    floor_clearance_min: 0  # mm from floor
+    ceiling_clearance_min: 50  # mm from ceiling
+    wall_clearance_min: 10  # mm from walls
+
+  # Door swing zones - keep clear
+  door_swing_zones:
+    status: pending_step_analysis
+
+# Validation
+validation:
+  # How to validate designs against the habitat
+  method: fusion360_interference_check
+
+  # Required checks before any design is approved
+  required_checks:
+    - interference_with_shell: false
+    - within_interior_bounds: true
+    - clearances_respected: true
+    - door_swings_clear: true
+
+# Notes
+notes:
+  - This file is the authoritative metadata for the habitat reference
+  - The STEP file itself is the geometric source of truth
+  - Update this file after importing the STEP file
+  - All measurements in millimeters unless otherwise specified

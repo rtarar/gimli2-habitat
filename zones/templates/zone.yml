@@ -1,0 +1,58 @@
+# Zone Template
+# Copy this file when defining new zones
+
+id: ZONE-XXX  # Get next available ID
+name: Human-readable zone name
+type: functional | circulation | keep_out | utility_corridor | buffer
+description: |
+  Purpose and characteristics of this zone.
+  What activities happen here? What does it contain?
+
+bounds:
+  type: pending  # pending | box | polygon | derived
+  reference: habitat.yml coordinate system
+  # Populate after STEP import:
+  # min_x: null
+  # max_x: null
+  # min_y: null
+  # max_y: null
+  # min_z: null
+  # max_z: null
+
+adjacencies:
+  required:
+    - ZONE-XXX  # Must be adjacent to these zones
+  preferred:
+    - ZONE-XXX  # Should be adjacent if possible
+  forbidden:
+    - ZONE-XXX  # Must NOT be adjacent to
+
+constraints:
+  min_area: null  # m² minimum floor area
+  min_dimension: null  # mm smallest side length
+  ceiling_height: full | partial
+  floor_access: required | preferred | not_needed
+  wall_access: required | preferred | not_needed
+  natural_light: required | preferred | not_needed
+  ventilation: required | preferred | not_needed
+  privacy: high | medium | low | none
+  noise_level: quiet | moderate | any
+
+# Fixed elements this zone must accommodate
+fixed_elements: []
+
+# Utility requirements
+utilities:
+  electrical: none | basic | heavy
+  plumbing: none | supply | supply_and_drain
+  hvac: none | supply | supply_and_return
+  data: none | basic | extensive
+
+requirements:
+  - REQ-XXX  # Requirements this zone addresses
+
+status: concept  # concept | defined | validated
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+notes: |
+  Additional context, considerations, or constraints.

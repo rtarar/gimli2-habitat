@@ -1,0 +1,28 @@
+# Requirement Template
+# Copy this file when creating new requirements
+
+id: REQ-XXX  # Get next available ID
+title: Short descriptive title
+type: functional | constraint | preference
+category: spatial | ergonomic | structural | utility | aesthetic
+priority: must | should | could | wont
+description: |
+  Detailed description of what is required.
+  Be specific and unambiguous.
+rationale: |
+  Why this requirement exists.
+  What need does it address?
+source: user | code | regulation | derived
+acceptance_criteria:
+  - Criterion 1 (must be measurable/verifiable)
+  - Criterion 2
+dependencies:
+  - REQ-XXX  # Requirements this depends on
+conflicts_with: []  # Should be empty; resolve conflicts before adding
+decisions:
+  - DEC-XXX  # Decisions addressing this requirement
+status: draft  # draft | active | satisfied | deferred | rejected
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+notes: |
+  Additional context, edge cases, or considerations.

@@ -1,0 +1,94 @@
+# Kanban Backlog
+# Items identified but not yet prioritized for work
+
+items:
+  - id: WI-001
+    title: Import habitat STEP file
+    type: requirement
+    description: |
+      Import the builder-supplied STEP file into the reference directory
+      and populate habitat.yml with measured dimensions and features.
+    created: 2025-01-19
+    created_by: system
+    priority: critical
+    dependencies: []
+    blocks:
+      - WI-002
+      - WI-003
+      - WI-004
+    requirements: []
+    decisions: []
+    assigned_to: null
+    status: backlog
+    notes: |
+      This is the foundational task. No interior design work can proceed
+      until the reference geometry is established.
+
+  - id: WI-002
+    title: Define interior zones
+    type: design
+    description: |
+      Define the functional zones within the habitat interior:
+      - Living area
+      - Sleeping area
+      - Kitchen/galley
+      - Bathroom/wet area
+      - Storage
+      - Circulation paths
+    created: 2025-01-19
+    created_by: system
+    priority: high
+    dependencies:
+      - WI-001
+    blocks: []
+    requirements: []
+    decisions: []
+    assigned_to: null
+    status: backlog
+    notes: |
+      Zone definitions will drive all subsequent interior element placement.
+
+  - id: WI-003
+    title: Establish keep-out zones
+    type: requirement
+    description: |
+      Define areas that must remain clear:
+      - Door swing areas
+      - Window access
+      - Emergency egress paths
+      - Utility access panels
+      - Ventilation clearances
+    created: 2025-01-19
+    created_by: system
+    priority: high
+    dependencies:
+      - WI-001
+    blocks: []
+    requirements: []
+    decisions: []
+    assigned_to: null
+    status: backlog
+    notes: |
+      Keep-out zones are constraints that all designs must respect.
+
+  - id: WI-004
+    title: Define routing corridors
+    type: requirement
+    description: |
+      Establish pathways for:
+      - Electrical wiring
+      - Plumbing
+      - HVAC ducting
+      - Data/communication cables
+    created: 2025-01-19
+    created_by: system
+    priority: medium
+    dependencies:
+      - WI-001
+    blocks: []
+    requirements: []
+    decisions: []
+    assigned_to: null
+    status: backlog
+    notes: |
+      Routing corridors ensure utility runs don't conflict with interior elements.
