@@ -10,22 +10,22 @@ metadata:
 # Reference Geometry
 reference:
   # Location of the immutable STEP file
-  step_file: reference/habitat-shell.step
+  step_file: reference/Osterath_Habitat_1225 AF.step
 
   # Status - this file is NEVER modified directly
   status: immutable
 
   # Source of the geometry
   source:
-    provider: builder  # Builder-supplied geometry
-    received_date: null  # To be filled when STEP is imported
-    revision: null  # Builder's revision number
+    provider: Osterath  # Builder-supplied geometry
+    received_date: 2025-01-19
+    revision: "1225 AF"
 
   # Change control
   change_control:
     owner: human  # Only humans can authorize changes
     process: See GOVERNANCE.md for change control protocol
-    last_change: null
+    last_change: 2025-01-19
 
 # Coordinate System
 coordinate_system:
@@ -79,7 +79,7 @@ constraints:
   # All interior elements must fit within these bounds
   interior_bounds:
     type: derived_from_step
-    status: pending_step_import
+    status: step_imported_pending_analysis
 
   # Clearance requirements
   clearances:

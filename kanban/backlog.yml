@@ -17,12 +17,13 @@ items:
       - WI-003
       - WI-004
     requirements: []
-    decisions: []
-    assigned_to: null
-    status: backlog
+    decisions:
+      - DEC-001
+    assigned_to: user
+    status: in_progress
     notes: |
-      This is the foundational task. No interior design work can proceed
-      until the reference geometry is established.
+      STEP file imported: Osterath_Habitat_1225 AF.step
+      Next: Analyze geometry and populate dimensions in habitat.yml
 
   - id: WI-002
     title: Define interior zones
