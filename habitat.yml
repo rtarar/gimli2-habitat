@@ -3,9 +3,10 @@
 
 metadata:
   project: Gimli2 Habitat Interior Design
-  version: 0.1.0
+  version: 0.2.0
   created: 2025-01-19
   last_updated: 2025-01-19
+  dimensions_verified: 2025-01-19
 
 # Reference Geometry
 reference:
@@ -40,13 +41,13 @@ coordinate_system:
     ceiling_level: null
     entry_door_center: null
 
-# Habitat Dimensions (to be populated after STEP import)
+# Habitat Dimensions (measured from STEP file)
 dimensions:
-  interior_length: null
-  interior_width: null
-  interior_height: null
-  floor_area: null
-  volume: null
+  interior_length: 4780  # mm
+  interior_width: 2280   # mm
+  interior_height: 2160  # mm
+  floor_area: 10.90      # m² (4.78 x 2.28)
+  volume: 23.54          # m³ (4.78 x 2.28 x 2.16)
 
 # Defined Features (to be populated after STEP analysis)
 features:
@@ -79,7 +80,10 @@ constraints:
   # All interior elements must fit within these bounds
   interior_bounds:
     type: derived_from_step
-    status: step_imported_pending_analysis
+    status: measured
+    length: 4780  # mm
+    width: 2280   # mm
+    height: 2160  # mm
 
   # Clearance requirements
   clearances:

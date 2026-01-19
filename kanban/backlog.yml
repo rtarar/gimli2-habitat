@@ -20,10 +20,16 @@ items:
     decisions:
       - DEC-001
     assigned_to: user
-    status: in_progress
+    status: done
+    completed: 2025-01-19
     notes: |
       STEP file imported: Osterath_Habitat_1225 AF.step
-      Next: Analyze geometry and populate dimensions in habitat.yml
+      Interior dimensions measured and verified:
+      - Length: 4780 mm
+      - Width: 2280 mm
+      - Height: 2160 mm
+      - Floor area: 10.90 m²
+      - Volume: 23.54 m³
 
   - id: WI-002
     title: Define interior zones
