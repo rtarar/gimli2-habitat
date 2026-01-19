@@ -102,6 +102,32 @@ windows:
         operable: true
         type: sliding  # or awning - confirm
 
+    - id: WIN-04
+      name: RA-30 Bathroom Window
+      model: RA-30
+      quantity: 1
+      location: driver-side
+      spec_page: 1
+      selection_date: 2025-01-19
+      key_specs:
+        # Overall window dimensions
+        overall_width: 622   # mm (dimension A)
+        overall_height: 722  # mm (dimension B)
+        # Visible glass opening
+        visible_width: 537   # mm (dimension D)
+        visible_height: 637  # mm (dimension E)
+        # Cutout dimensions (for wall opening)
+        cutout_width: 570    # mm
+        cutout_height: 673   # mm
+        # Installation
+        frame_depth: 36      # mm (dimension C)
+        weight: 9.7          # kg
+        sill_height: null    # mm from floor - TBD
+        position_from_front: null  # mm from front wall - TBD
+        operable: true
+        type: sliding
+        zone: bathroom
+
 # Roof Windows
 roof_windows:
   supplier: Outbound

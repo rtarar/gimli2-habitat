@@ -62,6 +62,7 @@ features:
     - id: WALL-DRIVER
       location: driver-side
       length: 4780  # mm (length of habitat)
+      features: [WIN-04]  # Bathroom window
     - id: WALL-PASSENGER
       location: passenger-side
       length: 4780  # mm
@@ -91,6 +92,15 @@ features:
       opening_height: 650  # mm visible
       cutout_width: 554    # mm
       cutout_height: 698   # mm
+    - id: WIN-04
+      model: RA-30
+      location: driver-side
+      wall: WALL-DRIVER
+      zone: bathroom
+      opening_width: 537   # mm visible
+      opening_height: 637  # mm visible
+      cutout_width: 570    # mm
+      cutout_height: 673   # mm
 
   doors:
     - id: DOOR-01
