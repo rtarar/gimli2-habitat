@@ -1,0 +1,38 @@
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Large reference files (not needed in image)
+reference/
+*.step
+*.STEP
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.temp
+__pycache__/
+*.pyc
+
+# Documentation
+docs/
+renders/
+*.md
+
+# AI artifacts
+.ai/
+
+# Project data (not needed in image)
+kanban/
+requirements/
+zones/
+decisions/
+tmp/

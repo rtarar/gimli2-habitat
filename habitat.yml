@@ -90,8 +90,9 @@ features:
       location: roof
       opening_width: 400   # mm visible
       opening_height: 650  # mm visible
-      cutout_width: 554    # mm
-      cutout_height: 698   # mm
+      cutout_width: 554    # mm (verified from STEP file)
+      cutout_height: 698   # mm (verified from STEP file)
+      center_mm: [0, 2478, 3615]
     - id: WIN-04
       model: RA-30
       location: driver-side
@@ -101,16 +102,44 @@ features:
       opening_height: 637  # mm visible
       cutout_width: 570    # mm
       cutout_height: 673   # mm
+    - id: WIN-05
+      model: RA-40
+      location: passenger-side
+      wall: WALL-PASSENGER
+      zone: kitchen
+      opening_width: 637   # mm visible
+      opening_height: 1027  # mm visible
+      cutout_width: 670    # mm (verified from STEP file)
+      cutout_height: 1063  # mm (verified from STEP file)
+      center_mm: [1158, 1641, 2710]
 
   doors:
     - id: DOOR-01
       model: DE-15
       location: passenger-side
       wall: WALL-PASSENGER
-      opening_width: 637   # mm
-      opening_height: 1027  # mm
+      opening_width: 1766  # mm (verified from STEP file)
+      opening_height: 693  # mm (verified from STEP file)
+      cutout_width: 1766   # mm
+      cutout_height: 693   # mm
       swing: outward
       hinge_side: right
+
+  hatches:
+    - id: HATCH-01
+      model: LU-40
+      location: floor-storage
+      cutout_width: 600    # mm (verified from STEP file)
+      cutout_height: 550   # mm (verified from STEP file)
+      center_mm: [890, -295, 898]
+      notes: Lower floor hatch for storage access
+    - id: HATCH-02
+      model: LU-40
+      location: floor-storage
+      cutout_width: 600    # mm (verified from STEP file)
+      cutout_height: 550   # mm (verified from STEP file)
+      center_mm: [890, -295, 2298]
+      notes: Upper floor hatch for storage access
 
   mounting_surfaces: []
   fixed_elements: []

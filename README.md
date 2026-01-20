@@ -89,6 +89,48 @@ All agents must operate under the rules defined in `AGENTS.md`.
 3. Review `habitat.yml` for reference geometry metadata
 4. Check `kanban/` for current work items
 
+## Docker Environment
+
+A Docker-based development environment is provided for running CadQuery scripts that process STEP files. This ensures consistent, reproducible execution without requiring local CadQuery/OpenCASCADE installation.
+
+### Prerequisites
+
+- Docker 20.10 or later
+- Docker Compose v2 (optional)
+
+### Quick Start
+
+```bash
+# Build the Docker image
+./docker/build.sh
+
+# Run the STEP extraction script
+./docker/run.sh
+
+# Start an interactive development shell
+./docker/shell.sh
+```
+
+### Using Docker Compose
+
+```bash
+# Build
+docker-compose build
+
+# Run extraction script
+docker-compose run --rm cadquery
+
+# Interactive shell
+docker-compose run --rm cadquery-dev
+```
+
+### Custom Parameters
+
+```bash
+# Custom tolerance
+TOLERANCE=5.0 ./docker/run.sh
+```
+
 ## Project Goals
 
 1. Finalize interior design elements inside a fixed habitat shell
