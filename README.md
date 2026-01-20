@@ -1,150 +1,66 @@
-# Gimli2 Habitat Interior Design
+# Gimli2 — Expedition Truck + Habitat Program
 
-An AI-governed, requirements-driven interior design system for a physical habitat shell.
+Gimli2 is an expedition-truck build program to create a durable, long-duration overland platform optimized for full-time living and remote work. The base vehicle is a Mercedes-Benz 1225 AF (NG80 chassis), being converted into a self-supported global-travel rig with an integrated habitat module (approximately 16 ft). The objective is a vehicle that can reliably handle corrugations, poor roads, and mixed climates while remaining serviceable, safe, and practical for extended international travel.
 
-## Overview
-
-This repository treats **physical habitat design as a governed, requirements-driven software system**. It provides a structured framework for AI-human collaboration on interior design while maintaining strict guardrails against:
-
-- Circular reasoning
-- Geometry drift
-- Unstructured AI output
-- Loss of design intent
-- Conflicting decisions across iterations
-
-## Core Principle: Immutable Habitat Shell
-
-The habitat shell is provided as a **builder-supplied STEP file** and is **immutable**.
-
-This STEP file defines the authoritative:
-- Interior volume
-- Wall geometry
-- Windows and doors
-- Mounting surfaces
-
-**All interior design must conform to this geometry, not modify it.**
-
-## Design Flow (One Direction Only)
-
-```
-Requirements → Decisions → Parametric Design → Geometry → Review
-```
-
-Reverse flow is forbidden. Observations from CAD tools must be converted into requirements, constraints, or decision updates—never direct geometry edits.
-
-## Repository Structure
-
-```
-gimli2-habitat/
-├── reference/              # Immutable habitat geometry (STEP file)
-├── requirements/           # Design requirements and constraints
-├── decisions/              # Decision log with rationale
-├── kanban/                 # Work prioritization and tracking
-├── zones/                  # Interior zone definitions
-├── docs/                   # Project documentation
-├── renders/                # Derived visualizations (GLB, images)
-├── .ai/                    # AI governance artifacts
-├── README.md               # This file
-├── GOVERNANCE.md           # Source of truth and rules
-├── AGENTS.md               # AI agent operating guidelines
-└── habitat.yml             # Habitat reference metadata
-```
-
-## Separation of Responsibilities
-
-| Concern             | Where it Lives                |
-|---------------------|-------------------------------|
-| Design intent       | Markdown / YAML               |
-| Constraints         | `requirements/`               |
-| Decisions           | `decisions/`                  |
-| Geometry generation | Code / scripts                |
-| Validation          | Fusion 360                    |
-| Visualization       | `renders/` (derived outputs)  |
-
-No tool may assume multiple roles.
-
-## Workflow
-
-1. **Requirements Discovery** - Elicit and document design requirements
-2. **Prioritization** - Use Kanban to prioritize work with dependency awareness
-3. **Decision Making** - Log decisions with rationale and traceability
-4. **Design Generation** - Generate parametric designs that conform to constraints
-5. **Validation** - Validate geometry in Fusion 360
-6. **Review** - Generate renderings and review
-
-## Multi-LLM Compatibility
-
-This project is designed to work with multiple AI assistants:
-- Claude
-- GPT
-- Gemini
-- Grok
-
-All agents must operate under the rules defined in `AGENTS.md`.
-
-## Getting Started
-
-1. Read `GOVERNANCE.md` to understand the rules
-2. Read `AGENTS.md` to understand AI operating guidelines
-3. Review `habitat.yml` for reference geometry metadata
-4. Check `kanban/` for current work items
-
-## Docker Environment
-
-A Docker-based development environment is provided for running CadQuery scripts that process STEP files. This ensures consistent, reproducible execution without requiring local CadQuery/OpenCASCADE installation.
-
-### Prerequisites
-
-- Docker 20.10 or later
-- Docker Compose v2 (optional)
-
-### Quick Start
-
-```bash
-# Build the Docker image
-./docker/build.sh
-
-# Run the STEP extraction script
-./docker/run.sh
-
-# Start an interactive development shell
-./docker/shell.sh
-```
-
-### Using Docker Compose
-
-```bash
-# Build
-docker-compose build
-
-# Run extraction script
-docker-compose run --rm cadquery
-
-# Interactive shell
-docker-compose run --rm cadquery-dev
-```
-
-### Custom Parameters
-
-```bash
-# Custom tolerance
-TOLERANCE=5.0 ./docker/run.sh
-```
-
-## Project Goals
-
-1. Finalize interior design elements inside a fixed habitat shell
-2. Elicit, refine, and track requirements through AI-human interaction
-3. Prioritize work using Kanban and dependency awareness
-4. Prevent cyclical or contradictory design changes
-5. Generate up-to-date renderings on demand
-6. Serve as a durable knowledge base across months of iteration
-7. Remain compatible with multiple LLMs
-
-## License
-
-[To be determined]
+This repository documents the end-to-end systems engineering of the truck + habitat: structural/subframe integration, entry systems, cabinetry and interior construction, water/grey tanks and plumbing, thermal/heating (diesel/hydronic), and a 24V Victron-based electrical architecture with a large LiFePO₄ bank and a roof solar array (on the order of ~1.2 kW) to support off-grid living. The build is managed with disciplined governance (canonical artifacts, decision logs, and versioning) to prevent design drift across tools, vendors, and iterations—and to preserve a high-quality record suitable for future publication.
 
 ---
 
-*This project treats AI as a design consultant, not a geometry generator unless explicitly asked.*
+## What We’re Building
+
+- **Base vehicle:** Mercedes-Benz 1225 AF (NG80 chassis)
+- **Habitat module:** ~16 ft expedition habitat for full-time living + remote work
+- **Primary design goals:** reliability, serviceability, off-grid autonomy, safety, and documentation completeness
+- **Core systems in scope:**
+  - Structure & integration (subframe, pass-through, reinforcements)
+  - Electrical (24V Victron ecosystem, LiFePO₄ bank, solar, monitoring)
+  - Plumbing (fresh + grey, filtration, pumps, winterization considerations)
+  - Thermal (diesel/hydronic heating strategy; insulation approach)
+  - Interior (cabinetry materials, mounting strategy, durability on corrugations)
+  - Security & networking (as required for remote work and travel)
+
+---
+
+## How This Repo Is Organized
+
+This repo is designed so newcomers can understand the project, and contributors can make changes without causing “design drift.”
+
+- `docs/specs/` — Requirements, constraints, acceptance criteria, design targets
+- `docs/architecture/` — System architecture, schematics, interface-control notes
+- `docs/decisions/` — Decision log / ADR-style records (what we chose and why)
+- `docs/vendor/` — Vendor comms, quotes, procurement decisions, lead times
+- `cad/` — CAD exports (STEP/DXF), profiles, reference geometry
+- `build-log/` — Build log entries, photos/notes, “what changed in the real world”
+
+> The enforceable rules for how changes are proposed and recorded live in `PROJECT_CONSTITUTION.md`.
+
+---
+
+## Working Agreements (High Level)
+
+- Major design choices must be recorded in the decision log before they are treated as “real.”
+- Drawings and specs must carry a version and “Last updated” date when modified.
+- Unknowns are explicitly marked `TBD` with an owner/action to resolve them.
+
+---
+
+## Current Status (Update as Needed)
+
+- [ ] Baseline architecture and subsystem boundaries captured
+- [ ] Electrical one-line and parts list stabilized (24V Victron)
+- [ ] Plumbing and tank layout finalized (fresh/grey, filtration, winterization)
+- [ ] Thermal/insulation strategy selected and documented
+- [ ] Entry and exterior integration decisions (steps/ladder, carriers, hatches)
+- [ ] Interior cabinetry material and mounting strategy confirmed
+
+---
+
+## Contributing
+
+If you want to contribute, open an issue describing:
+1) the problem or improvement,
+2) the affected subsystem(s),
+3) the tradeoffs you see,
+4) any links to relevant artifacts (specs, drawings, vendor data).
+
+Proposed changes that impact architecture, safety, or procurement should include a decision entry in `docs/decisions/`.
