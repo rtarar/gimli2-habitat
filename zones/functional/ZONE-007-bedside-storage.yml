@@ -1,0 +1,102 @@
+# Zone: Bedside Storage Cabinets
+# Location: Both sides of lift bed, rear section
+
+id: ZONE-007
+name: Bedside Storage Cabinets
+type: functional
+description: |
+  Tall storage cabinets on both sides of the lift bed.
+  300mm deep (shallow), designed to be flush with bed edge when lowered.
+  Extend full height from floor to ceiling for maximum storage.
+  Provide nightstand-like functionality at bed level.
+
+bounds:
+  type: dual_boxes
+  reference: habitat.yml coordinate system
+
+  driver_side_cabinet:
+    width: 300    # mm (depth from wall)
+    depth: 2000   # mm (matches bed length)
+    height: 2160  # mm (floor to ceiling)
+    position:
+      from_driver_wall: 0     # mm - against wall
+      from_rear_wall: 0       # mm - starts at rear
+    notes: |
+      Against driver wall, behind/beside bed.
+      Gap to bed: 390 - 300 = 90mm clearance when bed lowered.
+
+  passenger_side_cabinet:
+    width: 300    # mm (depth from wall)
+    depth: 2000   # mm (matches bed length)
+    height: 2160  # mm (floor to ceiling)
+    position:
+      from_passenger_wall: 0  # mm - against wall
+      from_rear_wall: 0       # mm - starts at rear
+    notes: |
+      Against passenger wall, behind/beside bed.
+      Gap to bed: 390 - 300 = 90mm clearance when bed lowered.
+
+cabinet_zones:
+  # Vertical zones within each cabinet
+  lower_zone:
+    height_range: [0, 860]      # mm - below garage shell level
+    use: bulk_storage           # Larger items, less frequent access
+    access: door_or_drawer
+
+  middle_zone:
+    height_range: [860, 1300]   # mm - bed level when lowered
+    use: nightstand             # Glasses, phone, book, water
+    access: open_shelf_or_door  # Easy bedside access
+
+  upper_zone:
+    height_range: [1300, 2160]  # mm - above bed
+    use: clothing_or_storage    # Hanging or shelved
+    access: door
+
+adjacencies:
+  required:
+    - ZONE-004  # Sleeping - bed between cabinets
+  preferred:
+    - ZONE-005  # Living/dinette - can serve as display/storage
+  forbidden: []
+
+constraints:
+  min_area: 1.20      # m² (2 x 0.3 x 2.0)
+  min_dimension: 300  # mm (cabinet depth)
+  ceiling_height: full
+  floor_access: not_needed
+  wall_access: required  # Mounting
+  natural_light: not_needed
+  ventilation: not_needed
+  privacy: none
+  noise_level: any
+
+fixed_elements:
+  - cabinet_frames
+  - shelves_or_drawers
+  - doors
+  - interior_lighting  # Automatic on door open
+
+utilities:
+  electrical: basic   # Interior lights, USB ports at nightstand level
+  plumbing: none
+  hvac: none
+  data: basic         # USB charging at nightstand zone
+
+requirements:
+  - REQ-STORAGE-002  # Personal storage
+  - REQ-SLEEP-004    # Bedside functionality
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Total storage volume: 2 x (0.3 x 2.0 x 2.16) = 2.59 m³
+  - Shallow depth (300mm) maximizes floor space
+  - 90mm gap between cabinet face and bed edge when lowered
+  - Middle zone at 860-1300mm is prime nightstand height
+  - Consider interior LED strips that activate on door open
+  - USB charging ports at nightstand level (both sides)
+  - Lower zone accessible when bed raised (for day use)
+  - Upper zone accessible always (above bed travel height)
+  - Soft-close hinges prevent noise at night

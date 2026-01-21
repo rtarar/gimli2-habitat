@@ -1,0 +1,112 @@
+# Zone: Living / Dinette
+# Location: Rear section, under lift bed when raised
+
+id: ZONE-005
+name: Living / Dinette
+type: functional
+description: |
+  U-shaped seating area with central table, located under the lift bed.
+  Active when bed is raised (1650mm ceiling clearance).
+  Seating built on top of garage shell at rear, with side benches.
+  Table centered for eating, working, or socializing.
+
+bounds:
+  type: box
+  reference: habitat.yml coordinate system
+  # Volume under lift bed
+  width: 2280   # mm (full interior width)
+  depth: 2000   # mm (matches bed length, extends from garage shell)
+  height: 1650  # mm (clearance when bed raised)
+  position:
+    from_rear_wall: 0     # mm - starts at rear
+    floor_level: 0        # mm
+    ceiling_level: 1650   # mm (bottom of raised bed)
+    notes: |
+      Shares footprint with sleeping zone but at different times.
+      When bed lowered: this zone is occupied by bed.
+      When bed raised: full living/dinette use.
+
+u_shaped_seating:
+  rear_bench:
+    location: on_garage_shell  # ZONE-003
+    width: 2280     # mm (full width)
+    depth: 400      # mm (seating depth on ledge)
+    seat_height: 860  # mm (top of garage shell)
+    notes: Cushions on garage shell top
+
+  driver_side_bench:
+    width: 400      # mm (seating depth)
+    length: 1200    # mm (along wall)
+    seat_height: 450  # mm (standard bench height)
+    notes: Built-in storage underneath
+
+  passenger_side_bench:
+    width: 400      # mm (seating depth)
+    length: 1200    # mm (along wall)
+    seat_height: 450  # mm (standard bench height)
+    notes: Built-in storage underneath
+
+table:
+  type: removable_or_folding
+  width: 600      # mm
+  length: 900     # mm
+  height: 720     # mm (standard dining height)
+  position: centered_in_u
+  storage: wall_mounted_or_leg_fold
+
+adjacencies:
+  required:
+    - ZONE-003  # Garage shell - rear seating on top
+    - ZONE-004  # Sleeping - time-shared volume
+    - ZONE-006  # Entry/circulation - accessible
+  preferred:
+    - ZONE-002  # Kitchen - serve food to dinette
+  forbidden: []
+
+constraints:
+  min_area: 4.56      # m² (2280x2000)
+  min_dimension: 1650 # mm (standing height)
+  ceiling_height: partial  # 1650mm when bed raised
+  floor_access: preferred  # Storage under benches
+  wall_access: required    # Bench mounting, table storage
+  natural_light: preferred # WIN-01, WIN-02 at rear
+  ventilation: preferred   # WIN-03 roof window
+  privacy: low
+  noise_level: any
+
+fixed_elements:
+  - rear_bench_cushions   # On garage shell
+  - driver_bench          # Built-in with storage
+  - passenger_bench       # Built-in with storage
+  - table                 # Removable or folding
+  - lighting              # Overhead when bed raised
+
+utilities:
+  electrical: basic   # Lighting, outlets for devices
+  plumbing: none
+  hvac: supply       # Climate control
+  data: basic        # WiFi, USB charging
+
+windows_in_zone:
+  - WIN-01  # Rear driver-side (at seating level)
+  - WIN-02  # Rear passenger-side (at seating level)
+  - WIN-03  # Roof window (when bed raised)
+
+requirements:
+  - REQ-LIVING-001  # Seating for eating
+  - REQ-LIVING-002  # Work surface
+  - REQ-LIVING-003  # Social space
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - U-shape: rear bench (on garage shell) + two side benches
+  - Rear bench at 860mm (garage shell height) - higher than side benches
+  - Side benches at 450mm - standard dining height with 720mm table
+  - Height difference creates interesting tiered seating
+  - Table must be removable/foldable for bed lowering
+  - Consider swivel table mount or folding wall-mount
+  - Side bench storage: shoes, gear, misc
+  - When bed lowers, cushions may need adjustment or stay in place
+  - Seating capacity: 4-5 people comfortably

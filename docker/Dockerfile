@@ -25,7 +25,7 @@ COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yml /tmp/environment.yml
 # Note: conda-forge's cadquery has broken ezdxf dependency
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
 RUN micromamba install --yes --file /tmp/environment.yml && \
-    pip install --no-cache-dir "ezdxf>=1.0,<1.4" && \
+    /opt/conda/bin/pip install --no-cache-dir "ezdxf>=1.0,<1.4" && \
     micromamba clean --all --yes
 
 # Set working directory for mounted project files

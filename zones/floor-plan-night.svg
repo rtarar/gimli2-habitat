@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <title>Gimli2 Habitat Floor Plan - Night Mode</title>
+  <defs>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4" height="4">
+      <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#999" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="bedpattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#bbdefb"/>
+      <circle cx="10" cy="10" r="3" fill="#90caf9"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="900" fill="#f5f5f5"/>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">
+    Gimli2 Habitat - Night Mode (Bed Lowered)
+  </text>
+  <text x="300" y="50" text-anchor="middle" font-family="Arial" font-size="12" fill="#666">
+    Interior: 4780 x 2280 x 2160mm | Scale: 1px ≈ 8mm
+  </text>
+
+  <!-- Coordinate labels -->
+  <text x="50" y="80" font-family="Arial" font-size="10" fill="#666">FRONT (Cab)</text>
+  <text x="50" y="870" font-family="Arial" font-size="10" fill="#666">REAR</text>
+  <text x="530" y="470" font-family="Arial" font-size="10" fill="#666" transform="rotate(90,530,470)">PASSENGER</text>
+  <text x="70" y="470" font-family="Arial" font-size="10" fill="#666" transform="rotate(-90,70,470)">DRIVER</text>
+
+  <!-- Habitat Shell Outline -->
+  <rect x="100" y="90" width="285" height="598" fill="white" stroke="#333" stroke-width="3"/>
+
+  <!-- ZONE-001: Bathroom -->
+  <rect x="285" y="90" width="100" height="150" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="335" y="150" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">BATH</text>
+  <text x="335" y="165" text-anchor="middle" font-family="Arial" font-size="9">800×1200</text>
+  <text x="335" y="180" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">ZONE-001</text>
+
+  <!-- ZONE-002: Kitchen -->
+  <rect x="310" y="240" width="75" height="288" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="347" y="370" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">KITCHEN</text>
+  <text x="347" y="385" text-anchor="middle" font-family="Arial" font-size="9">600×2300</text>
+  <text x="347" y="400" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">ZONE-002</text>
+
+  <!-- WIN-05 in Kitchen -->
+  <rect x="375" y="420" width="10" height="40" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <text x="370" y="445" text-anchor="end" font-family="Arial" font-size="7">WIN-05</text>
+
+  <!-- WIN-04 on Driver Side -->
+  <rect x="100" y="350" width="10" height="30" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <text x="115" y="370" font-family="Arial" font-size="7">WIN-04</text>
+
+  <!-- ZONE-006: Entry/Circulation -->
+  <rect x="100" y="90" width="185" height="150" fill="none" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="192" y="130" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">CIRCULATION</text>
+  <text x="192" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#999">ZONE-006</text>
+
+  <!-- DOOR-01 Entry -->
+  <rect x="375" y="100" width="10" height="60" fill="#a5d6a7" stroke="#388e3c" stroke-width="2"/>
+  <text x="370" y="135" text-anchor="end" font-family="Arial" font-size="8">DOOR</text>
+
+  <!-- ZONE-003: Garage Shell (underneath bed) -->
+  <rect x="100" y="560" width="285" height="128" fill="#d7ccc8" stroke="#795548" stroke-width="2"/>
+
+  <!-- ZONE-004: QUEEN BED - Lowered (1500x2000mm = 188x250px) -->
+  <rect x="138" y="528" width="188" height="160" fill="url(#bedpattern)" stroke="#1565c0" stroke-width="3"/>
+  <text x="232" y="590" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#0d47a1">QUEEN BED</text>
+  <text x="232" y="610" text-anchor="middle" font-family="Arial" font-size="10" fill="#1565c0">1500 × 2000mm</text>
+  <text x="232" y="628" text-anchor="middle" font-family="Arial" font-size="9" fill="#1565c0">ZONE-004</text>
+  <text x="232" y="645" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">(on garage shell @ 860mm)</text>
+
+  <!-- Pillows representation -->
+  <ellipse cx="175" cy="665" rx="30" ry="15" fill="#e3f2fd" stroke="#90caf9" stroke-width="1"/>
+  <ellipse cx="290" cy="665" rx="30" ry="15" fill="#e3f2fd" stroke="#90caf9" stroke-width="1"/>
+
+  <!-- ZONE-007: Bedside Storage - flush with bed -->
+  <rect x="100" y="528" width="38" height="160" fill="#cfd8dc" stroke="#607d8b" stroke-width="2"/>
+  <rect x="326" y="528" width="59" height="160" fill="#cfd8dc" stroke="#607d8b" stroke-width="2"/>
+  <text x="119" y="600" text-anchor="middle" font-family="Arial" font-size="8" fill="#455a64" transform="rotate(-90,119,600)">STORAGE 300mm</text>
+  <text x="355" y="600" text-anchor="middle" font-family="Arial" font-size="8" fill="#455a64" transform="rotate(-90,355,600)">STORAGE 300mm</text>
+
+  <!-- Rear Windows (partially behind bed) -->
+  <rect x="130" y="678" width="40" height="10" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <rect x="310" y="678" width="40" height="10" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <text x="150" y="700" text-anchor="middle" font-family="Arial" font-size="7">WIN-01</text>
+  <text x="330" y="700" text-anchor="middle" font-family="Arial" font-size="7">WIN-02</text>
+
+  <!-- Legend -->
+  <rect x="420" y="90" width="160" height="250" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="500" y="110" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">LEGEND</text>
+
+  <rect x="430" y="125" width="20" height="15" fill="#e3f2fd" stroke="#1976d2"/>
+  <text x="455" y="137" font-family="Arial" font-size="9">Bathroom</text>
+
+  <rect x="430" y="145" width="20" height="15" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="455" y="157" font-family="Arial" font-size="9">Kitchen</text>
+
+  <rect x="430" y="165" width="20" height="15" fill="#d7ccc8" stroke="#795548"/>
+  <text x="455" y="177" font-family="Arial" font-size="9">Garage Shell</text>
+
+  <rect x="430" y="185" width="20" height="15" fill="url(#bedpattern)" stroke="#1565c0"/>
+  <text x="455" y="197" font-family="Arial" font-size="9">Bed (lowered)</text>
+
+  <rect x="430" y="205" width="20" height="15" fill="#cfd8dc" stroke="#607d8b"/>
+  <text x="455" y="217" font-family="Arial" font-size="9">Bedside Storage</text>
+
+  <rect x="430" y="225" width="20" height="15" fill="#4fc3f7" stroke="#0288d1"/>
+  <text x="455" y="237" font-family="Arial" font-size="9">Window</text>
+
+  <rect x="430" y="245" width="20" height="15" fill="#a5d6a7" stroke="#388e3c"/>
+  <text x="455" y="257" font-family="Arial" font-size="9">Door</text>
+
+  <rect x="430" y="265" width="20" height="15" fill="none" stroke="#9e9e9e" stroke-dasharray="5,3"/>
+  <text x="455" y="277" font-family="Arial" font-size="9">Circulation</text>
+
+  <ellipse cx="440" cy="300" rx="10" ry="6" fill="#e3f2fd" stroke="#90caf9"/>
+  <text x="455" y="303" font-family="Arial" font-size="9">Pillow</text>
+
+  <!-- Dimensions -->
+  <text x="242" y="720" text-anchor="middle" font-family="Arial" font-size="10" fill="#333">← 2280mm →</text>
+  <text x="60" y="440" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" transform="rotate(-90,60,440)">← 4780mm →</text>
+
+  <!-- Bed dimensions callout -->
+  <line x1="138" y1="510" x2="326" y2="510" stroke="#1565c0" stroke-width="1"/>
+  <line x1="138" y1="505" x2="138" y2="515" stroke="#1565c0" stroke-width="1"/>
+  <line x1="326" y1="505" x2="326" y2="515" stroke="#1565c0" stroke-width="1"/>
+  <text x="232" y="505" text-anchor="middle" font-family="Arial" font-size="9" fill="#1565c0">1500mm</text>
+
+  <!-- Mode indicator -->
+  <rect x="420" y="360" width="160" height="50" fill="#e1bee7" stroke="#7b1fa2" stroke-width="2" rx="5"/>
+  <text x="500" y="385" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#4a148c">NIGHT MODE</text>
+  <text x="500" y="400" text-anchor="middle" font-family="Arial" font-size="9" fill="#7b1fa2">Bed lowered to 860mm</text>
+
+  <!-- Note about bedside storage flush -->
+  <rect x="420" y="420" width="160" height="40" fill="#fff8e1" stroke="#ffc107" stroke-width="1" rx="3"/>
+  <text x="500" y="438" text-anchor="middle" font-family="Arial" font-size="8" fill="#f57f17">Bedside cabinets flush</text>
+  <text x="500" y="450" text-anchor="middle" font-family="Arial" font-size="8" fill="#f57f17">with bed when lowered</text>
+</svg>

@@ -1,0 +1,83 @@
+# Zone: Garage Shell / Rear Storage
+# Location: Rear wall, full width, floor level
+
+id: ZONE-003
+name: Garage Shell
+type: functional
+description: |
+  Enclosed storage structure at rear wall containing the garage/tunnel
+  with hatch access from both sides. Forms the base ledge for the lift bed
+  when lowered. Houses the dinette seating on top when bed is raised.
+
+bounds:
+  type: box
+  reference: habitat.yml coordinate system
+  # Full width of rear wall
+  width: 2280  # mm (full interior width)
+  depth: 1023  # mm (from rear wall forward)
+  height: 860  # mm (from floor)
+  position:
+    from_wall: rear
+    from_front: 3757  # mm (4780 - 1023)
+    floor_level: 0    # mm - starts at floor
+    notes: |
+      Spans full width of rear wall.
+      Contains hatch tunnel for through-access.
+      Top surface serves as:
+      - Ledge for lift bed when lowered
+      - Base for U-shaped dinette seating when bed raised
+
+adjacencies:
+  required:
+    - ZONE-004  # Sleeping - bed lowers onto this
+    - ZONE-005  # Living/dinette - seating on top
+  preferred: []
+  forbidden: []
+
+constraints:
+  min_area: 2.33      # m² (2280x1023mm footprint)
+  min_dimension: 860  # mm (height)
+  ceiling_height: partial  # Only 860mm high
+  floor_access: required   # Hatch tunnel access
+  wall_access: required    # Mounted to rear wall
+  natural_light: not_needed
+  ventilation: not_needed
+  privacy: none
+  noise_level: any
+
+fixed_elements:
+  - hatch_tunnel       # Through-access tunnel
+  - storage_compartments
+  - dinette_bench_base # Cushions on top for seating
+
+tunnel_access:
+  hatches:
+    - HATCH-01  # Driver side access
+    - HATCH-02  # Passenger side access
+  tunnel_dimensions:
+    width: 600    # mm (hatch width)
+    height: 550   # mm (hatch height)
+    notes: Allows pass-through access to garage storage
+
+utilities:
+  electrical: basic   # Interior lights, maybe 12V outlet
+  plumbing: none
+  hvac: none
+  data: none
+
+requirements:
+  - REQ-STORAGE-001  # Gear storage
+  - REQ-BED-002      # Bed support structure
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Multi-function structure: storage + bed support + seating base
+  - Hatch tunnel provides through-access without going outside
+  - Top surface at 860mm from floor = comfortable bench height
+  - When lift bed lowers, it rests on this ledge
+  - Dinette cushions on top double as part of bed support
+  - Consider internal dividers for organized storage
+  - Ventilation slots may be needed to prevent moisture buildup
+  - Structural requirements: must support bed + 2 people (~200kg)

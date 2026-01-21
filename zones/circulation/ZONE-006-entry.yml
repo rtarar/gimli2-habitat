@@ -1,0 +1,84 @@
+# Zone: Entry / Main Circulation
+# Location: Front passenger-side, at entry door
+
+id: ZONE-006
+name: Entry / Circulation
+type: circulation
+description: |
+  Primary entry point and main circulation corridor.
+  Located at DOOR-01 on passenger side.
+  Provides access to bathroom, kitchen, and living/sleeping areas.
+  Must accommodate door swing and maintain clear passage.
+
+bounds:
+  type: polygon
+  reference: habitat.yml coordinate system
+  # Entry area and main corridor
+  primary_entry:
+    width: 700    # mm (clear landing inside door)
+    depth: 900    # mm (door swing + standing room)
+    position:
+      at_door: DOOR-01
+      notes: Immediate entry area
+
+  main_corridor:
+    width: 600    # mm minimum (between bathroom and driver-side wall)
+    length: 3500  # mm (from entry to living zone)
+    notes: |
+      Runs along driver side of habitat.
+      Bathroom (800mm) on passenger side reduces corridor width at front.
+      Opens up after bathroom ends.
+
+door_clearance:
+  door: DOOR-01
+  opening_width: 1766  # mm
+  opening_height: 693  # mm
+  swing: outward
+  interior_clearance: 900  # mm (no obstruction inside door swing path)
+
+adjacencies:
+  required:
+    - ZONE-001  # Bathroom - immediate access from entry
+    - ZONE-002  # Kitchen - accessible from corridor
+    - ZONE-005  # Living/dinette - end of corridor
+  preferred: []
+  forbidden: []
+
+constraints:
+  min_area: null      # Corridor, not a room
+  min_dimension: 600  # mm (minimum corridor width)
+  ceiling_height: full
+  floor_access: not_needed
+  wall_access: preferred  # Hooks, shoe storage
+  natural_light: not_needed
+  ventilation: not_needed
+  privacy: none
+  noise_level: any
+
+fixed_elements:
+  - entry_step        # If needed for door threshold
+  - shoe_storage      # Near entry
+  - coat_hooks        # Near entry
+  - light_switch      # At entry
+
+utilities:
+  electrical: basic   # Entry light, switch
+  plumbing: none
+  hvac: none
+  data: none
+
+requirements:
+  - REQ-CIRC-001  # Clear passage minimum 600mm
+  - REQ-CIRC-002  # Entry door clearance
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Entry door on passenger side, bathroom immediately adjacent
+  - Corridor width: 2280 - 800 (bath) = 1480mm at narrowest
+  - After bathroom: full width available for kitchen/living access
+  - Door swings outward, so interior clearance is for standing/turning
+  - Consider entry mat for dirt/moisture
+  - Shoe storage near entry prevents tracking through habitat
+  - Emergency egress: door is primary, windows are secondary

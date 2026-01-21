@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <title>Gimli2 Habitat Floor Plan - Day Mode</title>
+  <defs>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4" height="4">
+      <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="#999" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="900" fill="#f5f5f5"/>
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">
+    Gimli2 Habitat - Day Mode (Bed Raised)
+  </text>
+  <text x="300" y="50" text-anchor="middle" font-family="Arial" font-size="12" fill="#666">
+    Interior: 4780 x 2280 x 2160mm | Scale: 1px ≈ 8mm
+  </text>
+
+  <!-- Coordinate labels -->
+  <text x="50" y="80" font-family="Arial" font-size="10" fill="#666">FRONT (Cab)</text>
+  <text x="50" y="870" font-family="Arial" font-size="10" fill="#666">REAR</text>
+  <text x="530" y="470" font-family="Arial" font-size="10" fill="#666" transform="rotate(90,530,470)">PASSENGER</text>
+  <text x="70" y="470" font-family="Arial" font-size="10" fill="#666" transform="rotate(-90,70,470)">DRIVER</text>
+
+  <!-- Habitat Shell Outline -->
+  <rect x="100" y="90" width="285" height="598" fill="white" stroke="#333" stroke-width="3"/>
+
+  <!-- ZONE-001: Bathroom (800x1200mm = 100x150px) -->
+  <rect x="285" y="90" width="100" height="150" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="335" y="150" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">BATH</text>
+  <text x="335" y="165" text-anchor="middle" font-family="Arial" font-size="9">800×1200</text>
+  <text x="335" y="180" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">ZONE-001</text>
+
+  <!-- ZONE-002: Kitchen (600x2300mm = 75x288px) -->
+  <rect x="310" y="240" width="75" height="288" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="347" y="370" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">KITCHEN</text>
+  <text x="347" y="385" text-anchor="middle" font-family="Arial" font-size="9">600×2300</text>
+  <text x="347" y="400" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">ZONE-002</text>
+
+  <!-- WIN-05 in Kitchen (passenger side wall) -->
+  <rect x="375" y="420" width="10" height="50" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <text x="370" y="450" text-anchor="end" font-family="Arial" font-size="7">WIN-05</text>
+
+  <!-- WIN-04 on Driver Side (forward) -->
+  <rect x="100" y="320" width="10" height="35" fill="#4fc3f7" stroke="#0288d1" stroke-width="1"/>
+  <text x="115" y="342" font-family="Arial" font-size="7">WIN-04</text>
+
+  <!-- ZONE-006: Entry/Circulation -->
+  <rect x="100" y="90" width="185" height="150" fill="none" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="192" y="130" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">CIRCULATION</text>
+  <text x="192" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#999">ZONE-006</text>
+
+  <!-- DOOR-01 Entry -->
+  <rect x="375" y="100" width="10" height="60" fill="#a5d6a7" stroke="#388e3c" stroke-width="2"/>
+  <text x="370" y="135" text-anchor="end" font-family="Arial" font-size="8">DOOR</text>
+
+  <!-- ZONE-003: Garage Shell (2280x1023x860mm = 285x128px) -->
+  <rect x="100" y="560" width="285" height="128" fill="#d7ccc8" stroke="#795548" stroke-width="2"/>
+  <text x="242" y="610" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">GARAGE SHELL</text>
+  <text x="242" y="625" text-anchor="middle" font-family="Arial" font-size="9">2280×1023 (h:860)</text>
+  <text x="242" y="640" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">ZONE-003</text>
+
+  <!-- Hatches in Garage Shell -->
+  <rect x="140" y="580" width="40" height="35" fill="#bcaaa4" stroke="#5d4037" stroke-width="1"/>
+  <text x="160" y="602" text-anchor="middle" font-family="Arial" font-size="7">HATCH-01</text>
+  <rect x="300" y="580" width="40" height="35" fill="#bcaaa4" stroke="#5d4037" stroke-width="1"/>
+  <text x="320" y="602" text-anchor="middle" font-family="Arial" font-size="7">HATCH-02</text>
+
+  <!-- ZONE-005: Living/Dinette (shown as overlay when bed raised) -->
+  <rect x="100" y="528" width="285" height="160" fill="none" stroke="#7b1fa2" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="242" y="545" text-anchor="middle" font-family="Arial" font-size="10" fill="#7b1fa2">LIVING/DINETTE (1650mm ceiling)</text>
+
+  <!-- U-shaped seating representation -->
+  <rect x="140" y="650" width="30" height="80" fill="#ce93d8" stroke="#7b1fa2" stroke-width="1"/>
+  <rect x="315" y="650" width="30" height="80" fill="#ce93d8" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="155" y="695" text-anchor="middle" font-family="Arial" font-size="7">Seat</text>
+  <text x="330" y="695" text-anchor="middle" font-family="Arial" font-size="7">Seat</text>
+
+  <!-- Table -->
+  <rect x="190" y="670" width="100" height="50" fill="none" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="240" y="700" text-anchor="middle" font-family="Arial" font-size="8">TABLE</text>
+
+  <!-- ZONE-007: Bedside Storage (300mm = 38px each side) -->
+  <rect x="100" y="528" width="38" height="160" fill="url(#hatch)" stroke="#607d8b" stroke-width="2"/>
+  <rect x="347" y="528" width="38" height="160" fill="url(#hatch)" stroke="#607d8b" stroke-width="2"/>
+  <text x="119" y="520" text-anchor="middle" font-family="Arial" font-size="7" fill="#607d8b">BEDSIDE</text>
+  <text x="366" y="520" text-anchor="middle" font-family="Arial" font-size="7" fill="#607d8b">BEDSIDE</text>
+
+  <!-- WIN-01 on Driver Side wall (at bed area) -->
+  <rect x="100" y="560" width="10" height="50" fill="#4fc3f7" stroke="#0288d1" stroke-width="2"/>
+  <text x="115" y="590" font-family="Arial" font-size="8" font-weight="bold">WIN-01</text>
+
+  <!-- WIN-02 on Passenger Side wall (at bed area) -->
+  <rect x="375" y="560" width="10" height="50" fill="#4fc3f7" stroke="#0288d1" stroke-width="2"/>
+  <text x="370" y="590" text-anchor="end" font-family="Arial" font-size="8" font-weight="bold">WIN-02</text>
+
+  <!-- Rear wall indicator (no windows) -->
+  <text x="242" y="700" text-anchor="middle" font-family="Arial" font-size="8" fill="#666">REAR WALL (solid)</text>
+
+  <!-- Legend -->
+  <rect x="420" y="90" width="160" height="280" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="500" y="110" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold">LEGEND</text>
+
+  <rect x="430" y="125" width="20" height="15" fill="#e3f2fd" stroke="#1976d2"/>
+  <text x="455" y="137" font-family="Arial" font-size="9">Bathroom</text>
+
+  <rect x="430" y="145" width="20" height="15" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="455" y="157" font-family="Arial" font-size="9">Kitchen</text>
+
+  <rect x="430" y="165" width="20" height="15" fill="#d7ccc8" stroke="#795548"/>
+  <text x="455" y="177" font-family="Arial" font-size="9">Garage Shell</text>
+
+  <rect x="430" y="185" width="20" height="15" fill="none" stroke="#7b1fa2" stroke-dasharray="4,2"/>
+  <text x="455" y="197" font-family="Arial" font-size="9">Living/Dinette</text>
+
+  <rect x="430" y="205" width="20" height="15" fill="url(#hatch)" stroke="#607d8b"/>
+  <text x="455" y="217" font-family="Arial" font-size="9">Bedside Storage</text>
+
+  <rect x="430" y="225" width="20" height="15" fill="#4fc3f7" stroke="#0288d1"/>
+  <text x="455" y="237" font-family="Arial" font-size="9">Window</text>
+
+  <rect x="430" y="245" width="20" height="15" fill="#a5d6a7" stroke="#388e3c"/>
+  <text x="455" y="257" font-family="Arial" font-size="9">Door</text>
+
+  <rect x="430" y="265" width="20" height="15" fill="none" stroke="#9e9e9e" stroke-dasharray="5,3"/>
+  <text x="455" y="277" font-family="Arial" font-size="9">Circulation</text>
+
+  <rect x="430" y="285" width="20" height="15" fill="#ce93d8" stroke="#7b1fa2"/>
+  <text x="455" y="297" font-family="Arial" font-size="9">Seating</text>
+
+  <!-- Window positions note -->
+  <text x="500" y="320" text-anchor="middle" font-family="Arial" font-size="8" fill="#0288d1">Windows:</text>
+  <text x="500" y="332" text-anchor="middle" font-family="Arial" font-size="7" fill="#666">WIN-01/02: Side walls @ bed</text>
+  <text x="500" y="344" text-anchor="middle" font-family="Arial" font-size="7" fill="#666">WIN-04/05: Side walls fwd</text>
+  <text x="500" y="356" text-anchor="middle" font-family="Arial" font-size="7" fill="#666">Rear wall: SOLID</text>
+
+  <!-- Dimensions -->
+  <text x="242" y="720" text-anchor="middle" font-family="Arial" font-size="10" fill="#333">← 2280mm →</text>
+  <text x="60" y="440" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" transform="rotate(-90,60,440)">← 4780mm →</text>
+
+  <!-- Mode indicator -->
+  <rect x="420" y="390" width="160" height="50" fill="#c8e6c9" stroke="#4caf50" stroke-width="2" rx="5"/>
+  <text x="500" y="415" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#2e7d32">DAY MODE</text>
+  <text x="500" y="430" text-anchor="middle" font-family="Arial" font-size="9" fill="#388e3c">Bed raised to ceiling</text>
+</svg>

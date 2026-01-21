@@ -1,0 +1,70 @@
+# Zone: Bathroom / Wet Room
+# Location: Front passenger-side, adjacent to entry door
+
+id: ZONE-001
+name: Bathroom
+type: functional
+description: |
+  Wet bath with shower over toilet configuration.
+  Located at entry door for efficient plumbing routing.
+  No window - requires mechanical ventilation.
+
+bounds:
+  type: box
+  reference: habitat.yml coordinate system
+  # Passenger-side front corner
+  # X: 0 = driver side, positive = passenger side
+  # Y: 0 = front, positive = rear
+  # Z: floor to ceiling
+  width: 800   # mm (across habitat)
+  depth: 1200  # mm (along habitat length)
+  height: 2160 # mm (full ceiling height)
+  position:
+    from_wall: passenger-side
+    from_front: 0  # mm - starts at front wall
+    notes: Adjacent to DOOR-01 entry
+
+adjacencies:
+  required:
+    - ZONE-006  # Entry/circulation - must access from entry
+  preferred:
+    - ZONE-002  # Kitchen - share plumbing wall
+  forbidden:
+    - ZONE-004  # Sleeping - hygiene separation
+
+constraints:
+  min_area: 0.96      # m² (800x1200)
+  min_dimension: 800  # mm (width)
+  ceiling_height: full
+  floor_access: required  # Drain, waterproofing
+  wall_access: required   # Plumbing, mounting
+  natural_light: not_needed  # No window per user choice
+  ventilation: required      # Mechanical vent fan required
+  privacy: high
+  noise_level: moderate      # Plumbing noise acceptable
+
+fixed_elements:
+  - toilet
+  - shower_head
+  - sink_basin
+  - vent_fan
+
+utilities:
+  electrical: basic         # Vent fan, light, outlet
+  plumbing: supply_and_drain
+  hvac: none               # Vent fan handles exhaust
+  data: none
+
+requirements:
+  - REQ-BATH-001  # Wet bath functionality
+  - REQ-BATH-002  # Ventilation requirement
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Wet bath design: shower drains to floor drain, everything waterproof
+  - No window - WIN-04 on driver side will be in kitchen/utility area
+  - Entry door adjacency allows easy access for guests
+  - Plumbing wall shared with kitchen for efficiency
+  - Consider fold-down sink or rotating fixtures for space

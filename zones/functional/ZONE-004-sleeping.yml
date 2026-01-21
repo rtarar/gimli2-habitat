@@ -1,0 +1,102 @@
+# Zone: Sleeping / Lift Bed
+# Location: Rear section, centered, raises to ceiling
+
+id: ZONE-004
+name: Sleeping Zone (Lift Bed)
+type: functional
+description: |
+  Queen-size lift bed system that raises to ceiling during day and
+  lowers at night. Centered on rear wall, no split mattress.
+  When lowered, rests on garage shell ledge with bedside cabinets flush.
+  When raised, provides 1650mm standing clearance for living/dinette below.
+
+bounds:
+  type: box
+  reference: habitat.yml coordinate system
+  # Bed dimensions and travel
+  bed_width: 1500   # mm (queen width, north-south orientation)
+  bed_length: 2000  # mm (queen length, centered on rear)
+  bed_thickness: 200 # mm (mattress + platform)
+
+  position:
+    # Centered on rear wall: (2280 - 1500) / 2 = 390mm from each side
+    from_driver_wall: 390   # mm
+    from_passenger_wall: 390 # mm
+    from_rear_wall: 0       # mm - bed headboard at rear
+
+  vertical_travel:
+    lowered_position: 860   # mm from floor (on garage shell ledge)
+    raised_position: 1960   # mm from floor (bed bottom)
+    ceiling_clearance: 0    # mm (bed at ceiling when raised)
+    floor_clearance: 1650   # mm (standing height when raised)
+    notes: |
+      Bed surface when lowered: 860mm + mattress = ~1060mm (comfortable entry)
+      When raised: bottom of bed at 1960mm, 1650mm clear below
+
+adjacencies:
+  required:
+    - ZONE-003  # Garage shell - bed rests on this
+    - ZONE-005  # Living/dinette - shares volume when raised
+    - ZONE-007  # Bedside storage - flush when lowered
+  preferred: []
+  forbidden:
+    - ZONE-001  # Bathroom - hygiene separation
+
+constraints:
+  min_area: 3.00      # m² (1500x2000)
+  min_dimension: 1500 # mm (bed width)
+  ceiling_height: full     # Full travel to ceiling
+  floor_access: not_needed # Raised/lowered system
+  wall_access: required    # Lift mechanism mounting
+  natural_light: preferred # WIN-01, WIN-02 at rear when lowered
+  ventilation: preferred   # WIN-03 roof window above
+  privacy: high            # Sleeping area
+  noise_level: quiet
+
+fixed_elements:
+  - lift_mechanism     # Electric/manual lift system
+  - bed_platform       # Rigid platform for mattress
+  - mattress           # Queen, single piece, no splits
+  - safety_rails       # Prevents falling when raised
+  - lighting           # Reading lights
+
+lift_system:
+  type: electric_lift  # or manual with gas struts
+  travel: 1100         # mm (1960 - 860)
+  load_capacity: 300   # kg (mattress + 2 people + bedding)
+  safety_features:
+    - auto_stop_on_obstruction
+    - manual_override
+    - locking_at_positions
+  power: 12V_DC
+
+windows_in_zone:
+  when_lowered:
+    - WIN-01  # Rear driver-side
+    - WIN-02  # Rear passenger-side
+  above_when_raised:
+    - WIN-03  # Roof window for ventilation
+
+utilities:
+  electrical: basic    # Lift motor, reading lights, USB charging
+  plumbing: none
+  hvac: supply        # Ceiling vent for sleeping comfort
+  data: basic         # USB ports for charging
+
+requirements:
+  - REQ-SLEEP-001  # 2-person sleeping capacity
+  - REQ-SLEEP-002  # Lift bed system
+  - REQ-SLEEP-003  # No split mattress
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Queen bed (1500x2000) centered leaves 390mm each side for bedside cabinets
+  - Bedside cabinets (300mm deep) are flush with bed when lowered
+  - Remaining gap: 390 - 300 = 90mm clearance between bed and cabinet face
+  - Lift mechanism options: Happiack, Bedlift, or custom
+  - When lowered: bed surface ~1060mm from floor, access from sides
+  - When raised: full standing room below for dinette use
+  - Safety: locking mechanism at both positions essential
+  - Consider manual backup if electric fails

@@ -1,0 +1,83 @@
+# Zone: Kitchen / Galley
+# Location: Passenger-side, behind bathroom
+
+id: ZONE-002
+name: Kitchen / Galley
+type: functional
+description: |
+  Full galley kitchen with cooktop, sink, refrigerator, and counter space.
+  Located on passenger side behind bathroom for efficient plumbing.
+  Adjacent to WIN-05 kitchen window for natural light and ventilation.
+
+bounds:
+  type: box
+  reference: habitat.yml coordinate system
+  # Passenger-side, behind bathroom
+  # Interior length: 4780mm, bathroom takes 1200mm from front
+  width: 600   # mm (counter depth from wall)
+  depth: 2300  # mm (along habitat length, from bathroom to living zone)
+  height: 2160 # mm (full ceiling height for upper cabinets)
+  position:
+    from_wall: passenger-side
+    from_front: 1200  # mm - starts after bathroom
+    notes: |
+      Runs from behind bathroom toward rear.
+      WIN-05 located in this zone for light/ventilation.
+      Ends where living/dinette zone begins.
+
+adjacencies:
+  required:
+    - ZONE-001  # Bathroom - shared plumbing wall
+    - ZONE-006  # Entry/circulation - accessible from entry
+  preferred:
+    - ZONE-005  # Living/dinette - serve food easily
+  forbidden: []
+
+constraints:
+  min_area: 1.38      # m² (600x2300)
+  min_dimension: 600  # mm (counter depth)
+  ceiling_height: full
+  floor_access: preferred   # Under-cabinet storage
+  wall_access: required     # Plumbing, electrical, mounting
+  natural_light: preferred  # WIN-05 provides this
+  ventilation: required     # Range hood / window
+  privacy: none
+  noise_level: any
+
+fixed_elements:
+  - countertop
+  - sink
+  - cooktop          # 2-3 burner
+  - refrigerator     # Under-counter or upright
+  - upper_cabinets
+  - lower_cabinets
+
+utilities:
+  electrical: heavy        # Cooktop, fridge, outlets, lighting
+  plumbing: supply_and_drain
+  hvac: supply            # Range hood exhaust
+  data: basic             # One outlet for small appliances
+
+features:
+  window: WIN-05
+  window_specs:
+    model: RA-40
+    opening_width: 637   # mm
+    opening_height: 1027 # mm
+    sill_height: TBD     # mm from floor
+
+requirements:
+  - REQ-KITCHEN-001  # Full cooking capability
+  - REQ-KITCHEN-002  # Food storage
+  - REQ-KITCHEN-003  # Counter workspace
+
+status: defined
+created: 2025-01-20
+updated: 2025-01-20
+notes: |
+  - Share plumbing wall with bathroom for efficiency
+  - WIN-05 provides natural light and cooking ventilation
+  - Consider slide-out countertop extension for prep space
+  - Fridge placement: under-counter or slim upright near entry
+  - Upper cabinets for dry goods, lower for pots/pans
+  - Range hood vents through roof or wall
