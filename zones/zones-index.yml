@@ -20,16 +20,17 @@ zones:
     - id: ZONE-001
       name: Bathroom
       file: functional/ZONE-001-bathroom.yml
-      location: Front passenger-side
-      footprint: 800 x 1200 mm
-      area: 0.96 m²
+      location: Front wall, full width
+      footprint: 2280 x 800 mm
+      area: 1.82 m²
+      layout: Shower on passenger side, toilet on driver side (below WIN-04)
 
     - id: ZONE-002
       name: Kitchen / Galley
       file: functional/ZONE-002-kitchen.yml
       location: Passenger-side, behind bathroom
-      footprint: 600 x 2300 mm
-      area: 1.38 m²
+      footprint: 609 x 1948 mm
+      area: 1.19 m²
 
     - id: ZONE-003
       name: Garage Shell
@@ -69,15 +70,18 @@ zones:
 
 # Layout Summary (front to rear)
 layout_longitudinal:
-  - position: 0-1200mm
-    passenger_side: ZONE-001 (Bathroom 800mm wide)
-    driver_side: ZONE-006 (Circulation)
+  - position: 0-800mm
+    full_width: ZONE-001 (Bathroom, 2280 x 800mm)
+    notes: |
+      Shower on passenger side (entry door)
+      Toilet on driver side (below WIN-04)
 
-  - position: 1200-3500mm
-    passenger_side: ZONE-002 (Kitchen 600mm deep)
-    driver_side: ZONE-006 (Circulation) + open
+  - position: 800-2748mm
+    passenger_side: ZONE-002 (Kitchen 609mm deep)
+    driver_side: CABINETS (Floor-to-ceiling, 609mm deep)
+    center: ZONE-006 (Circulation corridor, 1062mm wide)
 
-  - position: 3500-4780mm (rear 1280mm)
+  - position: 2748-4780mm (rear section)
     full_width: |
       ZONE-003 (Garage Shell, floor-860mm)
       ZONE-005 (Living/Dinette, floor-1650mm)
@@ -86,15 +90,16 @@ layout_longitudinal:
 
 # Key Dimensions
 key_dimensions:
-  bathroom: 800 x 1200 x 2160 mm
-  kitchen_depth: 600 mm
+  bathroom: 2280 x 800 x 2160 mm (full width)
+  kitchen: 609 x 1948 mm
+  cabinets: 609 x 1948 mm (driver side, opposite kitchen)
+  corridor_width: 1062 mm (between kitchen and cabinets)
   garage_shell_height: 860 mm
   garage_shell_depth: 1023 mm
   bed_size: 1500 x 2000 mm (Queen)
   bed_lowered_height: 860 mm (on garage shell)
   bed_raised_clearance: 1650 mm
   bedside_cabinet_depth: 300 mm
-  corridor_min_width: 600 mm
 
 # Time-Shared Volumes
 time_shared:
@@ -116,22 +121,23 @@ adjacency_summary:
 # Validation Checklist
 validation:
   total_footprint_check: |
-    Bathroom (800x1200) + Kitchen (600x2300) + Garage Shell (2280x1023) + Corridors
-    Verify no overlaps and all fits within 4780x2280mm
+    Bathroom (2280x800) + Kitchen (609x1948) + Cabinets (609x1948) +
+    Corridor (1062x1948) + Garage Shell (2280x1023) = fits within 4780x2280mm
+    800 + 1948 + 1023 = 3771mm < 4780mm (remaining ~1009mm for living transition)
 
   volume_check: |
     Verify lift bed travel (860-1960mm) clears all fixtures
     Verify 1650mm standing height when bed raised
 
   window_assignments:
-    WIN-01: ZONE-005 (Living/Dinette rear)
-    WIN-02: ZONE-005 (Living/Dinette rear)
+    WIN-01: ZONE-005 (Living/Dinette, driver-side wall)
+    WIN-02: ZONE-005 (Living/Dinette, passenger-side wall)
     WIN-03: ZONE-004/005 (Roof, shared)
-    WIN-04: ZONE-002 (Kitchen, driver-side)
+    WIN-04: ZONE-001 (Bathroom, driver-side - above toilet)
     WIN-05: ZONE-002 (Kitchen, passenger-side)
 
   door_assignment:
-    DOOR-01: ZONE-006 (Entry)
+    DOOR-01: ZONE-001 (Bathroom entry, passenger-side)
 
   hatch_assignments:
     HATCH-01: ZONE-003 (Garage Shell access)

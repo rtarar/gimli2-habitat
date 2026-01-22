@@ -38,50 +38,60 @@
 
   <!-- Orientation labels -->
   <text x="400" y="75" text-anchor="middle" class="zone-label">FRONT (Cab connection)</text>
-  <text x="100" y="400" text-anchor="middle" class="zone-label" transform="rotate(-90, 100, 400)">DRIVER SIDE</text>
-  <text x="700" y="400" text-anchor="middle" class="zone-label" transform="rotate(90, 700, 400)">PASSENGER SIDE</text>
+  <text x="100" y="400" text-anchor="middle" class="zone-label" transform="rotate(-90, 100, 400)">PASSENGER SIDE</text>
+  <text x="700" y="400" text-anchor="middle" class="zone-label" transform="rotate(90, 700, 400)">DRIVER SIDE</text>
   <text x="400" y="820" text-anchor="middle" class="zone-label">REAR WALL (solid)</text>
 
   <!-- Main exterior walls -->
   <rect x="150" y="90" width="500" height="700" class="wall-fill"/>
 
   <!-- ==================== BATHROOM (ZONE-001) ==================== -->
-  <rect x="150" y="90" width="500" height="115" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
-  <text x="400" y="130" text-anchor="middle" class="zone-title">BATHROOM (ZONE-001)</text>
-  <text x="400" y="145" text-anchor="middle" class="zone-label">Full width, 800mm deep</text>
-  <text x="400" y="160" text-anchor="middle" class="zone-label">⚡ 💧</text>
+  <!-- CORRECTED: Full width (2280mm) x 800mm deep -->
+  <!-- Scale: 500px = 2280mm width, 700px = 4780mm length -->
+  <!-- 800mm depth ≈ 117px -->
+  <!-- Shower on driver/entry side, toilet on passenger side below WIN-04 -->
+  <rect x="150" y="90" width="500" height="117" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
+  <text x="400" y="125" text-anchor="middle" class="zone-title">BATHROOM (ZONE-001)</text>
+  <text x="400" y="142" text-anchor="middle" class="zone-label">Full width (2280mm) x 800mm deep ⚡ 💧</text>
+  <!-- Shower area (driver side) -->
+  <text x="250" y="172" text-anchor="middle" class="dimension">SHOWER</text>
+  <!-- Toilet area (passenger side, below WIN-04) -->
+  <text x="550" y="172" text-anchor="middle" class="dimension">TOILET</text>
 
-  <!-- WIN-04 (bathroom, driver side) -->
-  <rect x="150" y="110" width="12" height="70" class="window"/>
-  <text x="175" y="150" class="dimension">WIN-04</text>
+  <!-- WIN-04 (passenger side, in bathroom - above toilet) -->
+  <rect x="638" y="110" width="12" height="70" class="window"/>
+  <text x="610" y="150" text-anchor="end" class="dimension">WIN-04</text>
 
-  <!-- DOOR-01 (passenger side, adjacent to bathroom) -->
-  <rect x="638" y="120" width="12" height="80" class="door"/>
-  <text x="610" y="165" text-anchor="end" class="dimension">DOOR</text>
+  <!-- DOOR-01 (driver side, bathroom entry) -->
+  <rect x="150" y="100" width="12" height="100" class="door"/>
+  <text x="175" y="155" class="dimension">DOOR-01</text>
 
-  <!-- ==================== KITCHEN (ZONE-002) - Along Passenger Side ==================== -->
+  <!-- ==================== KITCHEN (ZONE-002) - Along Driver Side ==================== -->
   <!-- Kitchen: 1948mm length x 609mm depth x 914mm height (counter) -->
-  <!-- 609mm depth ≈ 133px, 1948mm length ≈ 285px (scaled to fit layout) -->
-  <rect x="517" y="205" width="133" height="285" class="kitchen"/>
-  <text x="583" y="310" text-anchor="middle" class="zone-title" transform="rotate(90, 583, 310)">KITCHEN (ZONE-002)</text>
-  <text x="583" y="400" text-anchor="middle" class="zone-label" transform="rotate(90, 583, 400)">1948 x 609mm ⚡ 💧</text>
-  <text x="583" y="440" text-anchor="middle" class="dimension" transform="rotate(90, 583, 440)">914mm counter height</text>
+  <!-- Starts after bathroom (800mm = 117px from top of interior) -->
+  <!-- 609mm depth ≈ 133px, 1948mm length ≈ 285px -->
+  <rect x="150" y="207" width="133" height="285" class="kitchen"/>
+  <text x="216" y="312" text-anchor="middle" class="zone-title" transform="rotate(-90, 216, 312)">KITCHEN (ZONE-002)</text>
+  <text x="216" y="402" text-anchor="middle" class="zone-label" transform="rotate(-90, 216, 402)">1948 x 609mm ⚡ 💧</text>
+  <text x="216" y="442" text-anchor="middle" class="dimension" transform="rotate(-90, 216, 442)">914mm counter height</text>
 
-  <!-- WIN-05 (kitchen, passenger side) - flush with kitchen -->
-  <rect x="638" y="280" width="12" height="120" class="window"/>
-  <text x="620" y="345" text-anchor="end" class="dimension">WIN-05</text>
+  <!-- WIN-05 (kitchen, driver side) - flush with kitchen -->
+  <rect x="150" y="282" width="12" height="120" class="window"/>
+  <text x="175" y="347" class="dimension">WIN-05</text>
 
-  <!-- ==================== FLOOR-TO-CEILING CABINETS (Driver Side) ==================== -->
-  <!-- Cabinets on driver side, opposite kitchen, same length (1948mm) -->
-  <rect x="150" y="205" width="133" height="285" class="cabinet"/>
-  <text x="216" y="310" text-anchor="middle" class="zone-title" transform="rotate(-90, 216, 310)">FLOOR-TO-CEILING</text>
-  <text x="216" y="400" text-anchor="middle" class="zone-label" transform="rotate(-90, 216, 400)">CABINETS</text>
+  <!-- ==================== FLOOR-TO-CEILING CABINETS (Passenger Side) ==================== -->
+  <!-- Cabinets on passenger side, opposite kitchen, same length (1948mm) -->
+  <!-- Starts after bathroom (800mm = 117px from top of interior) -->
+  <rect x="517" y="207" width="133" height="285" class="cabinet"/>
+  <text x="583" y="312" text-anchor="middle" class="zone-title" transform="rotate(90, 583, 312)">FLOOR-TO-CEILING</text>
+  <text x="583" y="402" text-anchor="middle" class="zone-label" transform="rotate(90, 583, 402)">CABINETS</text>
 
   <!-- ==================== CIRCULATION (ZONE-006) ==================== -->
-  <!-- Circulation is the open area between cabinets (driver) and kitchen (passenger) -->
-  <rect x="283" y="205" width="234" height="285" fill="#fff9e6" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <text x="400" y="330" text-anchor="middle" class="zone-title">CIRCULATION</text>
-  <text x="400" y="350" text-anchor="middle" class="zone-label">(ZONE-006)</text>
+  <!-- Circulation is the open area between kitchen (driver) and cabinets (passenger) -->
+  <!-- Width: 2280 - 609 - 609 = 1062mm ≈ 234px -->
+  <rect x="283" y="207" width="234" height="285" fill="#fff9e6" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="400" y="335" text-anchor="middle" class="zone-title">CIRCULATION</text>
+  <text x="400" y="355" text-anchor="middle" class="zone-label">(ZONE-006)</text>
 
   <!-- ==================== LIVING/DINETTE (ZONE-005) ==================== -->
   <rect x="150" y="465" width="500" height="200" fill="#e6ffe6" stroke="#333" stroke-width="2"/>
@@ -154,12 +164,16 @@
   <text x="750" y="440" text-anchor="middle" class="dimension" transform="rotate(90, 750, 440)">4780mm</text>
 
   <!-- Kitchen depth dimension -->
-  <line x1="517" y1="195" x2="650" y2="195" stroke="#c66" stroke-width="1"/>
-  <text x="583" y="190" text-anchor="middle" class="dimension" fill="#c66">609mm depth</text>
+  <line x1="150" y1="197" x2="283" y2="197" stroke="#c66" stroke-width="1"/>
+  <text x="216" y="192" text-anchor="middle" class="dimension" fill="#c66">609mm depth</text>
 
   <!-- Kitchen length dimension -->
-  <line x1="660" y1="205" x2="660" y2="490" stroke="#c66" stroke-width="1"/>
-  <text x="680" y="350" text-anchor="middle" class="dimension" fill="#c66" transform="rotate(90, 680, 350)">1948mm length</text>
+  <line x1="140" y1="207" x2="140" y2="492" stroke="#c66" stroke-width="1"/>
+  <text x="120" y="352" text-anchor="middle" class="dimension" fill="#c66" transform="rotate(-90, 120, 352)">1948mm length</text>
+
+  <!-- Bathroom depth dimension -->
+  <line x1="80" y1="90" x2="80" y2="207" stroke="#06c" stroke-width="1"/>
+  <text x="60" y="148" text-anchor="middle" class="dimension" fill="#06c" transform="rotate(-90, 60, 148)">800mm</text>
 
   <!-- ==================== LEGEND ==================== -->
   <rect x="150" y="890" width="500" height="100" fill="#fafafa" stroke="#ccc" stroke-width="1"/>

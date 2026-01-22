@@ -44,6 +44,36 @@ This repo is designed so newcomers can understand the project, and contributors 
 
 ---
 
+## Habitat Floor Plan
+
+The habitat module interior layout (Day Mode with lift bed raised):
+
+![Gimli2 Habitat Floor Plan](zones/floor-plan.svg)
+
+**Key dimensions:**
+- Interior: 4780mm (L) × 2280mm (W) × 2160mm (H)
+- Kitchen: 1948mm length × 609mm depth × 914mm counter height (passenger side)
+- Floor-to-ceiling cabinets opposite kitchen (driver side)
+- Garage shell: wall-to-wall (2280mm), 860mm high, with exterior hatches on both sides
+- U-shaped dinette with rear bench seating on garage shell top
+
+### Interactive 3D Viewer
+
+To explore the habitat in 3D, open the interactive viewer:
+
+```bash
+open renders/habitat_zones_3d.html
+```
+
+The 3D viewer includes:
+- All functional zones (color-coded)
+- Day/Night mode toggle (shows bed raised vs lowered)
+- Wireframe view option
+- Windows, doors, and hatches
+- Click zones to highlight
+
+---
+
 ## Current Status (Update as Needed)
 
 - [ ] Baseline architecture and subsystem boundaries captured

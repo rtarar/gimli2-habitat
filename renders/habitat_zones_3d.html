@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimli2 Habitat - 3D Zone Viewer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+        }
+        #container { width: 100vw; height: 100vh; }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            max-width: 320px;
+            z-index: 100;
+            border: 1px solid #333;
+        }
+        #info h2 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #4CAF50;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+        #info h3 {
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 8px;
+            margin: 3px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .zone-item:hover { background: rgba(255,255,255,0.1); }
+        .zone-item.active { background: rgba(76, 175, 80, 0.3); }
+
+        .zone-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            margin-right: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .zone-name { flex: 1; font-size: 12px; }
+        .zone-dims { font-size: 10px; color: #888; }
+
+        .opening-item {
+            padding: 4px 8px;
+            margin: 2px 0;
+            font-size: 11px;
+            border-left: 3px solid;
+            padding-left: 10px;
+        }
+        .opening-window { border-color: #2196F3; }
+        .opening-door { border-color: #FF9800; }
+        .opening-hatch { border-color: #4CAF50; }
+
+        #controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            border: 1px solid #333;
+        }
+        #controls b { color: #4CAF50; }
+
+        #mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            z-index: 100;
+        }
+        #mode-toggle button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 2px;
+        }
+        #mode-toggle button:hover { background: #45a049; }
+        #mode-toggle button.active { background: #2E7D32; }
+
+        #dimensions {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            border: 1px solid #333;
+        }
+        #dimensions h4 { color: #4CAF50; margin-bottom: 8px; }
+        #dimensions .dim { margin: 3px 0; }
+        #dimensions .dim span { color: #888; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <div id="info">
+        <h2>Gimli2 Habitat Zones</h2>
+        <div id="zones-list"></div>
+        <h3>Openings</h3>
+        <div id="openings-list"></div>
+    </div>
+
+    <div id="mode-toggle">
+        <button id="btn-day" class="active">Day Mode</button>
+        <button id="btn-night">Night Mode</button>
+        <button id="btn-wireframe">Wireframe</button>
+    </div>
+
+    <div id="controls">
+        <b>Controls:</b> Left-drag rotate | Right-drag pan | Scroll zoom | Click zone to highlight
+    </div>
+
+    <div id="dimensions">
+        <h4>Habitat Interior</h4>
+        <div class="dim">Length: <span>4780mm</span></div>
+        <div class="dim">Width: <span>2280mm</span></div>
+        <div class="dim">Height: <span>2160mm</span></div>
+        <div class="dim">Floor Area: <span>10.90 m2</span></div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // ============================================================
+        // COORDINATE SYSTEM (from habitat.yml)
+        // Origin: builder_defined from STEP file
+        // Units: millimeters
+        // Up axis: Z (in STEP), but Three.js uses Y-up
+        // We map: STEP X -> Three X, STEP Z -> Three Y, STEP Y -> Three Z
+        // ============================================================
+
+        // Habitat interior dimensions (mm) from habitat.yml
+        const HABITAT = {
+            length: 4780,   // Along Y axis (front to rear)
+            width: 2280,    // Along X axis (driver to passenger)
+            height: 2160    // Along Z axis (floor to ceiling)
+        };
+
+        // Zone definitions from zones/*.yml specs (updated 2025-01-21)
+        // Coordinate system: X = width (driver=-X, passenger=+X), Y = height, Z = length (front=+Z, rear=-Z)
+        const ZONES = {
+            'ZONE-001': {
+                name: 'Bathroom',
+                color: 0x4FC3F7,
+                // CORRECTED: Full width (2280mm) x 800mm deep
+                // Shower on driver/entry side, toilet on passenger side below WIN-04
+                bounds: { width: 2280, depth: 800, height: 2160 },
+                position: { x: 0, y: 0, z: HABITAT.length/2 - 400 },
+                description: 'Full width x 800mm deep'
+            },
+            'ZONE-002': {
+                name: 'Kitchen',
+                color: 0xFFB74D,
+                // Kitchen: 609mm depth (counter) x 1948mm length (along wall)
+                // Position: driver-side, starts after bathroom (800mm from front)
+                bounds: { width: 609, depth: 1948, height: 2160 },
+                position: { x: -HABITAT.width/2 + 304.5, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                description: '609 x 1948mm, driver-side'
+            },
+            'ZONE-003': {
+                name: 'Garage Shell',
+                color: 0x78909C,
+                // Per ZONE-003-garage-shell.yml: 2280mm wide (full) x 1023mm deep x 860mm high
+                // Position: rear wall, from_front: 3757mm (4780 - 1023)
+                bounds: { width: 2280, depth: 1023, height: 860 },
+                position: { x: 0, y: 0, z: -HABITAT.length/2 + 511.5 },
+                description: '2280 x 1023mm, 860mm high'
+            },
+            'ZONE-004': {
+                name: 'Sleeping (Bed)',
+                color: 0xBA68C8,
+                // Per ZONE-004-sleeping.yml: 1500mm wide x 2000mm long x 200mm thick
+                // Centered: from_driver_wall: 390mm, from_passenger_wall: 390mm
+                // Vertical travel: lowered=860mm, raised=1960mm (bed bottom)
+                bounds: { width: 1500, depth: 2000, height: 200 },
+                position: { x: 0, y: 860, z: -HABITAT.length/2 + 1000 },
+                positionRaised: { x: 0, y: 1960, z: -HABITAT.length/2 + 1000 },
+                description: 'Queen 1500 x 2000mm, lift bed'
+            },
+            'ZONE-005': {
+                name: 'Living / Dinette',
+                color: 0x81C784,
+                // Per ZONE-005-living-dinette.yml: 2280mm wide x 2000mm deep x 1650mm ceiling
+                // Position: from_rear_wall: 0mm
+                bounds: { width: 2280, depth: 2000, height: 1650 },
+                position: { x: 0, y: 0, z: -HABITAT.length/2 + 1000 },
+                description: '2280 x 2000mm, 1650mm ceiling'
+            },
+            'ZONE-006': {
+                name: 'Circulation',
+                color: 0xFFF176,
+                // Circulation corridor between kitchen (passenger) and cabinets (driver)
+                // After bathroom: remaining width between 609mm zones = 2280 - 609 - 609 = 1062mm
+                bounds: { width: 1062, depth: 1948, height: 2160 },
+                position: { x: 0, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                description: 'Corridor, 1062mm wide'
+            },
+            // BEDSIDE CABINETS - Split into upper (hanging) and lower (on garage ledge)
+            // Lower cabinets sit on garage shell ledge (860mm), upper cabinets hang from ceiling
+            // Middle section left open for window view (between ~860mm and ~1500mm)
+            'ZONE-007-D-LOWER': {
+                name: 'Bedside Lower (Driver)',
+                color: 0xE1BEE7,
+                // Lower cabinet: sits on garage shell ledge at 860mm
+                // Height: from ledge to window bottom (~400mm)
+                bounds: { width: 300, depth: 1200, height: 400 },
+                position: { x: -HABITAT.width/2 + 150, y: 860, z: -HABITAT.length/2 + 600 },
+                description: 'Lower cabinet on ledge'
+            },
+            'ZONE-007-D-UPPER': {
+                name: 'Bedside Upper (Driver)',
+                color: 0xD1C4E9,
+                // Upper cabinet: hangs from ceiling, accessible in night mode
+                // From ~1500mm to ceiling (2160mm) = 660mm height
+                bounds: { width: 300, depth: 1200, height: 660 },
+                position: { x: -HABITAT.width/2 + 150, y: 1500, z: -HABITAT.length/2 + 600 },
+                description: 'Upper cabinet (hanging)'
+            },
+            'ZONE-007-P-LOWER': {
+                name: 'Bedside Lower (Pass.)',
+                color: 0xE1BEE7,
+                // Lower cabinet: sits on garage shell ledge at 860mm
+                bounds: { width: 300, depth: 1200, height: 400 },
+                position: { x: HABITAT.width/2 - 150, y: 860, z: -HABITAT.length/2 + 600 },
+                description: 'Lower cabinet on ledge'
+            },
+            'ZONE-007-P-UPPER': {
+                name: 'Bedside Upper (Pass.)',
+                color: 0xD1C4E9,
+                // Upper cabinet: hangs from ceiling
+                bounds: { width: 300, depth: 1200, height: 660 },
+                position: { x: HABITAT.width/2 - 150, y: 1500, z: -HABITAT.length/2 + 600 },
+                description: 'Upper cabinet (hanging)'
+            },
+            'CABINETS': {
+                name: 'Floor-to-Ceiling Cabinets',
+                color: 0xA1887F,
+                // Cabinets on passenger side, opposite kitchen: 609mm depth x 1948mm length
+                // Position: passenger-side, starts after bathroom (800mm from front)
+                bounds: { width: 609, depth: 1948, height: 2160 },
+                position: { x: HABITAT.width/2 - 304.5, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                description: '609 x 1948mm, passenger-side'
+            }
+        };
+
+        // ============================================================
+        // OPENINGS - Updated 2025-01-21
+        // Windows are HORIZONTAL (long edge horizontal)
+        // Passenger side layout (back to front): Hatch → Rear Window → Kitchen Window → Door
+        // cutout_width = horizontal span, cutout_height = vertical span
+        // ============================================================
+        const OPENINGS = {
+            windows: [
+                // WIN-01: RA-40 on DRIVER SIDE wall, rear section (living/dinette)
+                // HORIZONTAL: 1063mm wide x 670mm tall (swapped for landscape orientation)
+                {
+                    id: 'WIN-01',
+                    name: 'RA-40 Driver Rear',
+                    wall: 'driver',
+                    cutout_width: 1063,   // horizontal span along wall
+                    cutout_height: 670,   // vertical height
+                    center_y: 1100,       // center height from floor
+                    center_z: -HABITAT.length/2 + 1200  // rear section, living/dinette
+                },
+                // WIN-02: RA-40 on PASSENGER SIDE wall, rear section
+                // Behind kitchen, aligned horizontally with WIN-01
+                // HORIZONTAL: 1063mm wide x 670mm tall
+                {
+                    id: 'WIN-02',
+                    name: 'RA-40 Passenger Rear',
+                    wall: 'passenger',
+                    cutout_width: 1063,
+                    cutout_height: 670,
+                    center_y: 1100,
+                    center_z: -HABITAT.length/2 + 1200  // rear section
+                },
+                // WIN-04: RA-30 on PASSENGER side wall (bathroom - above toilet)
+                // HORIZONTAL: 673mm wide x 570mm tall
+                {
+                    id: 'WIN-04',
+                    name: 'RA-30 Bathroom',
+                    wall: 'passenger',
+                    cutout_width: 673,    // horizontal
+                    cutout_height: 570,   // vertical
+                    center_y: 1400,       // higher up for bathroom privacy
+                    center_z: HABITAT.length/2 - 400  // in bathroom zone
+                },
+                // WIN-05: RA-40 on DRIVER side wall (kitchen zone)
+                // Between rear window and door
+                // HORIZONTAL: 1063mm wide x 670mm tall
+                {
+                    id: 'WIN-05',
+                    name: 'RA-40 Kitchen',
+                    wall: 'driver',
+                    cutout_width: 1063,
+                    cutout_height: 670,
+                    center_y: 1100,
+                    center_z: HABITAT.length/2 - 800 - 1000  // kitchen zone (after bathroom)
+                }
+            ],
+            doors: [
+                // DOOR-01: Entry door on DRIVER side
+                // Front of driver wall, at bathroom area
+                // Standard RV entry door: ~700mm wide x 1800mm tall
+                {
+                    id: 'DOOR-01',
+                    name: 'Entry Door',
+                    wall: 'driver',
+                    cutout_width: 700,    // door width
+                    cutout_height: 1800,  // door height (full height entry)
+                    center_y: 900,        // center from floor
+                    center_z: HABITAT.length/2 - 400  // at bathroom, front section
+                }
+            ],
+            hatches: [
+                // HATCH-01: Driver side garage access (rear)
+                // HORIZONTAL: 600mm wide x 550mm tall
+                {
+                    id: 'HATCH-01',
+                    name: 'Garage Hatch Driver',
+                    wall: 'driver',
+                    cutout_width: 600,
+                    cutout_height: 550,
+                    center_y: 430,
+                    center_z: -HABITAT.length/2 + 500
+                },
+                // HATCH-02: Passenger side garage access (rear-most on passenger side)
+                // HORIZONTAL: 600mm wide x 550mm tall
+                {
+                    id: 'HATCH-02',
+                    name: 'Garage Hatch Passenger',
+                    wall: 'passenger',
+                    cutout_width: 600,
+                    cutout_height: 550,
+                    center_y: 430,
+                    center_z: -HABITAT.length/2 + 500
+                }
+            ]
+        };
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a2e);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 10, 50000);
+        camera.position.set(4000, 3000, 5000);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('container').appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.target.set(0, HABITAT.height/2, 0);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(2000, 4000, 3000);
+        scene.add(directionalLight);
+
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        fillLight.position.set(-2000, 2000, -2000);
+        scene.add(fillLight);
+
+        // Create habitat shell (wireframe)
+        const shellGeometry = new THREE.BoxGeometry(HABITAT.width, HABITAT.height, HABITAT.length);
+        const shellMaterial = new THREE.MeshBasicMaterial({
+            color: 0x444444,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
+        });
+        const shell = new THREE.Mesh(shellGeometry, shellMaterial);
+        shell.position.y = HABITAT.height / 2;
+        scene.add(shell);
+
+        // Floor
+        const floorGeometry = new THREE.PlaneGeometry(HABITAT.width, HABITAT.length);
+        const floorMaterial = new THREE.MeshLambertMaterial({ color: 0x333333, side: THREE.DoubleSide });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = 1;
+        scene.add(floor);
+
+        // Zone meshes
+        const zoneMeshes = {};
+        let isDayMode = true;
+        let isWireframe = false;
+
+        function createZoneMesh(zoneId, zone) {
+            const geometry = new THREE.BoxGeometry(zone.bounds.width, zone.bounds.height, zone.bounds.depth);
+            const material = new THREE.MeshLambertMaterial({
+                color: zone.color,
+                transparent: true,
+                opacity: 0.7
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+
+            const pos = isDayMode && zone.positionRaised ? zone.positionRaised : zone.position;
+            mesh.position.set(pos.x, pos.y + zone.bounds.height/2, pos.z);
+            mesh.userData = { zoneId, zone };
+
+            const edges = new THREE.EdgesGeometry(geometry);
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.5, transparent: true });
+            const wireframe = new THREE.LineSegments(edges, lineMaterial);
+            mesh.add(wireframe);
+
+            return mesh;
+        }
+
+        function buildZones() {
+            Object.values(zoneMeshes).forEach(mesh => scene.remove(mesh));
+
+            for (const [zoneId, zone] of Object.entries(ZONES)) {
+                if (zoneId === 'ZONE-004' && isDayMode) {
+                    const mesh = createZoneMesh(zoneId, zone);
+                    mesh.position.y = zone.positionRaised.y + zone.bounds.height/2;
+                    mesh.material.opacity = 0.3;
+                    zoneMeshes[zoneId] = mesh;
+                    scene.add(mesh);
+                    continue;
+                }
+
+                const mesh = createZoneMesh(zoneId, zone);
+                zoneMeshes[zoneId] = mesh;
+                scene.add(mesh);
+            }
+        }
+
+        // ============================================================
+        // CREATE OPENINGS - Fixed orientation
+        // Side walls (driver/passenger): plane faces X direction
+        //   - geometry: PlaneGeometry(depth_along_wall, height)
+        //   - rotation: Y = PI/2 to face X direction
+        // Front/rear walls: plane faces Z direction
+        //   - geometry: PlaneGeometry(width, height)
+        //   - no Y rotation needed
+        // ============================================================
+        function createOpening(opening, type) {
+            const color = type === 'window' ? 0x2196F3 : type === 'door' ? 0xFF9800 : 0x4CAF50;
+
+            // For side walls: geometry is (length_along_z, height)
+            // cutout_width goes along the wall, cutout_height is vertical (Y axis)
+            const geometry = new THREE.PlaneGeometry(opening.cutout_width, opening.cutout_height);
+            const material = new THREE.MeshBasicMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.6,
+                side: THREE.DoubleSide
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+
+            // Position based on wall
+            if (opening.wall === 'driver') {
+                // Driver side is -X wall
+                mesh.position.set(-HABITAT.width/2, opening.center_y, opening.center_z);
+                mesh.rotation.y = Math.PI / 2;  // Face X direction (rotate around Y)
+            } else if (opening.wall === 'passenger') {
+                // Passenger side is +X wall
+                mesh.position.set(HABITAT.width/2, opening.center_y, opening.center_z);
+                mesh.rotation.y = Math.PI / 2;  // Face X direction
+            } else if (opening.wall === 'front') {
+                const x = opening.center_x !== undefined ? opening.center_x : 0;
+                mesh.position.set(x, opening.center_y, HABITAT.length/2);
+                // No rotation, faces Z
+            } else if (opening.wall === 'rear') {
+                const x = opening.center_x !== undefined ? opening.center_x : 0;
+                mesh.position.set(x, opening.center_y, -HABITAT.length/2);
+                // No rotation, faces Z
+            }
+
+            // Add border
+            const borderGeometry = new THREE.EdgesGeometry(geometry);
+            const borderMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+            const border = new THREE.LineSegments(borderGeometry, borderMaterial);
+            mesh.add(border);
+
+            return mesh;
+        }
+
+        // Create all openings
+        OPENINGS.windows.forEach(w => scene.add(createOpening(w, 'window')));
+        OPENINGS.doors.forEach(d => scene.add(createOpening(d, 'door')));
+        OPENINGS.hatches.forEach(h => scene.add(createOpening(h, 'hatch')));
+
+        // Build UI
+        function buildUI() {
+            const zonesList = document.getElementById('zones-list');
+            zonesList.innerHTML = '<h3>Functional Zones</h3>';
+
+            for (const [zoneId, zone] of Object.entries(ZONES)) {
+                const item = document.createElement('div');
+                item.className = 'zone-item';
+                item.innerHTML = `
+                    <div class="zone-color" style="background: #${zone.color.toString(16).padStart(6, '0')}"></div>
+                    <div class="zone-name">${zone.name}</div>
+                    <div class="zone-dims">${zone.description}</div>
+                `;
+                item.onclick = () => highlightZone(zoneId);
+                zonesList.appendChild(item);
+            }
+
+            const openingsList = document.getElementById('openings-list');
+            openingsList.innerHTML = '';
+
+            OPENINGS.windows.forEach(w => {
+                const item = document.createElement('div');
+                item.className = 'opening-item opening-window';
+                item.textContent = `${w.id}: ${w.name} (${w.cutout_width}x${w.cutout_height}mm)`;
+                openingsList.appendChild(item);
+            });
+
+            OPENINGS.doors.forEach(d => {
+                const item = document.createElement('div');
+                item.className = 'opening-item opening-door';
+                item.textContent = `${d.id}: ${d.name} (${d.cutout_width}x${d.cutout_height}mm)`;
+                openingsList.appendChild(item);
+            });
+
+            OPENINGS.hatches.forEach(h => {
+                const item = document.createElement('div');
+                item.className = 'opening-item opening-hatch';
+                item.textContent = `${h.id}: ${h.name} (${h.cutout_width}x${h.cutout_height}mm)`;
+                openingsList.appendChild(item);
+            });
+        }
+
+        function highlightZone(zoneId) {
+            Object.values(zoneMeshes).forEach(mesh => {
+                mesh.material.opacity = 0.7;
+                mesh.material.emissive = new THREE.Color(0x000000);
+            });
+
+            if (zoneMeshes[zoneId]) {
+                zoneMeshes[zoneId].material.opacity = 1.0;
+                zoneMeshes[zoneId].material.emissive = new THREE.Color(0x222222);
+            }
+
+            document.querySelectorAll('.zone-item').forEach(el => el.classList.remove('active'));
+            event.target.closest('.zone-item')?.classList.add('active');
+        }
+
+        // Mode toggles
+        document.getElementById('btn-day').onclick = () => {
+            isDayMode = true;
+            document.getElementById('btn-day').classList.add('active');
+            document.getElementById('btn-night').classList.remove('active');
+            buildZones();
+        };
+
+        document.getElementById('btn-night').onclick = () => {
+            isDayMode = false;
+            document.getElementById('btn-day').classList.remove('active');
+            document.getElementById('btn-night').classList.add('active');
+            buildZones();
+        };
+
+        document.getElementById('btn-wireframe').onclick = () => {
+            isWireframe = !isWireframe;
+            document.getElementById('btn-wireframe').classList.toggle('active');
+            Object.values(zoneMeshes).forEach(mesh => {
+                mesh.material.wireframe = isWireframe;
+                mesh.material.opacity = isWireframe ? 1.0 : 0.7;
+            });
+        };
+
+        // Grid helper
+        const gridHelper = new THREE.GridHelper(6000, 30, 0x444444, 0x333333);
+        gridHelper.position.y = 0;
+        scene.add(gridHelper);
+
+        // Axes helper (X=red/width, Y=green/height, Z=blue/length)
+        const axesHelper = new THREE.AxesHelper(1000);
+        axesHelper.position.set(-HABITAT.width/2 - 200, 0, HABITAT.length/2 + 200);
+        scene.add(axesHelper);
+
+        // Initialize
+        buildZones();
+        buildUI();
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Raycaster for click detection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        renderer.domElement.addEventListener('click', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const meshArray = Object.values(zoneMeshes);
+            const intersects = raycaster.intersectObjects(meshArray);
+
+            if (intersects.length > 0) {
+                const zoneId = intersects[0].object.userData.zoneId;
+                highlightZone(zoneId);
+            }
+        });
+    </script>
+</body>
+</html>

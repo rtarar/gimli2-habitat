@@ -1,59 +1,86 @@
 # Zone: Bathroom / Wet Room
-# Location: Front passenger-side, adjacent to entry door
+# Location: Front wall, full width
 
 id: ZONE-001
 name: Bathroom
 type: functional
 description: |
-  Wet bath with shower over toilet configuration.
-  Located at entry door for efficient plumbing routing.
-  No window - requires mechanical ventilation.
+  Wet bath spanning full width of habitat at front wall.
+  Shower area on passenger/entry side, toilet on driver side below WIN-04.
+  WIN-04 provides natural light and ventilation above toilet area.
 
 bounds:
   type: box
   reference: habitat.yml coordinate system
-  # Passenger-side front corner
-  # X: 0 = driver side, positive = passenger side
+  # Full width at front wall
+  # X: spans full width (driver to passenger)
   # Y: 0 = front, positive = rear
   # Z: floor to ceiling
-  width: 800   # mm (across habitat)
-  depth: 1200  # mm (along habitat length)
+  width: 2280  # mm (full interior width, wall-to-wall)
+  depth: 800   # mm (along habitat length, from front wall)
   height: 2160 # mm (full ceiling height)
   position:
-    from_wall: passenger-side
     from_front: 0  # mm - starts at front wall
-    notes: Adjacent to DOOR-01 entry
+    notes: |
+      Full width bathroom at front of habitat.
+      Shower on passenger side (entry door side).
+      Toilet on driver side (below WIN-04 window).
+
+layout:
+  passenger_side:
+    zone: shower
+    features:
+      - shower_head
+      - floor_drain
+      - grab_bars
+    adjacent_to: DOOR-01 (entry)
+  driver_side:
+    zone: toilet
+    features:
+      - toilet
+      - sink_basin
+      - WIN-04 (natural light/ventilation)
+    notes: Window above toilet provides light and can vent moisture
 
 adjacencies:
   required:
-    - ZONE-006  # Entry/circulation - must access from entry
-  preferred:
-    - ZONE-002  # Kitchen - share plumbing wall
+    - ZONE-002  # Kitchen - behind bathroom on passenger side
+    - CABINETS  # Floor-to-ceiling cabinets - behind bathroom on driver side
+  preferred: []
   forbidden:
     - ZONE-004  # Sleeping - hygiene separation
 
 constraints:
-  min_area: 0.96      # m² (800x1200)
-  min_dimension: 800  # mm (width)
+  min_area: 1.82      # m² (2280 x 800)
+  min_dimension: 800  # mm (depth)
   ceiling_height: full
   floor_access: required  # Drain, waterproofing
   wall_access: required   # Plumbing, mounting
-  natural_light: not_needed  # No window per user choice
-  ventilation: required      # Mechanical vent fan required
+  natural_light: available  # WIN-04 on driver side
+  ventilation: required     # WIN-04 + mechanical vent fan
   privacy: high
-  noise_level: moderate      # Plumbing noise acceptable
+  noise_level: moderate     # Plumbing noise acceptable
 
 fixed_elements:
-  - toilet
-  - shower_head
-  - sink_basin
-  - vent_fan
+  - toilet           # Driver side, below WIN-04
+  - shower_head      # Passenger side
+  - sink_basin       # Driver side, near toilet
+  - vent_fan         # Mechanical backup ventilation
+  - floor_drain      # Shower area
 
 utilities:
   electrical: basic         # Vent fan, light, outlet
   plumbing: supply_and_drain
-  hvac: none               # Vent fan handles exhaust
+  hvac: none               # WIN-04 + vent fan handles exhaust
   data: none
+
+window:
+  id: WIN-04
+  model: RA-30
+  location: driver-side wall
+  cutout_width: 570   # mm
+  cutout_height: 673  # mm
+  function: Natural light and ventilation for toilet area
 
 requirements:
   - REQ-BATH-001  # Wet bath functionality
@@ -61,10 +88,11 @@ requirements:
 
 status: defined
 created: 2025-01-20
-updated: 2025-01-20
+updated: 2025-01-21
 notes: |
-  - Wet bath design: shower drains to floor drain, everything waterproof
-  - No window - WIN-04 on driver side will be in kitchen/utility area
-  - Entry door adjacency allows easy access for guests
-  - Plumbing wall shared with kitchen for efficiency
-  - Consider fold-down sink or rotating fixtures for space
+  - Full-width wet bath design allows separate shower and toilet zones
+  - Shower drains to floor drain, everything waterproof
+  - WIN-04 on driver side provides natural light above toilet
+  - Entry door (DOOR-01) opens into shower side for easy access
+  - Plumbing concentrated on rear wall (shared with kitchen behind)
+  - Consider privacy curtain or partial wall between shower and toilet zones

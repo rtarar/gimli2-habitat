@@ -273,4 +273,114 @@ When multiple agents may work on the project:
 
 ---
 
+## Render and Visualization Creation
+
+This section documents how to create renders and visualizations for the habitat.
+
+### File Locations
+
+| File | Purpose |
+|------|---------|
+| `renders/habitat_zones_3d.html` | Interactive 3D viewer with all zones |
+| `renders/habitat_viewer.html` | Original habitat viewer (large, embedded) |
+| `zones/floor-plan.svg` | 2D SVG floor plan (Day Mode) |
+| `zones/floor-plan.txt` | ASCII floor plan with all views |
+| `zones/floor-plan.html` | HTML wrapper to view the SVG |
+
+### Data Sources (READ THESE FIRST)
+
+1. **`habitat.yml`** - Master habitat definition
+   - Interior dimensions: 4780 x 2280 x 2160mm
+   - Window/door/hatch specs with `cutout_width`, `cutout_height`
+   - Verified `center_mm` positions from STEP file analysis
+
+2. **`zones/zones-index.yml`** - Zone summary
+   - All zone IDs, names, footprints
+   - Layout positions (front to rear)
+   - Adjacency relationships
+
+3. **`zones/functional/*.yml`** - Individual zone specs
+   - Detailed bounds, positions, constraints
+   - Utility requirements (electrical, plumbing)
+
+### How to Extract Opening Positions from STEP File
+
+Use the Docker CadQuery environment:
+
+```bash
+# Build the Docker image (first time)
+docker compose build cadquery
+
+# Run the extraction script
+docker compose run cadquery
+
+# Or for interactive development
+docker compose run cadquery-dev
+```
+
+The script `scripts/extract_step_openings.py` will:
+- Load the STEP file from `reference/Osterath_Habitat_1225 AF.step`
+- Match planar faces to expected cutout sizes from `habitat.yml`
+- Output center coordinates and bounding boxes in YAML format
+
+### Coordinate System
+
+From `habitat.yml`:
+- **Origin**: Builder-defined in STEP file
+- **Units**: Millimeters
+- **Up axis**: Z (in STEP)
+
+For Three.js rendering (Y-up):
+- Map STEP X -> Three.js X (width, driver-to-passenger)
+- Map STEP Z -> Three.js Y (height, floor-to-ceiling)
+- Map STEP Y -> Three.js Z (length, front-to-rear)
+
+### Creating/Updating the 3D Viewer
+
+The 3D viewer (`renders/habitat_zones_3d.html`) uses Three.js. Key sections:
+
+1. **HABITAT** constant - Interior dimensions
+2. **ZONES** object - Zone definitions with bounds and positions
+3. **OPENINGS** object - Windows, doors, hatches with:
+   - `wall`: 'driver', 'passenger', 'front', or 'rear'
+   - `cutout_width`, `cutout_height`: Opening dimensions
+   - `center_y`: Height of center from floor
+   - `center_z`: Position along length (front=positive, rear=negative)
+
+When updating:
+1. Read the relevant YAML files for current specs
+2. Update the JavaScript constants to match
+3. For side walls, openings are rotated 90° (rotation.y = PI/2)
+4. Test by opening the HTML file in a browser
+
+### Creating/Updating the SVG Floor Plan
+
+The SVG (`zones/floor-plan.svg`) is a 2D top-down view:
+
+- Scale: ~500px = 2280mm width
+- Front (cab connection) at top, rear at bottom
+- Driver side on left, passenger side on right
+
+Key elements:
+- Zones as colored rectangles with class names
+- Windows/doors as small rectangles on walls
+- Hatches shown outside the walls with swing indicators
+- Dimension lines and legend
+
+### Kitchen Specifications (Current)
+
+- **Length**: 1948mm (along passenger wall)
+- **Depth**: 609mm (into room)
+- **Counter Height**: 914mm
+- **Position**: Passenger side, from bathroom to dinette
+
+### Garage Shell Specifications (Current)
+
+- **Width**: 2280mm (wall-to-wall)
+- **Depth**: 1023mm (from rear wall)
+- **Height**: 860mm
+- **Hatches**: HATCH-01 (driver), HATCH-02 (passenger) - open outward for exterior access
+
+---
+
 *AI agents are valuable for structured reasoning and conflict detection—not for speed or autonomous action.*
