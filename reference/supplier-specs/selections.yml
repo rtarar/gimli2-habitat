@@ -35,13 +35,13 @@ door:
   selected_product:
     name: Habitat Entry Door DE-15
     model: DE-15
-    description: Entry door - passenger side
+    description: Entry door - driver side
     spec_page: null
     selection_date: null
     selection_rationale: null
   key_specs:
-    width: 637  # mm - opening width
-    height: 1027  # mm - opening height
+    width: 700  # mm - opening width
+    height: 1800  # mm - opening height
     swing: outward  # inward | outward
     hinge_side: right  # left | right  when viewed from outside
     threshold_height: null  # mm from floor
@@ -106,7 +106,7 @@ windows:
       name: RA-30 Bathroom Window
       model: RA-30
       quantity: 1
-      location: driver-side
+      location: passenger-side
       spec_page: 1
       selection_date: 2025-01-19
       key_specs:
@@ -116,9 +116,9 @@ windows:
         # Visible glass opening
         visible_width: 537   # mm (dimension D)
         visible_height: 637  # mm (dimension E)
-        # Cutout dimensions (for wall opening)
-        cutout_width: 570    # mm
-        cutout_height: 673   # mm
+        # Cutout dimensions (for wall opening) - horizontal orientation
+        cutout_width: 673    # mm (rotated for horizontal)
+        cutout_height: 570   # mm (rotated for horizontal)
         # Installation
         frame_depth: 36      # mm (dimension C)
         weight: 9.7          # kg
@@ -127,6 +127,31 @@ windows:
         operable: true
         type: sliding
         zone: bathroom
+    - id: WIN-05
+      name: RA-40 Kitchen Window
+      model: RA-40
+      quantity: 1
+      location: driver-side
+      spec_page: 1
+      selection_date: 2025-01-19
+      key_specs:
+        # Overall window dimensions
+        overall_width: 722   # mm (dimension A)
+        overall_height: 1113  # mm (dimension B)
+        # Visible glass opening
+        visible_width: 637   # mm (dimension D)
+        visible_height: 1027  # mm (dimension E)
+        # Cutout dimensions (for wall opening) - horizontal orientation
+        cutout_width: 1063   # mm (rotated for horizontal)
+        cutout_height: 670   # mm (rotated for horizontal)
+        # Installation
+        frame_depth: 36      # mm (dimension C)
+        weight: 17.5         # kg
+        sill_height: null    # mm from floor - TBD
+        position_from_front: null  # mm from front wall - TBD
+        operable: true
+        type: sliding
+        zone: kitchen
 
 # Roof Windows
 roof_windows:

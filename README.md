@@ -52,10 +52,13 @@ The habitat module interior layout (Day Mode with lift bed raised):
 
 **Key dimensions:**
 - Interior: 4780mm (L) × 2280mm (W) × 2160mm (H)
-- Kitchen: 1948mm length × 609mm depth × 914mm counter height (passenger side)
-- Floor-to-ceiling cabinets opposite kitchen (driver side)
+- Kitchen: 1948mm length × 609mm depth × 914mm counter height (**driver side**)
+- Floor-to-ceiling cabinets opposite kitchen (**passenger side**)
+- Bathroom: toilet on **passenger side**, shower on driver side
 - Garage shell: wall-to-wall (2280mm), 860mm high, with exterior hatches on both sides
 - U-shaped dinette with rear bench seating on garage shell top
+
+> **Layout Note (Swapped Configuration):** The kitchen is located on the **driver side** (left when facing rear), with floor-to-ceiling storage cabinets on the **passenger side** (right when facing rear). In the bathroom, the toilet is on the **passenger side** below WIN-04, and the shower is on the **driver side** adjacent to entry.
 
 ### Interactive 3D Viewer
 

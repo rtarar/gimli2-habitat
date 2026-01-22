@@ -62,11 +62,11 @@ features:
     - id: WALL-DRIVER
       location: driver-side
       length: 4780  # mm (length of habitat)
-      features: [WIN-04]  # Bathroom window
+      features: [DOOR-01, WIN-05]  # Entry door and kitchen window
     - id: WALL-PASSENGER
       location: passenger-side
       length: 4780  # mm
-      features: [DOOR-01]  # Entry door
+      features: [WIN-04]  # Bathroom window
 
   windows:
     - id: WIN-01
@@ -95,51 +95,52 @@ features:
       center_mm: [0, 2478, 3615]
     - id: WIN-04
       model: RA-30
-      location: driver-side
-      wall: WALL-DRIVER
+      location: passenger-side
+      wall: WALL-PASSENGER
       zone: bathroom
       opening_width: 537   # mm visible
       opening_height: 637  # mm visible
       cutout_width: 570    # mm
       cutout_height: 673   # mm
+      notes: Horizontal orientation (673mm wide x 570mm tall)
     - id: WIN-05
       model: RA-40
-      location: passenger-side
-      wall: WALL-PASSENGER
+      location: driver-side
+      wall: WALL-DRIVER
       zone: kitchen
       opening_width: 637   # mm visible
       opening_height: 1027  # mm visible
-      cutout_width: 670    # mm (verified from STEP file)
-      cutout_height: 1063  # mm (verified from STEP file)
-      center_mm: [1158, 1641, 2710]
+      cutout_width: 670    # mm
+      cutout_height: 1063  # mm
+      notes: Horizontal orientation (1063mm wide x 670mm tall)
 
   doors:
     - id: DOOR-01
       model: DE-15
-      location: passenger-side
-      wall: WALL-PASSENGER
-      opening_width: 1766  # mm (verified from STEP file)
-      opening_height: 693  # mm (verified from STEP file)
-      cutout_width: 1766   # mm
-      cutout_height: 693   # mm
+      location: driver-side
+      wall: WALL-DRIVER
+      opening_width: 700   # mm - standard RV entry door
+      opening_height: 1800 # mm - full height entry
+      cutout_width: 700    # mm
+      cutout_height: 1800  # mm
       swing: outward
       hinge_side: right
 
   hatches:
     - id: HATCH-01
       model: LU-40
-      location: floor-storage
-      cutout_width: 600    # mm (verified from STEP file)
-      cutout_height: 550   # mm (verified from STEP file)
-      center_mm: [890, -295, 898]
-      notes: Lower floor hatch for storage access
+      location: garage-shell-driver-side
+      wall: WALL-DRIVER
+      cutout_width: 600    # mm
+      cutout_height: 550   # mm
+      notes: Driver side garage access hatch
     - id: HATCH-02
       model: LU-40
-      location: floor-storage
-      cutout_width: 600    # mm (verified from STEP file)
-      cutout_height: 550   # mm (verified from STEP file)
-      center_mm: [890, -295, 2298]
-      notes: Upper floor hatch for storage access
+      location: garage-shell-passenger-side
+      wall: WALL-PASSENGER
+      cutout_width: 600    # mm
+      cutout_height: 550   # mm
+      notes: Passenger side garage access hatch
 
   mounting_surfaces: []
   fixed_elements: []
