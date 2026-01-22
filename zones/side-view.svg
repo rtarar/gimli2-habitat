@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500">
+  <defs>
+    <style>
+      .wall { fill: none; stroke: #333; stroke-width: 3; }
+      .wall-fill { fill: #f5f5f5; stroke: #333; stroke-width: 3; }
+      .zone-label { font-family: Arial, sans-serif; font-size: 11px; fill: #333; }
+      .zone-title { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #333; }
+      .dimension { font-family: Arial, sans-serif; font-size: 10px; fill: #666; }
+      .dim-line { stroke: #666; stroke-width: 1; }
+      .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #666; }
+      .garage { fill: #e6e6e6; stroke: #333; stroke-width: 2; }
+      .kitchen { fill: #ffe6e6; stroke: #333; stroke-width: 2; }
+      .cabinet { fill: #c9a86c; stroke: #8b6914; stroke-width: 2; }
+      .bed-raised { fill: #fffacd; stroke: #cc9900; stroke-width: 2; }
+      .bed-lowered { fill: #fff8dc; stroke: #cc9900; stroke-width: 2; stroke-dasharray: 5,3; }
+      .bathroom { fill: #e6f3ff; stroke: #333; stroke-width: 2; }
+      .living { fill: #e6ffe6; stroke: #333; stroke-width: 2; }
+      .height-line { stroke: #999; stroke-width: 1; stroke-dasharray: 3,3; }
+    </style>
+    <!-- Arrow marker for dimensions -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+    <marker id="arrowhead-rev" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" class="title">GIMLI2 HABITAT - SIDE ELEVATION (PASSENGER SIDE)</text>
+  <text x="450" y="50" text-anchor="middle" class="subtitle">Looking from passenger side toward driver | Kitchen on this side</text>
+
+  <!-- Orientation labels -->
+  <text x="120" y="420" text-anchor="middle" class="zone-label">FRONT</text>
+  <text x="780" y="420" text-anchor="middle" class="zone-label">REAR</text>
+
+  <!-- Ground line -->
+  <line x1="100" y1="400" x2="800" y2="400" stroke="#333" stroke-width="2"/>
+
+  <!-- ==================== MAIN STRUCTURE ==================== -->
+  <!-- Exterior shell outline -->
+  <rect x="120" y="100" width="660" height="300" class="wall-fill"/>
+
+  <!-- ==================== CEILING (2160mm) ==================== -->
+  <line x1="100" y1="100" x2="800" y2="100" class="height-line"/>
+  <text x="95" y="104" text-anchor="end" class="dimension">2160mm</text>
+  <text x="95" y="118" text-anchor="end" class="dimension">(ceiling)</text>
+
+  <!-- ==================== BED RAISED POSITION (at ceiling) ==================== -->
+  <!-- Bed spans from ~3500mm to rear wall, raised position near ceiling -->
+  <!-- Bed height: 260mm (60mm frame + 200mm mattress) -->
+  <rect x="540" y="100" width="235" height="55" class="bed-raised"/>
+  <text x="657" y="132" text-anchor="middle" class="zone-title">BED RAISED</text>
+
+  <!-- ==================== 1650mm LINE (standing room when bed raised) ==================== -->
+  <line x1="100" y1="170" x2="800" y2="170" class="height-line"/>
+  <text x="95" y="174" text-anchor="end" class="dimension">1650mm</text>
+
+  <!-- ==================== KITCHEN UPPER CABINETS (passenger side) ==================== -->
+  <!-- Kitchen uppers from ~800mm to ~3500mm, height from ~1100mm to ~2000mm -->
+  <rect x="230" y="115" width="290" height="85" class="kitchen"/>
+  <text x="375" y="155" text-anchor="middle" class="zone-title">KITCHEN UPPERS</text>
+  <text x="375" y="170" text-anchor="middle" class="zone-label">(passenger side)</text>
+
+  <!-- ==================== STANDING ROOM ==================== -->
+  <rect x="540" y="170" width="235" height="115" fill="#f0fff0" stroke="#666" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="657" y="215" text-anchor="middle" class="zone-label">STANDING ROOM</text>
+  <text x="657" y="230" text-anchor="middle" class="zone-label">1650mm clearance</text>
+  <text x="657" y="245" text-anchor="middle" class="zone-label">when bed raised</text>
+
+  <!-- ==================== 1120mm LINE (bed lowered position) ==================== -->
+  <!-- Bed height: 260mm total (60mm frame + 200mm mattress) -->
+  <!-- Bed surface when lowered: 860mm garage top + 260mm bed = 1120mm -->
+  <line x1="100" y1="270" x2="800" y2="270" class="height-line"/>
+  <text x="95" y="274" text-anchor="end" class="dimension">1120mm</text>
+
+  <!-- ==================== BED LOWERED POSITION (dashed) ==================== -->
+  <!-- 260mm bed thickness (60mm frame + 200mm mattress) -->
+  <rect x="540" y="270" width="235" height="50" class="bed-lowered"/>
+  <text x="657" y="307" text-anchor="middle" class="dimension">BED LOWERED</text>
+
+  <!-- ==================== 860mm LINE (garage shell top) ==================== -->
+  <line x1="100" y1="320" x2="800" y2="320" stroke="#666" stroke-width="2"/>
+  <text x="95" y="324" text-anchor="end" class="dimension">860mm</text>
+  <text x="95" y="338" text-anchor="end" class="dimension">(garage top)</text>
+
+  <!-- ==================== BATHROOM (ZONE-001) ==================== -->
+  <!-- From 0 to 800mm along length, full height -->
+  <rect x="120" y="200" width="110" height="200" class="bathroom"/>
+  <text x="175" y="280" text-anchor="middle" class="zone-title">BATH</text>
+  <text x="175" y="295" text-anchor="middle" class="zone-label">(shower</text>
+  <text x="175" y="308" text-anchor="middle" class="zone-label">side)</text>
+
+  <!-- ==================== KITCHEN LOWER CABINETS (passenger side) ==================== -->
+  <!-- Kitchen lowers from 800mm to ~3500mm, counter height 914mm -->
+  <rect x="230" y="270" width="290" height="130" class="kitchen"/>
+  <text x="375" y="325" text-anchor="middle" class="zone-title">KITCHEN LOWERS</text>
+  <text x="375" y="340" text-anchor="middle" class="zone-label">(passenger side)</text>
+  <text x="375" y="355" text-anchor="middle" class="zone-label">914mm counter</text>
+
+  <!-- ==================== GARAGE SHELL (ZONE-003) ==================== -->
+  <!-- From ~3500mm to rear, 860mm high -->
+  <rect x="540" y="320" width="235" height="80" class="garage"/>
+  <text x="657" y="355" text-anchor="middle" class="zone-title">GARAGE SHELL</text>
+  <text x="657" y="370" text-anchor="middle" class="zone-label">860mm high</text>
+
+  <!-- ==================== BEDSIDE STORAGE (ZONE-007) ==================== -->
+  <!-- Nightstands: ON garage shell (860-1120mm), from rear wall to window start (668mm) -->
+  <!-- Upper cabinets: 2000mm from rear (1435mm to ceiling) - above window -->
+  <!-- Scale: 660px = 4780mm, so 668mm ≈ 92px -->
+  <!-- Nightstand: rear face at rear wall (x=780), front face at window start -->
+
+  <!-- NIGHTSTAND on garage shell (860-1120mm height, 668mm deep) -->
+  <!-- Rear face at rear wall, front face where window starts -->
+  <rect x="688" y="270" width="92" height="50" fill="#f0e6ff" stroke="#666" stroke-width="1.5"/>
+  <text x="734" y="300" text-anchor="middle" class="dimension">NIGHTSTAND</text>
+
+  <!-- Window zone (765mm to 1435mm height) - starts where nightstand ends -->
+  <rect x="595" y="200" width="93" height="70" fill="none" stroke="#0066cc" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="641" y="240" text-anchor="middle" class="dimension" fill="#0066cc">WIN-02</text>
+
+  <!-- Upper cabinet (2000mm deep, above window to ceiling) -->
+  <rect x="504" y="105" width="276" height="95" fill="#e6d5f2" stroke="#9966cc" stroke-width="1.5"/>
+  <text x="642" y="145" text-anchor="middle" class="zone-title" fill="#663399">UPPER CABINET</text>
+  <text x="642" y="160" text-anchor="middle" class="zone-label" fill="#663399">2000mm (above window)</text>
+  <text x="642" y="175" text-anchor="middle" class="dimension" fill="#663399">1435-2160mm height</text>
+
+  <!-- 1435mm LINE (window top / upper cabinet bottom) -->
+  <line x1="100" y1="200" x2="800" y2="200" class="height-line"/>
+  <text x="95" y="204" text-anchor="end" class="dimension">1435mm</text>
+  <text x="95" y="218" text-anchor="end" class="dimension">(window top)</text>
+
+  <!-- ==================== FLOOR LINE ==================== -->
+  <text x="95" y="404" text-anchor="end" class="dimension">FLOOR</text>
+
+  <!-- ==================== LENGTH DIMENSIONS ==================== -->
+  <!-- Overall length -->
+  <line x1="120" y1="440" x2="780" y2="440" class="dim-line" marker-start="url(#arrowhead-rev)" marker-end="url(#arrowhead)"/>
+  <text x="450" y="455" text-anchor="middle" class="dimension">4780mm (interior length)</text>
+
+  <!-- Section dimensions -->
+  <line x1="120" y1="425" x2="230" y2="425" class="dim-line"/>
+  <text x="175" y="435" text-anchor="middle" class="dimension">800</text>
+
+  <line x1="230" y1="425" x2="520" y2="425" class="dim-line"/>
+  <text x="375" y="435" text-anchor="middle" class="dimension">~2700mm (kitchen zone)</text>
+
+  <line x1="540" y1="425" x2="775" y2="425" class="dim-line"/>
+  <text x="657" y="435" text-anchor="middle" class="dimension">~1280mm</text>
+
+  <!-- ==================== HEIGHT DIMENSIONS (right side) ==================== -->
+  <line x1="820" y1="100" x2="820" y2="400" class="dim-line" marker-start="url(#arrowhead-rev)" marker-end="url(#arrowhead)"/>
+  <text x="845" y="250" text-anchor="middle" class="dimension" transform="rotate(90, 845, 250)">2160mm (full height)</text>
+
+  <!-- ==================== LEGEND ==================== -->
+  <rect x="120" y="465" width="660" height="30" fill="#fafafa" stroke="#ccc" stroke-width="1"/>
+
+  <rect x="140" y="473" width="20" height="12" class="kitchen"/>
+  <text x="165" y="483" class="dimension">Kitchen</text>
+
+  <rect x="240" y="473" width="20" height="12" class="garage"/>
+  <text x="265" y="483" class="dimension">Garage</text>
+
+  <rect x="330" y="473" width="20" height="12" class="bed-raised"/>
+  <text x="355" y="483" class="dimension">Bed (raised)</text>
+
+  <rect x="440" y="473" width="20" height="12" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
+  <text x="465" y="483" class="dimension">Nightstand</text>
+
+  <rect x="560" y="473" width="20" height="12" fill="#e6d5f2" stroke="#9966cc" stroke-width="1"/>
+  <text x="585" y="483" class="dimension">Upper Cabinet</text>
+
+  <rect x="690" y="473" width="20" height="12" fill="none" stroke="#0066cc" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="715" y="483" class="dimension">Window</text>
+
+</svg>

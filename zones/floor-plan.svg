@@ -38,121 +38,136 @@
 
   <!-- Orientation labels -->
   <text x="400" y="75" text-anchor="middle" class="zone-label">FRONT (Cab connection)</text>
-  <text x="100" y="400" text-anchor="middle" class="zone-label" transform="rotate(-90, 100, 400)">PASSENGER SIDE</text>
-  <text x="700" y="400" text-anchor="middle" class="zone-label" transform="rotate(90, 700, 400)">DRIVER SIDE</text>
+  <text x="100" y="400" text-anchor="middle" class="zone-label" transform="rotate(-90, 100, 400)">DRIVER SIDE</text>
+  <text x="700" y="400" text-anchor="middle" class="zone-label" transform="rotate(90, 700, 400)">PASSENGER SIDE</text>
   <text x="400" y="820" text-anchor="middle" class="zone-label">REAR WALL (solid)</text>
 
   <!-- Main exterior walls -->
   <rect x="150" y="90" width="500" height="700" class="wall-fill"/>
 
   <!-- ==================== BATHROOM (ZONE-001) ==================== -->
-  <!-- CORRECTED: Full width (2280mm) x 800mm deep -->
+  <!-- Full width (2280mm) x 800mm deep -->
   <!-- Scale: 500px = 2280mm width, 700px = 4780mm length -->
   <!-- 800mm depth ≈ 117px -->
-  <!-- Shower on driver/entry side, toilet on passenger side below WIN-04 -->
+  <!-- Shower on PASSENGER side (entry door side), Toilet on DRIVER side (below WIN-04) -->
   <rect x="150" y="90" width="500" height="117" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
   <text x="400" y="125" text-anchor="middle" class="zone-title">BATHROOM (ZONE-001)</text>
   <text x="400" y="142" text-anchor="middle" class="zone-label">Full width (2280mm) x 800mm deep ⚡ 💧</text>
-  <!-- Shower area (driver side) -->
-  <text x="250" y="172" text-anchor="middle" class="dimension">SHOWER</text>
-  <!-- Toilet area (passenger side, below WIN-04) -->
-  <text x="550" y="172" text-anchor="middle" class="dimension">TOILET</text>
+  <!-- Toilet area (DRIVER side, below WIN-04) -->
+  <text x="250" y="172" text-anchor="middle" class="dimension">TOILET</text>
+  <!-- Shower area (PASSENGER side, near entry door) -->
+  <text x="550" y="172" text-anchor="middle" class="dimension">SHOWER</text>
 
-  <!-- WIN-04 (passenger side, in bathroom - above toilet) -->
-  <rect x="638" y="110" width="12" height="70" class="window"/>
-  <text x="610" y="150" text-anchor="end" class="dimension">WIN-04</text>
+  <!-- WIN-04 (DRIVER side, in bathroom - above toilet) -->
+  <rect x="150" y="110" width="12" height="70" class="window"/>
+  <text x="175" y="150" class="dimension">WIN-04</text>
 
-  <!-- DOOR-01 (driver side, bathroom entry) -->
-  <rect x="150" y="100" width="12" height="100" class="door"/>
-  <text x="175" y="155" class="dimension">DOOR-01</text>
+  <!-- DOOR-01 (PASSENGER side, bathroom entry, adjacent to shower) -->
+  <rect x="638" y="100" width="12" height="100" class="door"/>
+  <text x="620" y="155" text-anchor="end" class="dimension">DOOR-01</text>
 
-  <!-- ==================== KITCHEN (ZONE-002) - Along Driver Side ==================== -->
-  <!-- Kitchen: 1948mm length x 609mm depth x 914mm height (counter) -->
+  <!-- ==================== KITCHEN (ZONE-002) - Along PASSENGER Side ==================== -->
+  <!-- Kitchen: ~2300mm length x 600mm depth -->
   <!-- Starts after bathroom (800mm = 117px from top of interior) -->
-  <!-- 609mm depth ≈ 133px, 1948mm length ≈ 285px -->
-  <rect x="150" y="207" width="133" height="285" class="kitchen"/>
-  <text x="216" y="312" text-anchor="middle" class="zone-title" transform="rotate(-90, 216, 312)">KITCHEN (ZONE-002)</text>
-  <text x="216" y="402" text-anchor="middle" class="zone-label" transform="rotate(-90, 216, 402)">1948 x 609mm ⚡ 💧</text>
-  <text x="216" y="442" text-anchor="middle" class="dimension" transform="rotate(-90, 216, 442)">914mm counter height</text>
+  <!-- 600mm depth ≈ 131px, ~2300mm length ≈ 337px -->
+  <rect x="517" y="207" width="133" height="285" class="kitchen"/>
+  <text x="583" y="312" text-anchor="middle" class="zone-title" transform="rotate(90, 583, 312)">KITCHEN (ZONE-002)</text>
+  <text x="583" y="402" text-anchor="middle" class="zone-label" transform="rotate(90, 583, 402)">~2300 x 600mm ⚡ 💧</text>
 
-  <!-- WIN-05 (kitchen, driver side) - flush with kitchen -->
-  <rect x="150" y="282" width="12" height="120" class="window"/>
-  <text x="175" y="347" class="dimension">WIN-05</text>
+  <!-- WIN-05 (kitchen window, PASSENGER side) -->
+  <rect x="638" y="282" width="12" height="120" class="window"/>
+  <text x="620" y="347" text-anchor="end" class="dimension">WIN-05</text>
 
-  <!-- ==================== FLOOR-TO-CEILING CABINETS (Passenger Side) ==================== -->
-  <!-- Cabinets on passenger side, opposite kitchen, same length (1948mm) -->
-  <!-- Starts after bathroom (800mm = 117px from top of interior) -->
-  <rect x="517" y="207" width="133" height="285" class="cabinet"/>
-  <text x="583" y="312" text-anchor="middle" class="zone-title" transform="rotate(90, 583, 312)">FLOOR-TO-CEILING</text>
-  <text x="583" y="402" text-anchor="middle" class="zone-label" transform="rotate(90, 583, 402)">CABINETS</text>
+  <!-- ==================== FLOOR-TO-CEILING CABINETS (DRIVER Side) ==================== -->
+  <!-- Cabinets on DRIVER side, opposite kitchen -->
+  <rect x="150" y="207" width="133" height="285" class="cabinet"/>
+  <text x="216" y="312" text-anchor="middle" class="zone-title" transform="rotate(-90, 216, 312)">FLOOR-TO-CEILING</text>
+  <text x="216" y="402" text-anchor="middle" class="zone-label" transform="rotate(-90, 216, 402)">CABINETS</text>
 
   <!-- ==================== CIRCULATION (ZONE-006) ==================== -->
-  <!-- Circulation is the open area between kitchen (driver) and cabinets (passenger) -->
-  <!-- Width: 2280 - 609 - 609 = 1062mm ≈ 234px -->
+  <!-- Circulation is the open area between cabinets (driver) and kitchen (passenger) -->
+  <!-- Width: 2280 - 600 - 600 = 1080mm ≈ 234px -->
   <rect x="283" y="207" width="234" height="285" fill="#fff9e6" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
   <text x="400" y="335" text-anchor="middle" class="zone-title">CIRCULATION</text>
   <text x="400" y="355" text-anchor="middle" class="zone-label">(ZONE-006)</text>
 
   <!-- ==================== LIVING/DINETTE (ZONE-005) ==================== -->
-  <rect x="150" y="465" width="500" height="200" fill="#e6ffe6" stroke="#333" stroke-width="2"/>
-  <text x="350" y="490" text-anchor="middle" class="zone-title">LIVING / DINETTE (ZONE-005)</text>
-  <text x="350" y="508" text-anchor="middle" class="zone-label">Ceiling: 1650mm (when bed raised)</text>
+  <rect x="150" y="492" width="500" height="200" fill="#e6ffe6" stroke="#333" stroke-width="2"/>
+  <text x="400" y="517" text-anchor="middle" class="zone-title">LIVING / DINETTE (ZONE-005)</text>
+  <text x="400" y="535" text-anchor="middle" class="zone-label">Ceiling: 1650mm (when bed raised)</text>
 
-  <!-- U-Seat Left Arm -->
-  <rect x="200" y="520" width="80" height="130" class="seat"/>
-  <text x="240" y="580" text-anchor="middle" class="dimension">U-SEAT</text>
-  <text x="240" y="595" text-anchor="middle" class="dimension">LEFT</text>
+  <!-- U-Seat Left Arm (Driver side) -->
+  <rect x="200" y="547" width="80" height="130" class="seat"/>
+  <text x="240" y="607" text-anchor="middle" class="dimension">U-SEAT</text>
+  <text x="240" y="622" text-anchor="middle" class="dimension">LEFT</text>
 
-  <!-- U-Seat Right Arm -->
-  <rect x="520" y="520" width="80" height="130" class="seat"/>
-  <text x="560" y="580" text-anchor="middle" class="dimension">U-SEAT</text>
-  <text x="560" y="595" text-anchor="middle" class="dimension">RIGHT</text>
+  <!-- U-Seat Right Arm (Passenger side) -->
+  <rect x="520" y="547" width="80" height="130" class="seat"/>
+  <text x="560" y="607" text-anchor="middle" class="dimension">U-SEAT</text>
+  <text x="560" y="622" text-anchor="middle" class="dimension">RIGHT</text>
 
   <!-- Table -->
-  <rect x="310" y="550" width="180" height="80" class="table"/>
-  <text x="400" y="595" text-anchor="middle" class="dimension">TABLE</text>
+  <rect x="310" y="577" width="180" height="80" class="table"/>
+  <text x="400" y="622" text-anchor="middle" class="dimension">TABLE</text>
 
-  <!-- WIN-01 (driver side, at dinette/bed area) -->
-  <rect x="150" y="510" width="12" height="100" class="window"/>
-  <text x="175" y="565" class="dimension">WIN-01</text>
+  <!-- WIN-01 (DRIVER side, at dinette/bed area) -->
+  <rect x="150" y="537" width="12" height="100" class="window"/>
+  <text x="175" y="592" class="dimension">WIN-01</text>
 
-  <!-- WIN-02 (passenger side, at dinette/bed area) -->
-  <rect x="638" y="510" width="12" height="100" class="window"/>
-  <text x="620" y="565" text-anchor="end" class="dimension">WIN-02</text>
+  <!-- WIN-02 (PASSENGER side, at dinette/bed area) -->
+  <rect x="638" y="537" width="12" height="100" class="window"/>
+  <text x="620" y="592" text-anchor="end" class="dimension">WIN-02</text>
 
   <!-- ==================== REAR BENCH ==================== -->
-  <rect x="150" y="650" width="500" height="50" class="seat"/>
-  <text x="400" y="680" text-anchor="middle" class="zone-label">REAR BENCH (wall-to-wall 2280mm, on garage shell top)</text>
+  <rect x="150" y="677" width="500" height="50" class="seat"/>
+  <text x="400" y="707" text-anchor="middle" class="zone-label">REAR BENCH (wall-to-wall 2280mm, on garage shell top)</text>
 
-  <!-- Bedside Storage - Driver (ZONE-007) -->
-  <rect x="150" y="510" width="45" height="190" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
-  <text x="172" y="610" text-anchor="middle" class="dimension" transform="rotate(-90, 172, 610)">BEDSIDE 300mm</text>
+  <!-- ==================== BEDSIDE STORAGE (ZONE-007) ==================== -->
+  <!-- Lower cabinets: 660mm long (ends where WIN-01/WIN-02 start) -->
+  <!-- Upper cabinets: 2000mm long (above window level, from rear to dinette) -->
+  <!-- Scale: 700px = 4780mm, so 660mm ≈ 97px, 2000mm ≈ 293px -->
 
-  <!-- Bedside Storage - Passenger (ZONE-007) -->
-  <rect x="605" y="510" width="45" height="190" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
-  <text x="628" y="610" text-anchor="middle" class="dimension" transform="rotate(90, 628, 610)">BEDSIDE 300mm</text>
+  <!-- Bedside Storage - Driver LOWER (floor to 860mm, 660mm deep) -->
+  <rect x="150" y="630" width="45" height="97" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
+  <text x="172" y="682" text-anchor="middle" class="dimension" transform="rotate(-90, 172, 682)">660</text>
+
+  <!-- Bedside Storage - Driver UPPER (1435mm to ceiling, 2000mm deep) -->
+  <!-- Shown as dashed outline since it's above the floor plan view -->
+  <rect x="150" y="434" width="45" height="293" fill="none" stroke="#9966cc" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="172" y="580" text-anchor="middle" class="dimension" fill="#9966cc" transform="rotate(-90, 172, 580)">UPPER 2000mm</text>
+
+  <!-- Bedside Storage - Passenger LOWER (floor to 860mm, 660mm deep) -->
+  <rect x="605" y="630" width="45" height="97" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
+  <text x="628" y="682" text-anchor="middle" class="dimension" transform="rotate(90, 628, 682)">660</text>
+
+  <!-- Bedside Storage - Passenger UPPER (1435mm to ceiling, 2000mm deep) -->
+  <rect x="605" y="434" width="45" height="293" fill="none" stroke="#9966cc" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="628" y="580" text-anchor="middle" class="dimension" fill="#9966cc" transform="rotate(90, 628, 580)">UPPER 2000mm</text>
+
+  <!-- Note: Lower cabinets (660mm) end where WIN-01/WIN-02 start -->
+  <!-- Upper cabinets (2000mm, dashed purple) are above window level -->
 
   <!-- ==================== GARAGE SHELL (ZONE-003) ==================== -->
-  <rect x="150" y="700" width="500" height="90" class="garage"/>
-  <text x="400" y="735" text-anchor="middle" class="zone-title">GARAGE SHELL (ZONE-003)</text>
-  <text x="400" y="755" text-anchor="middle" class="zone-label">860mm high, wall-to-wall (2280mm), extends to rear wall</text>
+  <rect x="150" y="727" width="500" height="63" class="garage"/>
+  <text x="400" y="755" text-anchor="middle" class="zone-title">GARAGE SHELL (ZONE-003)</text>
+  <text x="400" y="772" text-anchor="middle" class="zone-label">860mm high, wall-to-wall (2280mm)</text>
 
   <!-- ==================== HATCHES ==================== -->
   <!-- HATCH-01 (driver side) -->
-  <rect x="120" y="705" width="30" height="70" class="hatch"/>
-  <text x="135" y="785" text-anchor="middle" class="dimension">HATCH-01</text>
+  <rect x="120" y="732" width="30" height="50" class="hatch"/>
+  <text x="135" y="805" text-anchor="middle" class="dimension">HATCH-01</text>
   <!-- Swing arc for HATCH-01 -->
-  <path d="M 120 705 Q 55 740 120 775" class="hatch-swing" marker-end="url(#hatch-arrow)"/>
-  <text x="65" y="738" text-anchor="middle" class="dimension">opens</text>
-  <text x="65" y="750" text-anchor="middle" class="dimension">outward</text>
+  <path d="M 120 732 Q 55 757 120 782" class="hatch-swing" marker-end="url(#hatch-arrow)"/>
+  <text x="65" y="750" text-anchor="middle" class="dimension">opens</text>
+  <text x="65" y="762" text-anchor="middle" class="dimension">outward</text>
 
   <!-- HATCH-02 (passenger side) -->
-  <rect x="650" y="705" width="30" height="70" class="hatch"/>
-  <text x="665" y="785" text-anchor="middle" class="dimension">HATCH-02</text>
+  <rect x="650" y="732" width="30" height="50" class="hatch"/>
+  <text x="665" y="805" text-anchor="middle" class="dimension">HATCH-02</text>
   <!-- Swing arc for HATCH-02 -->
-  <path d="M 680 705 Q 745 740 680 775" class="hatch-swing" marker-end="url(#hatch-arrow)"/>
-  <text x="735" y="738" text-anchor="middle" class="dimension">opens</text>
-  <text x="735" y="750" text-anchor="middle" class="dimension">outward</text>
+  <path d="M 680 732 Q 745 757 680 782" class="hatch-swing" marker-end="url(#hatch-arrow)"/>
+  <text x="735" y="750" text-anchor="middle" class="dimension">opens</text>
+  <text x="735" y="762" text-anchor="middle" class="dimension">outward</text>
 
   <!-- ==================== DIMENSIONS ==================== -->
   <!-- Width dimension -->
@@ -164,12 +179,8 @@
   <text x="750" y="440" text-anchor="middle" class="dimension" transform="rotate(90, 750, 440)">4780mm</text>
 
   <!-- Kitchen depth dimension -->
-  <line x1="150" y1="197" x2="283" y2="197" stroke="#c66" stroke-width="1"/>
-  <text x="216" y="192" text-anchor="middle" class="dimension" fill="#c66">609mm depth</text>
-
-  <!-- Kitchen length dimension -->
-  <line x1="140" y1="207" x2="140" y2="492" stroke="#c66" stroke-width="1"/>
-  <text x="120" y="352" text-anchor="middle" class="dimension" fill="#c66" transform="rotate(-90, 120, 352)">1948mm length</text>
+  <line x1="517" y1="197" x2="650" y2="197" stroke="#c66" stroke-width="1"/>
+  <text x="583" y="192" text-anchor="middle" class="dimension" fill="#c66">600mm depth</text>
 
   <!-- Bathroom depth dimension -->
   <line x1="80" y1="90" x2="80" y2="207" stroke="#06c" stroke-width="1"/>
@@ -186,17 +197,21 @@
   <text x="295" y="932" class="dimension">Door</text>
 
   <rect x="370" y="920" width="20" height="15" class="hatch"/>
-  <text x="395" y="932" class="dimension">Hatch (ext. access)</text>
+  <text x="395" y="932" class="dimension">Hatch</text>
 
-  <rect x="520" y="920" width="20" height="15" class="kitchen"/>
-  <text x="545" y="932" class="dimension">Kitchen</text>
+  <rect x="470" y="920" width="20" height="15" class="kitchen"/>
+  <text x="495" y="932" class="dimension">Kitchen</text>
+
+  <rect x="560" y="920" width="20" height="15" class="cabinet"/>
+  <text x="585" y="932" class="dimension">Cabinets</text>
 
   <rect x="170" y="950" width="20" height="15" class="garage"/>
   <text x="195" y="962" class="dimension">Garage Shell</text>
 
-  <rect x="270" y="950" width="20" height="15" class="cabinet"/>
-  <text x="295" y="962" class="dimension">Cabinets (floor-to-ceiling)</text>
+  <rect x="270" y="950" width="20" height="15" fill="#f0e6ff" stroke="#666" stroke-width="1"/>
+  <text x="295" y="962" class="dimension">Bedside Lower (660mm)</text>
 
-  <text x="470" y="962" class="dimension">⚡ = Electrical   💧 = Plumbing</text>
+  <rect x="440" y="950" width="20" height="15" fill="none" stroke="#9966cc" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="465" y="962" class="dimension">Bedside Upper (2000mm)</text>
 
 </svg>

@@ -55,6 +55,53 @@ AI agents act as **design consultants and systems architects**, not autonomous d
 | Override logged decisions          | Append-only log                    |
 | Generate geometry without decision | Violates directionality            |
 | Make assumptions without flagging  | Hallucination risk                 |
+| **Create geometry outside shell**  | **All elements must fit inside habitat** |
+
+## CRITICAL: Shell Containment Rule
+
+**ALL interior geometry (zones, cabinets, fixtures, renderings) MUST fit entirely inside the immutable habitat shell.**
+
+### Interior Bounds (from habitat.yml)
+
+| Axis | Min | Max | Description |
+|------|-----|-----|-------------|
+| X | -1140mm | +1140mm | Driver to passenger walls |
+| Y | 0mm | 2160mm | Floor to ceiling |
+| Z | -2390mm | +2390mm | Rear to front walls (3D viewer coords) |
+
+### Validation Checklist
+
+Before creating or updating any geometry:
+
+1. ☐ Calculate bounding box of the element
+2. ☐ Verify X range is within [-1140, +1140]
+3. ☐ Verify Y range is within [0, 2160]
+4. ☐ Verify Z range is within [-2390, +2390]
+5. ☐ Check for clearances from walls (min 10mm)
+6. ☐ Check for clearance from ceiling (min 50mm recommended)
+
+### When Creating Renders
+
+- **3D viewer position.x and position.z** are CENTER coordinates - account for half the bounds
+- **3D viewer position.y** is the BOTTOM of the element (code adds height/2 automatically)
+- **SVG floor plans** must show elements within the shell outline
+- If an element appears to protrude, STOP and recalculate before proceeding
+
+### Position Calculation Examples
+
+```
+Driver-side cabinet against wall:
+  wall_x = -HABITAT.width/2 = -1140mm
+  cabinet_width = 300mm
+  position.x = wall_x + cabinet_width/2 = -1140 + 150 = -990mm
+  → outer edge at -990 - 150 = -1140 (flush with wall) ✓
+
+Upper cabinet from y=1435 to ceiling (2160):
+  cabinet_height = 2160 - 1435 = 725mm
+  position.y = 1435 (bottom of cabinet)
+  → code adds height/2, so center at 1435 + 362.5 = 1797.5
+  → top at 1797.5 + 362.5 = 2160 (flush with ceiling) ✓
+```
 
 ## How Agents Must Ask Questions
 

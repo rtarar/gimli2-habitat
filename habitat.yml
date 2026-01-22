@@ -188,16 +188,38 @@ validation:
   # How to validate designs against the habitat
   method: fusion360_interference_check
 
+  # CRITICAL RULE: All interior elements MUST fit inside the shell
+  shell_containment:
+    rule: ALL_GEOMETRY_INSIDE_SHELL
+    description: |
+      Every interior element (cabinets, zones, fixtures) must be fully contained
+      within the immutable habitat shell defined by the STEP file. No geometry
+      may protrude outside the shell walls, floor, or ceiling.
+    enforcement: mandatory
+    check_method: bounding_box_containment
+
   # Required checks before any design is approved
   required_checks:
     - interference_with_shell: false
     - within_interior_bounds: true
     - clearances_respected: true
     - door_swings_clear: true
+    - all_zones_inside_shell: true
+    - all_cabinets_inside_shell: true
+
+  # Interior bounds for containment check
+  interior_bounds_check:
+    x_min: -1140  # mm (driver wall)
+    x_max: 1140   # mm (passenger wall)
+    y_min: 0      # mm (floor)
+    y_max: 2160   # mm (ceiling)
+    z_min: -2390  # mm (rear wall, using 3D viewer coords)
+    z_max: 2390   # mm (front wall)
 
 # Notes
 notes:
   - This file is the authoritative metadata for the habitat reference
   - The STEP file itself is the geometric source of truth
+  - CRITICAL: All interior geometry must fit inside the shell - no protrusions allowed
   - Update this file after importing the STEP file
   - All measurements in millimeters unless otherwise specified

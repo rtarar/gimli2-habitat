@@ -5,83 +5,125 @@ id: ZONE-007
 name: Bedside Storage Cabinets
 type: functional
 description: |
-  Tall storage cabinets on both sides of the lift bed.
-  300mm deep (shallow), designed to be flush with bed edge when lowered.
-  Extend full height from floor to ceiling for maximum storage.
-  Provide nightstand-like functionality at bed level.
+  Bedside storage on both sides of the lift bed.
+  LOWER NIGHTSTANDS: Sit ON TOP of garage shell (860mm), flush with bed surface (1120mm).
+    - 390mm from wall (flush with bed edge)
+    - 400mm deep (from window toward rear, positioned between window and hatches)
+    - Located at headboard end for phones, AC, cables, charging
+  UPPER CABINETS: Above window zone (1435mm to ceiling).
+    - Can extend full bed length (2000mm)
+    - Clothing/storage
 
 bounds:
   type: dual_boxes
   reference: habitat.yml coordinate system
 
+  # CONSTRAINT ANALYSIS:
+  # Hatches (HATCH-01/02): center at 500mm from rear, 600mm wide → 200-800mm from rear
+  #   - Hatches are BELOW garage shell (center_y=430mm), so nightstands on top don't block them
+  # Windows (WIN-01/02): center at 1200mm from rear, 1063mm wide → 668-1732mm from rear
+  # Bed: 2000mm long from rear wall
+  #
+  # NIGHTSTAND DESIGN:
+  # - Rear face: AT rear wall (0mm from rear)
+  # - Front face: WHERE window starts (668mm from rear)
+  # - Depth: 668mm (fills gap between rear wall and window)
+  # - Sits ON garage shell (860mm) up to bed surface (1120mm)
+  # - Hatches below are not blocked (they're at 155-705mm height)
+
   driver_side_cabinet:
-    width: 300    # mm (depth from wall)
-    depth: 2000   # mm (matches bed length)
-    height: 2160  # mm (floor to ceiling)
     position:
-      from_driver_wall: 0     # mm - against wall
-      from_rear_wall: 0       # mm - starts at rear
-    notes: |
-      Against driver wall, behind/beside bed.
-      Gap to bed: 390 - 300 = 90mm clearance when bed lowered.
+      from_driver_wall: 90    # mm - leaves 90mm gap to bed edge
+    lower_nightstand:
+      width: 300              # mm (cabinet width, away from wall)
+      depth: 668              # mm (rear wall to window start)
+      height: 260             # mm (garage top 860mm to bed surface 1120mm)
+      position_from_rear: 0   # mm (rear face at rear wall)
+      height_range: [860, 1120]  # mm (on garage shell, flush with bed)
+      notes: |
+        Nightstand for phones, AC adapter, cables, USB charging.
+        Rear face against rear wall, front face at window start.
+        Hatches below (at 430mm height) are not blocked.
+    upper_section:
+      width: 300              # mm (cabinet width)
+      depth: 2000             # mm (full bed length above window)
+      height_range: [1435, 2160]  # mm (above window top to ceiling)
+      notes: Full length above window clearance
 
   passenger_side_cabinet:
-    width: 300    # mm (depth from wall)
-    depth: 2000   # mm (matches bed length)
-    height: 2160  # mm (floor to ceiling)
     position:
-      from_passenger_wall: 0  # mm - against wall
-      from_rear_wall: 0       # mm - starts at rear
-    notes: |
-      Against passenger wall, behind/beside bed.
-      Gap to bed: 390 - 300 = 90mm clearance when bed lowered.
+      from_passenger_wall: 90 # mm - same as driver side
+    lower_nightstand:
+      width: 300              # mm (cabinet width, away from wall)
+      depth: 668              # mm (rear wall to window start)
+      height: 260             # mm (garage top 860mm to bed surface 1120mm)
+      position_from_rear: 0   # mm (rear face at rear wall)
+      height_range: [860, 1120]  # mm (on garage shell, flush with bed)
+      notes: |
+        Nightstand for phones, AC adapter, cables, USB charging.
+        Rear face against rear wall, front face at window start.
+        Hatches below (at 430mm height) are not blocked.
+    upper_section:
+      width: 300              # mm (cabinet width)
+      depth: 2000             # mm (full bed length above window)
+      height_range: [1435, 2160]  # mm (above window top to ceiling)
+      notes: Full length above window clearance
 
 cabinet_zones:
-  # Vertical zones within each cabinet
-  lower_zone:
-    height_range: [0, 860]      # mm - below garage shell level
-    use: bulk_storage           # Larger items, less frequent access
-    access: door_or_drawer
+  # LOWER NIGHTSTANDS (on garage shell, at bed level)
+  nightstand_zone:
+    height_range: [860, 1120]   # mm - on garage shell to bed surface
+    depth: 668                  # mm - from rear wall to window start
+    position_from_rear: 0       # mm - rear face at rear wall
+    use: nightstand             # Phones, AC, cables, USB charging
+    access: open_top_or_drawer
 
-  middle_zone:
-    height_range: [860, 1300]   # mm - bed level when lowered
-    use: nightstand             # Glasses, phone, book, water
-    access: open_shelf_or_door  # Easy bedside access
+  # WINDOW ZONE (no cabinets - keep clear for light)
+  window_zone:
+    height_range: [765, 1435]   # mm - window vertical span
+    depth: n/a                  # mm - NO CABINET in window zone
+    use: natural_light          # Keep clear
+    access: n/a
 
+  # UPPER CABINETS (above windows)
   upper_zone:
-    height_range: [1300, 2160]  # mm - above bed
+    height_range: [1435, 2160]  # mm - above window top to ceiling
+    depth: 2000                 # mm - can extend full bed length
     use: clothing_or_storage    # Hanging or shelved
     access: door
 
 adjacencies:
   required:
     - ZONE-004  # Sleeping - bed between cabinets
+    - ZONE-003  # Garage shell - nightstands sit on top
   preferred:
     - ZONE-005  # Living/dinette - can serve as display/storage
   forbidden: []
 
 constraints:
-  min_area: 1.20      # m² (2 x 0.3 x 2.0)
-  min_dimension: 300  # mm (cabinet depth)
+  min_area: 0.70      # m² (2 x 0.3 x 0.4 nightstands + 2 x 0.3 x 2.0 x 0.725 uppers)
+  min_dimension: 300  # mm (cabinet width)
   ceiling_height: full
   floor_access: not_needed
-  wall_access: required  # Mounting
+  wall_access: required  # Mounting for upper cabinets
   natural_light: not_needed
   ventilation: not_needed
   privacy: none
   noise_level: any
 
 fixed_elements:
-  - cabinet_frames
-  - shelves_or_drawers
-  - doors
-  - interior_lighting  # Automatic on door open
+  - nightstand_surfaces    # Open top or shallow drawer
+  - upper_cabinet_frames
+  - upper_cabinet_doors
+  - interior_lighting      # LED strips, automatic on door open
+  - usb_charging_ports     # At nightstand level both sides
+  - cable_management       # Grommets for AC adapters, phone cables
 
 utilities:
-  electrical: basic   # Interior lights, USB ports at nightstand level
+  electrical: basic   # Interior lights, USB-A and USB-C ports at nightstand
   plumbing: none
   hvac: none
-  data: basic         # USB charging at nightstand zone
+  data: basic         # USB charging, possible wireless charging pad
 
 requirements:
   - REQ-STORAGE-002  # Personal storage
@@ -89,14 +131,39 @@ requirements:
 
 status: defined
 created: 2025-01-20
-updated: 2025-01-20
+updated: 2025-01-21
 notes: |
-  - Total storage volume: 2 x (0.3 x 2.0 x 2.16) = 2.59 m³
-  - Shallow depth (300mm) maximizes floor space
-  - 90mm gap between cabinet face and bed edge when lowered
-  - Middle zone at 860-1300mm is prime nightstand height
-  - Consider interior LED strips that activate on door open
-  - USB charging ports at nightstand level (both sides)
-  - Lower zone accessible when bed raised (for day use)
-  - Upper zone accessible always (above bed travel height)
-  - Soft-close hinges prevent noise at night
+  DESIGN CHANGES (2025-01-21):
+  - Lower cabinets REMOVED - were blocking hatches and extending to floor
+  - Replaced with NIGHTSTANDS that sit ON TOP of garage shell (860mm)
+  - Nightstands are flush with bed surface (1120mm) when bed is lowered
+
+  NIGHTSTAND GEOMETRY:
+  - Rear face: AT rear wall (0mm from rear)
+  - Front face: WHERE window starts (668mm from rear)
+  - Depth: 668mm (spans from rear wall to window)
+  - Width: 300mm (flush with bed edge at 390mm from wall)
+  - Height: 260mm (860mm garage top to 1120mm bed surface)
+
+  HATCH CLEARANCE:
+  - Hatches (HATCH-01/02) are at center_y=430mm (155-705mm height range)
+  - Nightstands sit at 860-1120mm height (ON TOP of garage shell)
+  - Hatches are BELOW the nightstands - no conflict
+
+  NIGHTSTAND FEATURES:
+  - 300mm wide x 668mm deep x 260mm tall (each side)
+  - Open top or shallow drawer for phones, glasses, books
+  - USB-A and USB-C charging ports
+  - Cable management grommets for AC adapters
+  - At headboard end where heads rest
+
+  UPPER CABINETS (unchanged):
+  - Above window zone (1435mm to ceiling)
+  - Full 2000mm depth (bed length)
+  - 725mm tall (1435 to 2160)
+  - Clothing or general storage
+
+  VOLUME CALCULATION:
+  - Nightstands: 2 x (0.3 x 0.668 x 0.26) = 0.104 m³
+  - Upper cabinets: 2 x (0.3 x 2.0 x 0.725) = 0.87 m³
+  - Total: ~0.97 m³

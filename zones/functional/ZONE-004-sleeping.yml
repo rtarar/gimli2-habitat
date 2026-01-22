@@ -16,7 +16,7 @@ bounds:
   # Bed dimensions and travel
   bed_width: 1500   # mm (queen width, north-south orientation)
   bed_length: 2000  # mm (queen length, centered on rear)
-  bed_thickness: 200 # mm (mattress + platform)
+  bed_thickness: 260 # mm (60mm frame + 200mm mattress)
 
   position:
     # Centered on rear wall: (2280 - 1500) / 2 = 390mm from each side
@@ -30,7 +30,7 @@ bounds:
     ceiling_clearance: 0    # mm (bed at ceiling when raised)
     floor_clearance: 1650   # mm (standing height when raised)
     notes: |
-      Bed surface when lowered: 860mm + mattress = ~1060mm (comfortable entry)
+      Bed surface when lowered: 860mm + 260mm bed = 1120mm (comfortable entry)
       When raised: bottom of bed at 1960mm, 1650mm clear below
 
 adjacencies:

@@ -46,19 +46,53 @@ This repo is designed so newcomers can understand the project, and contributors 
 
 ## Habitat Floor Plan
 
-The habitat module interior layout (Day Mode with lift bed raised):
-
-![Gimli2 Habitat Floor Plan](zones/floor-plan.svg)
-
 **Key dimensions:**
 - Interior: 4780mm (L) × 2280mm (W) × 2160mm (H)
-- Kitchen: 1948mm length × 609mm depth × 914mm counter height (**driver side**)
-- Floor-to-ceiling cabinets opposite kitchen (**passenger side**)
-- Bathroom: toilet on **passenger side**, shower on driver side
+- Kitchen: ~2300mm length × 600mm depth (**passenger side**)
+- Floor-to-ceiling cabinets opposite kitchen (**driver side**)
+- Bathroom: toilet on **driver side** (below WIN-04), shower on **passenger side**
+- Entry door (DOOR-01): **passenger side**, adjacent to shower area
+- Kitchen window (WIN-05): **passenger side**, in kitchen zone
+- Bathroom window (WIN-04): **driver side**, above toilet
 - Garage shell: wall-to-wall (2280mm), 860mm high, with exterior hatches on both sides
 - U-shaped dinette with rear bench seating on garage shell top
 
-> **Layout Note (Swapped Configuration):** The kitchen is located on the **driver side** (left when facing rear), with floor-to-ceiling storage cabinets on the **passenger side** (right when facing rear). In the bathroom, the toilet is on the **passenger side** below WIN-04, and the shower is on the **driver side** adjacent to entry.
+### Top View — Day Mode (Bed Raised)
+
+![Floor Plan - Top View](zones/floor-plan.svg)
+
+### Side Elevation — Passenger Side (Looking Toward Driver)
+
+![Side Elevation View](zones/side-view.svg)
+
+### Layout Summary
+
+| Element | Location | Notes |
+|---------|----------|-------|
+| **Kitchen** | Passenger side | Behind bathroom, with WIN-05 window |
+| **Floor-to-ceiling cabinets** | Driver side | Opposite kitchen |
+| **Toilet** | Driver side (bathroom) | Below WIN-04 window |
+| **Shower** | Passenger side (bathroom) | Adjacent to entry door |
+| **Entry door (DOOR-01)** | Passenger side | Opens into bathroom/shower area |
+| **WIN-04** | Driver side | Bathroom window above toilet |
+| **WIN-05** | Passenger side | Kitchen window |
+| **Bedside cabinets (lower)** | Both sides | 300mm deep × **660mm long** (ends where WIN-01/WIN-02 start) |
+| **Bedside cabinets (upper)** | Both sides | 300mm deep × 2000mm long (above window level) |
+
+### Bedside Cabinet Structure (ZONE-007)
+
+The bedside storage cabinets are split into three vertical zones to avoid blocking the rear windows:
+
+| Zone | Height Range | Depth | Description |
+|------|--------------|-------|-------------|
+| **Lower** | 0–860mm | 660mm | Bulk storage, ends where windows start |
+| **Window** | 860–1435mm | — | No cabinet (window clearance for WIN-01/WIN-02) |
+| **Upper** | 1435–2160mm | 2000mm | Full bed length, above window level |
+
+**Window clearance calculation:**
+- WIN-01/WIN-02 centers: 1200mm from rear wall, width 1063mm
+- Window rear edge: 1200 - 531.5 = **668.5mm** from rear
+- Lower cabinet depth: **660mm** (8.5mm clearance from window)
 
 ### Interactive 3D Viewer
 
