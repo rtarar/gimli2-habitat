@@ -19,16 +19,18 @@ bounds:
   reference: habitat.yml coordinate system
 
   # CONSTRAINT ANALYSIS:
+  # U-Shell arms: 509mm deep from rear wall
   # Hatches (HATCH-01/02): center at 500mm from rear, 600mm wide → 200-800mm from rear
-  #   - Hatches are BELOW garage shell (center_y=430mm), so nightstands on top don't block them
+  #   - Hatches are BELOW U-shell (center_y=430mm), so nightstands on top don't block them
   # Windows (WIN-01/02): center at 1200mm from rear, 1063mm wide → 668-1732mm from rear
   # Bed: 2000mm long from rear wall
   #
   # NIGHTSTAND DESIGN:
+  # - Sits ON TOP of U-shell arms (509mm deep)
   # - Rear face: AT rear wall (0mm from rear)
-  # - Front face: WHERE window starts (668mm from rear)
-  # - Depth: 668mm (fills gap between rear wall and window)
-  # - Sits ON garage shell (860mm) up to bed surface (1120mm)
+  # - Front face: AT U-shell arm front edge (509mm from rear)
+  # - Depth: 509mm (matches U-shell arm)
+  # - Sits ON U-shell top (860mm) up to bed surface (1120mm)
   # - Hatches below are not blocked (they're at 155-705mm height)
 
   driver_side_cabinet:
@@ -36,13 +38,13 @@ bounds:
       from_driver_wall: 90    # mm - leaves 90mm gap to bed edge
     lower_nightstand:
       width: 300              # mm (cabinet width, away from wall)
-      depth: 668              # mm (rear wall to window start)
-      height: 260             # mm (garage top 860mm to bed surface 1120mm)
+      depth: 509              # mm (matches U-shell arm depth)
+      height: 260             # mm (shell top 860mm to bed surface 1120mm)
       position_from_rear: 0   # mm (rear face at rear wall)
-      height_range: [860, 1120]  # mm (on garage shell, flush with bed)
+      height_range: [860, 1120]  # mm (on U-shell arm, flush with bed)
       notes: |
         Nightstand for phones, AC adapter, cables, USB charging.
-        Rear face against rear wall, front face at window start.
+        Sits on top of U-shell driver arm.
         Hatches below (at 430mm height) are not blocked.
     upper_section:
       width: 300              # mm (cabinet width)
@@ -55,13 +57,13 @@ bounds:
       from_passenger_wall: 90 # mm - same as driver side
     lower_nightstand:
       width: 300              # mm (cabinet width, away from wall)
-      depth: 668              # mm (rear wall to window start)
-      height: 260             # mm (garage top 860mm to bed surface 1120mm)
+      depth: 509              # mm (matches U-shell arm depth)
+      height: 260             # mm (shell top 860mm to bed surface 1120mm)
       position_from_rear: 0   # mm (rear face at rear wall)
-      height_range: [860, 1120]  # mm (on garage shell, flush with bed)
+      height_range: [860, 1120]  # mm (on U-shell arm, flush with bed)
       notes: |
         Nightstand for phones, AC adapter, cables, USB charging.
-        Rear face against rear wall, front face at window start.
+        Sits on top of U-shell passenger arm.
         Hatches below (at 430mm height) are not blocked.
     upper_section:
       width: 300              # mm (cabinet width)
@@ -70,10 +72,10 @@ bounds:
       notes: Full length above window clearance
 
 cabinet_zones:
-  # LOWER NIGHTSTANDS (on garage shell, at bed level)
+  # LOWER NIGHTSTANDS (on U-shell arms, at bed level)
   nightstand_zone:
-    height_range: [860, 1120]   # mm - on garage shell to bed surface
-    depth: 668                  # mm - from rear wall to window start
+    height_range: [860, 1120]   # mm - on U-shell top to bed surface
+    depth: 509                  # mm - matches U-shell arm depth
     position_from_rear: 0       # mm - rear face at rear wall
     use: nightstand             # Phones, AC, cables, USB charging
     access: open_top_or_drawer
@@ -135,23 +137,24 @@ updated: 2025-01-21
 notes: |
   DESIGN CHANGES (2025-01-21):
   - Lower cabinets REMOVED - were blocking hatches and extending to floor
-  - Replaced with NIGHTSTANDS that sit ON TOP of garage shell (860mm)
+  - Replaced with NIGHTSTANDS that sit ON TOP of U-shell arms (860mm)
   - Nightstands are flush with bed surface (1120mm) when bed is lowered
+  - U-shell depth changed to 509mm (from previous 1023mm solid box)
 
   NIGHTSTAND GEOMETRY:
   - Rear face: AT rear wall (0mm from rear)
-  - Front face: WHERE window starts (668mm from rear)
-  - Depth: 668mm (spans from rear wall to window)
+  - Front face: AT U-shell arm front (509mm from rear)
+  - Depth: 509mm (matches U-shell arm)
   - Width: 300mm (flush with bed edge at 390mm from wall)
-  - Height: 260mm (860mm garage top to 1120mm bed surface)
+  - Height: 260mm (860mm shell top to 1120mm bed surface)
 
   HATCH CLEARANCE:
   - Hatches (HATCH-01/02) are at center_y=430mm (155-705mm height range)
-  - Nightstands sit at 860-1120mm height (ON TOP of garage shell)
+  - Nightstands sit at 860-1120mm height (ON TOP of U-shell)
   - Hatches are BELOW the nightstands - no conflict
 
   NIGHTSTAND FEATURES:
-  - 300mm wide x 668mm deep x 260mm tall (each side)
+  - 300mm wide x 509mm deep x 260mm tall (each side)
   - Open top or shallow drawer for phones, glasses, books
   - USB-A and USB-C charging ports
   - Cable management grommets for AC adapters
@@ -164,6 +167,6 @@ notes: |
   - Clothing or general storage
 
   VOLUME CALCULATION:
-  - Nightstands: 2 x (0.3 x 0.668 x 0.26) = 0.104 m³
+  - Nightstands: 2 x (0.3 x 0.509 x 0.26) = 0.079 m³
   - Upper cabinets: 2 x (0.3 x 2.0 x 0.725) = 0.87 m³
-  - Total: ~0.97 m³
+  - Total: ~0.95 m³

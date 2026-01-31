@@ -99,3 +99,27 @@ items:
     status: backlog
     notes: |
       Routing corridors ensure utility runs don't conflict with interior elements.
+
+  - id: WI-005
+    title: Extract Wheel/Axle Dimensions
+    type: requirement
+    description: |
+      Locate the wheel geometry in the STEP file and extract dimensions to define keeping-out zones:
+      - Center Z position (axle location)
+      - Height (Y) from floor
+      - Intrusion (X) into cabin
+      The wheel well itself may not be modeled, but the wheel position defines the constraint.
+    created: 2026-01-31
+    created_by: Antigravity
+    priority: critical
+    dependencies:
+      - WI-001
+    blocks:
+      - WI-002
+      - WI-003
+    requirements: []
+    decisions: []
+    assigned_to: system
+    status: backlog
+    notes: |
+      Critical for garage volume (WI-002: ZONE-003) and water tank placement.

@@ -40,6 +40,7 @@ coordinate_system:
     floor_level: null
     ceiling_level: null
     entry_door_center: null
+    rear_axle_position_from_interior_rear_wall: 2140.0  # mm (derived from 2200mm external - 60mm wall)
 
 # Habitat Dimensions (measured from STEP file)
 dimensions:

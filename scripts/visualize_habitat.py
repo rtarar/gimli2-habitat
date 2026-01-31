@@ -16,253 +16,145 @@ DEFAULT_STEP = REPO_ROOT / "reference" / "Osterath_Habitat_1225 AF.step"
 DEFAULT_OUTPUT = REPO_ROOT / "renders" / "habitat_viewer.html"
 
 
-def load_step_to_stl(step_path: Path) -> bytes:
-    """Load STEP file and convert to STL format."""
+def create_box(width, depth, height, x, y, z):
+    """Create a box at specific center coordinates."""
+    import cadquery as cq
+    # Habitat coords: X=Width, Y=Length (Forward), Z=Height
+    # CadQuery standard: X, Y, Z. 
+    # But in our viewer (three.js STL loader), the orientation depends on the export.
+    # The STEP file dictates the shell orientation.
+    # Our previous experiment showed we need to match that.
+    # We will assume the coordinate system logic from generate_systems_cad.py is correct.
+    box = cq.Workplane("XY").box(width, depth, height)
+    return box.translate((x, y, z))
+
+def generate_systems_geometry(step_path: Path) -> dict:
+    """Generate STL data for all systems and zones."""
     import cadquery as cq
     from cadquery import importers
     import tempfile
 
-    shape = importers.importStep(str(step_path))
-    if isinstance(shape, cq.Workplane):
-        wp = shape
-    else:
-        wp = cq.Workplane().add(shape)
+    components = {}
 
-    # Export to STL
-    with tempfile.NamedTemporaryFile(suffix=".stl", delete=False) as f:
-        temp_path = f.name
+    def export_stl(shape):
+        with tempfile.NamedTemporaryFile(suffix=".stl", delete=False) as f:
+            path = f.name
+        cq.exporters.export(shape, path, exportType="STL")
+        with open(path, "rb") as f:
+            data = f.read()
+        Path(path).unlink()
+        return data
 
-    cq.exporters.export(wp, temp_path, exportType="STL")
+    # COLORS (Hex)
+    COLOR_ALDE = 0xff4444      # Red
+    COLOR_WATER = 0x4444ff     # Blue
+    COLOR_BATTERY = 0xffaa00   # Orange/Yellow
+    COLOR_ELEC = 0xaa44ff      # Purple
+    COLOR_ZONE = 0x44aa44      # Green (Translucent)
+    COLOR_DIESEL = 0x555555    # Grey
 
-    with open(temp_path, "rb") as f:
-        stl_data = f.read()
+    # 1. ALDE HEATER (Driver Side Rear Garage Arm)
+    alde = create_box(420, 500, 300, -840, -2090, 150)
+    components['alde'] = {
+        'data': export_stl(alde), 'color': COLOR_ALDE, 'name': 'Alde Heater', 'opacity': 1.0
+    }
 
-    Path(temp_path).unlink()
-    return stl_data
+    # 2. ELECTRICAL CORE (Passenger Side Rear Garage Arm)
+    elec = create_box(200, 400, 500, 840, -2090, 400)
+    components['electrical'] = {
+        'data': export_stl(elec), 'color': COLOR_ELEC, 'name': 'Electrical Core', 'opacity': 1.0
+    }
 
+    # 3. WATER TANK 1 (Passenger Kitchen Base)
+    tank1 = create_box(500, 1000, 500, 840, -1000, 250)
+    components['tank1'] = {
+        'data': export_stl(tank1), 'color': COLOR_WATER, 'name': 'Water Tank 1 (Standard)', 'opacity': 1.0
+    }
 
-def create_html_viewer(stl_data: bytes, openings: list) -> str:
-    """Create an HTML file with three.js viewer."""
-    import base64
+    # 4. WATER TANK 2 (Driver Dinette Base - Low Profile)
+    tank2 = create_box(500, 1250, 400, -840, -1000, 200)
+    components['tank2'] = {
+        'data': export_stl(tank2), 'color': COLOR_WATER, 'name': 'Water Tank 2 (Low Profile)', 'opacity': 1.0
+    }
 
-    stl_base64 = base64.b64encode(stl_data).decode("utf-8")
+    # 5. BATTERIES (Passenger Kitchen Base)
+    batteries = create_box(400, 600, 400, 840, 0, 200)
+    components['batteries'] = {
+        'data': export_stl(batteries), 'color': COLOR_BATTERY, 'name': 'Battery Bank (300kg)', 'opacity': 1.0
+    }
 
-    # Create markers for openings
-    markers_js = json.dumps(openings, indent=2)
+    # 6. DIESEL TANK (External Reference)
+    diesel = create_box(500, 1500, 600, -1140, -500, -300)
+    components['diesel'] = {
+        'data': export_stl(diesel), 'color': COLOR_DIESEL, 'name': 'Diesel Tank (Ref)', 'opacity': 1.0
+    }
 
-    html = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gimli2 Habitat Viewer</title>
-    <style>
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }}
-        #container {{ width: 100vw; height: 100vh; }}
-        #info {{
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            max-width: 300px;
-            z-index: 100;
-        }}
-        #info h2 {{ margin-bottom: 10px; font-size: 16px; }}
-        #info ul {{ list-style: none; padding: 0; }}
-        #info li {{ margin: 5px 0; padding: 5px; border-radius: 4px; cursor: pointer; }}
-        #info li:hover {{ background: rgba(255,255,255,0.2); }}
-        .window {{ border-left: 3px solid #4CAF50; padding-left: 8px; }}
-        .door {{ border-left: 3px solid #2196F3; padding-left: 8px; }}
-        .hatch {{ border-left: 3px solid #FF9800; padding-left: 8px; }}
-        #controls {{
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-        }}
-    </style>
-</head>
-<body>
-    <div id="container"></div>
-    <div id="info">
-        <h2>Gimli2 Habitat Openings</h2>
-        <ul id="openings-list"></ul>
-    </div>
-    <div id="controls">
-        <b>Controls:</b> Left-click drag to rotate | Right-click drag to pan | Scroll to zoom
-    </div>
+    # 7. ZONES (Transparent)
+    
+    # Garage Zone
+    garage_zone = create_box(2280, 600, 2160, 0, -2090, 1080)
+    components['zone_garage'] = {
+        'data': export_stl(garage_zone), 'color': COLOR_ZONE, 'name': 'Zone: Garage', 'opacity': 0.15
+    }
 
-    <script type="importmap">
-    {{
-        "imports": {{
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }}
-    }}
-    </script>
+    # Kitchen Zone
+    kitchen_zone = create_box(600, 2300, 2160, 840, 40, 1080)
+    components['zone_kitchen'] = {
+        'data': export_stl(kitchen_zone), 'color': COLOR_ZONE, 'name': 'Zone: Kitchen', 'opacity': 0.15
+    }
 
-    <script type="module">
-        import * as THREE from 'three';
-        import {{ OrbitControls }} from 'three/addons/controls/OrbitControls.js';
-        import {{ STLLoader }} from 'three/addons/loaders/STLLoader.js';
+    # Bathroom Zone
+    bathroom_zone = create_box(900, 1200, 2160, -690, 1790, 1080)
+    components['zone_bathroom'] = {
+        'data': export_stl(bathroom_zone), 'color': COLOR_ZONE, 'name': 'Zone: Bathroom', 'opacity': 0.15
+    }
 
-        const openings = {markers_js};
+    # Dinette Zone
+    dinette_zone = create_box(1000, 2300, 2160, -640, 40, 1080)
+    components['zone_dinette'] = {
+        'data': export_stl(dinette_zone), 'color': COLOR_ZONE, 'name': 'Zone: Dinette', 'opacity': 0.15
+    }
 
-        // Setup scene
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x1a1a2e);
-
-        // Camera
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100000);
-        camera.position.set(8000, 5000, 8000);
-
-        // Renderer
-        const renderer = new THREE.WebGLRenderer({{ antialias: true }});
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.getElementById('container').appendChild(renderer.domElement);
-
-        // Controls
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.target.set(0, 1200, 3000);
-
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5000, 10000, 5000);
-        scene.add(directionalLight);
-
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
-        directionalLight2.position.set(-5000, 5000, -5000);
-        scene.add(directionalLight2);
-
-        // Load STL model
-        const stlData = "{stl_base64}";
-        const stlBlob = new Blob([Uint8Array.from(atob(stlData), c => c.charCodeAt(0))], {{ type: 'application/octet-stream' }});
-        const stlUrl = URL.createObjectURL(stlBlob);
-
-        const loader = new STLLoader();
-        loader.load(stlUrl, (geometry) => {{
-            const material = new THREE.MeshPhongMaterial({{
-                color: 0x8899aa,
-                transparent: true,
-                opacity: 0.85,
-                side: THREE.DoubleSide
-            }});
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-        }});
-
-        // Add opening markers
-        const markerGroup = new THREE.Group();
-        scene.add(markerGroup);
-
-        const colors = {{
-            window: 0x4CAF50,
-            door: 0x2196F3,
-            hatch: 0xFF9800
-        }};
-
-        openings.forEach((opening, index) => {{
-            if (!opening.center_mm) return;
-
-            const [x, y, z] = opening.center_mm;
-            const color = colors[opening.kind] || 0xffffff;
-
-            // Create sphere marker
-            const geometry = new THREE.SphereGeometry(50, 16, 16);
-            const material = new THREE.MeshBasicMaterial({{ color: color }});
-            const sphere = new THREE.Mesh(geometry, material);
-            sphere.position.set(x, y, z);
-            markerGroup.add(sphere);
-
-            // Create ring around marker
-            const ringGeometry = new THREE.RingGeometry(60, 80, 32);
-            const ringMaterial = new THREE.MeshBasicMaterial({{ color: color, side: THREE.DoubleSide }});
-            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-            ring.position.set(x, y, z);
-            ring.lookAt(camera.position);
-            markerGroup.add(ring);
-
-            // Add label sprite
-            const canvas = document.createElement('canvas');
-            canvas.width = 256;
-            canvas.height = 64;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#' + color.toString(16).padStart(6, '0');
-            ctx.fillRect(0, 0, 256, 64);
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 24px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(opening.id, 128, 40);
-
-            const texture = new THREE.CanvasTexture(canvas);
-            const spriteMaterial = new THREE.SpriteMaterial({{ map: texture }});
-            const sprite = new THREE.Sprite(spriteMaterial);
-            sprite.position.set(x, y + 150, z);
-            sprite.scale.set(300, 75, 1);
-            markerGroup.add(sprite);
-        }});
-
-        // Populate openings list
-        const listEl = document.getElementById('openings-list');
-        openings.forEach((opening) => {{
-            const li = document.createElement('li');
-            li.className = opening.kind;
-            li.innerHTML = `<b>${{opening.id}}</b> - ${{opening.model}} (${{opening.kind}})<br>
-                           <small>${{opening.location}}</small>`;
-            li.onclick = () => {{
-                if (opening.center_mm) {{
-                    const [x, y, z] = opening.center_mm;
-                    controls.target.set(x, y, z);
-                    camera.position.set(x + 3000, y + 2000, z + 3000);
-                }}
-            }};
-            listEl.appendChild(li);
-        }});
-
-        // Animation loop
-        function animate() {{
-            requestAnimationFrame(animate);
-            controls.update();
-
-            // Make rings face camera
-            markerGroup.children.forEach(child => {{
-                if (child.geometry && child.geometry.type === 'RingGeometry') {{
-                    child.lookAt(camera.position);
-                }}
-            }});
-
-            renderer.render(scene, camera);
-        }}
-        animate();
-
-        // Handle resize
-        window.addEventListener('resize', () => {{
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }});
-    </script>
-</body>
-</html>'''
-    return html
-
+    return components
 
 def load_openings_from_yaml(yaml_path: Path) -> list:
+    """Load openings from habitat.yml."""
+    import yaml
+
+    with yaml_path.open("r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+
+    openings = []
+    features = data.get("features", {})
+
+    for win in features.get("windows", []):
+        openings.append({
+            "id": win.get("id"),
+            "model": win.get("model"),
+            "kind": "window",
+            "location": win.get("location"),
+            "center_mm": win.get("center_mm"),
+        })
+
+    for door in features.get("doors", []):
+        openings.append({
+            "id": door.get("id"),
+            "model": door.get("model"),
+            "kind": "door",
+            "location": door.get("location"),
+            "center_mm": door.get("center_mm"),
+        })
+
+    for hatch in features.get("hatches", []):
+        openings.append({
+            "id": hatch.get("id"),
+            "model": hatch.get("model"),
+            "kind": "hatch",
+            "location": hatch.get("location"),
+            "center_mm": hatch.get("center_mm"),
+        })
+
+    return openings
     """Load openings from habitat.yml."""
     import yaml
 

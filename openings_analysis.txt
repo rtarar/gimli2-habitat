@@ -1,0 +1,52 @@
+No match found for DOOR-01 (door) size 700.0x1800.0 mm
+matches:
+- id: WIN-01
+  kind: window
+  location: rear-driver-side
+  normal: [-1.0000, 0.0000, -0.0000]
+  center_mm: [-1158.00, 723.00, 5108.50]
+  bbox_min_mm: [-1158.00, 388.00, 4577.00]
+  bbox_max_mm: [-1158.00, 1058.00, 5640.00]
+  size_2d_mm: [670.00, 1063.00]
+  size_error_mm: 0.00
+  sill_or_threshold_height_mm: 4577.00
+- id: WIN-02
+  kind: window
+  location: rear-passenger-side
+  normal: [-1.0000, 0.0000, -0.0000]
+  center_mm: [-1158.00, 723.00, 5108.50]
+  bbox_min_mm: [-1158.00, 388.00, 4577.00]
+  bbox_max_mm: [-1158.00, 1058.00, 5640.00]
+  size_2d_mm: [670.00, 1063.00]
+  size_error_mm: 0.00
+  sill_or_threshold_height_mm: 4577.00
+- id: WIN-03
+  kind: window
+  location: roof
+  normal: [-0.0000, 1.0000, -0.0000]
+  center_mm: [0.00, 2478.00, 3615.00]
+  bbox_min_mm: [-277.00, 2478.00, 3266.00]
+  bbox_max_mm: [277.00, 2478.00, 3964.00]
+  size_2d_mm: [554.00, 698.00]
+  size_error_mm: 0.00
+  sill_or_threshold_height_mm: 3266.00
+- id: WIN-04
+  kind: window
+  location: passenger-side
+  normal: [-1.0000, 0.0000, 0.0000]
+  center_mm: [-1158.00, 1942.50, 1359.50]
+  bbox_min_mm: [-1158.00, 1657.50, 1023.00]
+  bbox_max_mm: [-1158.00, 2227.50, 1696.00]
+  size_2d_mm: [570.00, 673.00]
+  size_error_mm: 0.00
+  sill_or_threshold_height_mm: 1023.00
+- id: WIN-05
+  kind: window
+  location: driver-side
+  normal: [-1.0000, 0.0000, -0.0000]
+  center_mm: [-1158.00, 723.00, 5108.50]
+  bbox_min_mm: [-1158.00, 388.00, 4577.00]
+  bbox_max_mm: [-1158.00, 1058.00, 5640.00]
+  size_2d_mm: [670.00, 1063.00]
+  size_error_mm: 0.00
+  sill_or_threshold_height_mm: 4577.00

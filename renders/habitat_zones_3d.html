@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gimli2 Habitat - 3D Zone Viewer</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #1a1a2e;
         }
-        #container { width: 100vw; height: 100vh; }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+        }
 
         #info {
             position: absolute;
             top: 10px;
             left: 10px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 15px;
             border-radius: 8px;
@@ -25,6 +35,7 @@
             z-index: 100;
             border: 1px solid #333;
         }
+
         #info h2 {
             margin-bottom: 10px;
             font-size: 16px;
@@ -32,6 +43,7 @@
             border-bottom: 1px solid #333;
             padding-bottom: 8px;
         }
+
         #info h3 {
             margin-top: 12px;
             margin-bottom: 6px;
@@ -49,18 +61,32 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        .zone-item:hover { background: rgba(255,255,255,0.1); }
-        .zone-item.active { background: rgba(76, 175, 80, 0.3); }
+
+        .zone-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .zone-item.active {
+            background: rgba(76, 175, 80, 0.3);
+        }
 
         .zone-color {
             width: 14px;
             height: 14px;
             border-radius: 3px;
             margin-right: 10px;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .zone-name { flex: 1; font-size: 12px; }
-        .zone-dims { font-size: 10px; color: #888; }
+
+        .zone-name {
+            flex: 1;
+            font-size: 12px;
+        }
+
+        .zone-dims {
+            font-size: 10px;
+            color: #888;
+        }
 
         .opening-item {
             padding: 4px 8px;
@@ -69,34 +95,47 @@
             border-left: 3px solid;
             padding-left: 10px;
         }
-        .opening-window { border-color: #2196F3; }
-        .opening-door { border-color: #FF9800; }
-        .opening-hatch { border-color: #4CAF50; }
+
+        .opening-window {
+            border-color: #2196F3;
+        }
+
+        .opening-door {
+            border-color: #FF9800;
+        }
+
+        .opening-hatch {
+            border-color: #4CAF50;
+        }
 
         #controls {
             position: absolute;
             bottom: 10px;
             left: 10px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 12px 15px;
             border-radius: 8px;
             font-size: 11px;
             border: 1px solid #333;
         }
-        #controls b { color: #4CAF50; }
+
+        #controls b {
+            color: #4CAF50;
+        }
 
         #mode-toggle {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 12px 15px;
             border-radius: 8px;
             border: 1px solid #333;
             z-index: 100;
         }
+
         #mode-toggle button {
             background: #4CAF50;
             color: white;
@@ -107,25 +146,42 @@
             font-size: 12px;
             margin: 2px;
         }
-        #mode-toggle button:hover { background: #45a049; }
-        #mode-toggle button.active { background: #2E7D32; }
+
+        #mode-toggle button:hover {
+            background: #45a049;
+        }
+
+        #mode-toggle button.active {
+            background: #2E7D32;
+        }
 
         #dimensions {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 12px 15px;
             border-radius: 8px;
             font-size: 11px;
             border: 1px solid #333;
         }
-        #dimensions h4 { color: #4CAF50; margin-bottom: 8px; }
-        #dimensions .dim { margin: 3px 0; }
-        #dimensions .dim span { color: #888; }
+
+        #dimensions h4 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+
+        #dimensions .dim {
+            margin: 3px 0;
+        }
+
+        #dimensions .dim span {
+            color: #888;
+        }
     </style>
 </head>
+
 <body>
     <div id="container"></div>
 
@@ -191,7 +247,7 @@
                 // CORRECTED: Full width (2280mm) x 800mm deep
                 // Shower on driver/entry side, toilet on passenger side below WIN-04
                 bounds: { width: 2280, depth: 800, height: 2160 },
-                position: { x: 0, y: 0, z: HABITAT.length/2 - 400 },
+                position: { x: 0, y: 0, z: HABITAT.length / 2 - 400 },
                 description: 'Full width x 800mm deep'
             },
             'ZONE-002': {
@@ -200,202 +256,301 @@
                 // Kitchen: 609mm depth (counter) x 1948mm length (along wall)
                 // Position: driver-side, starts after bathroom (800mm from front)
                 bounds: { width: 609, depth: 1948, height: 2160 },
-                position: { x: -HABITAT.width/2 + 304.5, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                position: { x: -HABITAT.width / 2 + 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
                 description: '609 x 1948mm, driver-side'
             },
-            'ZONE-003': {
-                name: 'Garage Shell',
+            // ZONE-003: U-SHELL BENCH (replaces old solid garage shell)
+            // U-shaped structure: rear section + driver arm + passenger arm
+            // Shell depth: 509mm, height: 860mm
+            // Houses water tanks and batteries
+            // Center opening: 1262mm wide (2280 - 509 - 509)
+            // ... existing ZONES map ...
+            'ZONE-003-GARAGE-SHELL': {
+                name: 'Garage Shell Tunnel',
+                color: 0x546E7A,
+                // Rearmost tunnel connecting the hatches
+                // Full width, 600mm deep, 860mm high
+                // Position: Very rear wall
+                bounds: { width: 2280, depth: 600, height: 860 },
+                position: { x: 0, y: 0, z: -HABITAT.length / 2 + 300 }, // Z = -2090
+                description: 'Rear tunnel with hatches'
+            },
+            'ZONE-003-REAR': {
+                name: 'U-Shell Rear Bench',
                 color: 0x78909C,
-                // Per ZONE-003-garage-shell.yml: 2280mm wide (full) x 1023mm deep x 860mm high
-                // Position: rear wall, from_front: 3757mm (4780 - 1023)
-                bounds: { width: 2280, depth: 1023, height: 860 },
-                position: { x: 0, y: 0, z: -HABITAT.length/2 + 511.5 },
-                description: '2280 x 1023mm, 860mm high'
+                // Rear section of the U-seating
+                // Sits FORWARD of the Garage Shell Tunnel
+                // Depth 600mm.
+                bounds: { width: 2280, depth: 600, height: 860 },
+                position: { x: 0, y: 0, z: -HABITAT.length / 2 + 600 + 300 }, // Z = -1490 (Forward of tunnel)
+                description: 'Rear bench (forward of garage shell)'
+            },
+            'ZONE-003-PASSENGER': {
+                name: 'U-Shell Passenger Arm',
+                color: 0x607D8B,
+                // Passenger Side = Right (+X)
+                bounds: { width: 600, depth: 800, height: 860 },
+                position: {
+                    x: HABITAT.width / 2 - 300,  // +X side (Passenger)
+                    y: 0,
+                    z: -HABITAT.length / 2 + 600 + 600 + 400 // -790
+                },
+                description: 'Passenger arm (Kitchen side)'
+            },
+            'ZONE-003-DRIVER': {
+                name: 'U-Shell Driver Arm',
+                color: 0x607D8B,
+                // Driver Side = Left (-X)
+                bounds: { width: 600, depth: 800, height: 860 },
+                position: {
+                    x: -HABITAT.width / 2 + 300,  // -X side (Driver)
+                    y: 0,
+                    z: -HABITAT.length / 2 + 600 + 600 + 400 // -790
+                },
+                description: 'Driver arm (Dinette side)'
             },
             'ZONE-004': {
                 name: 'Sleeping (Bed)',
                 color: 0xBA68C8,
-                // Per ZONE-004-sleeping.yml: 1500mm wide x 2000mm long x 260mm thick
-                // Bed height: 260mm (60mm frame + 200mm mattress)
-                // Centered: from_driver_wall: 390mm, from_passenger_wall: 390mm
-                // Vertical travel: lowered=860mm, raised=1900mm (bed bottom)
-                // Note: raised position adjusted for thicker bed (2160 - 260 = 1900)
                 bounds: { width: 1500, depth: 2000, height: 260 },
-                position: { x: 0, y: 860, z: -HABITAT.length/2 + 1000 },
-                positionRaised: { x: 0, y: 1900, z: -HABITAT.length/2 + 1000 },
+                position: { x: 0, y: 860, z: -HABITAT.length / 2 + 1000 },
+                positionRaised: { x: 0, y: 1900, z: -HABITAT.length / 2 + 1000 },
                 description: 'Queen 1500 x 2000mm, lift bed (260mm thick)'
             },
             'ZONE-005': {
                 name: 'Living / Dinette',
                 color: 0x81C784,
-                // Per ZONE-005-living-dinette.yml: 2280mm wide x 2000mm deep x 1650mm ceiling
-                // Position: from_rear_wall: 0mm
                 bounds: { width: 2280, depth: 2000, height: 1650 },
-                position: { x: 0, y: 0, z: -HABITAT.length/2 + 1000 },
+                position: { x: 0, y: 0, z: -HABITAT.length / 2 + 1000 },
                 description: '2280 x 2000mm, 1650mm ceiling'
             },
             'ZONE-006': {
                 name: 'Circulation',
                 color: 0xFFF176,
-                // Circulation corridor between kitchen (passenger) and cabinets (driver)
-                // After bathroom: remaining width between 609mm zones = 2280 - 609 - 609 = 1062mm
                 bounds: { width: 1062, depth: 1948, height: 2160 },
-                position: { x: 0, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                position: { x: 0, y: 0, z: HABITAT.length / 2 - 800 - 974 },
                 description: 'Corridor, 1062mm wide'
             },
-            // BEDSIDE STORAGE - Nightstands (on garage shell) + Upper cabinets (above windows)
-            //
-            // NIGHTSTANDS: Sit ON TOP of garage shell, flush with bed surface
-            //   - Rear face: AT rear wall (0mm from rear)
-            //   - Front face: WHERE window starts (668mm from rear)
-            //   - Depth: 668mm (spans from rear wall to window)
-            //   - Height: 860mm (garage top) to 1120mm (bed surface) = 260mm tall
-            //   - Width: 300mm, flush with bed edge (bed at 390mm from wall)
-            //   - Hatches below (at 430mm height) are NOT blocked
-            //
-            // Nightstand center_z: -HABITAT.length/2 + 334 (midpoint of 0-668mm from rear)
+            // NIGHTSTANDS
             'ZONE-007-D-NIGHTSTAND': {
                 name: 'Nightstand (Driver)',
                 color: 0xE1BEE7,
-                // Nightstand on garage shell, flush with bed surface
-                // 300mm wide x 668mm deep x 260mm tall
-                // Rear face at rear wall, front face at window start
-                bounds: { width: 300, depth: 668, height: 260 },
-                position: { x: -HABITAT.width/2 + 240, y: 860, z: -HABITAT.length/2 + 334 },
-                description: 'Nightstand 300x668mm (rear wall to window)'
+                bounds: { width: 300, depth: 509, height: 260 },
+                position: { x: -HABITAT.width / 2 + 240, y: 860, z: -HABITAT.length / 2 + 254.5 },
+                description: 'Nightstand 300x509mm (on U-shell arm)'
             },
             'ZONE-007-D-UPPER': {
                 name: 'Upper Cabinet (Driver)',
                 color: 0xD1C4E9,
-                // Upper cabinet: from above window (1435mm) to ceiling (2160mm) = 725mm height
-                // Full bed length (2000mm) since above window clearance
                 bounds: { width: 300, depth: 2000, height: 725 },
-                position: { x: -HABITAT.width/2 + 150, y: 1435, z: -HABITAT.length/2 + 1000 },
+                position: { x: -HABITAT.width / 2 + 150, y: 1435, z: -HABITAT.length / 2 + 1000 },
                 description: 'Upper cabinet (above window)'
             },
             'ZONE-007-P-NIGHTSTAND': {
                 name: 'Nightstand (Pass.)',
                 color: 0xE1BEE7,
-                // Nightstand on garage shell, flush with bed surface
-                // 300mm wide x 668mm deep x 260mm tall
-                // Rear face at rear wall, front face at window start
-                bounds: { width: 300, depth: 668, height: 260 },
-                position: { x: HABITAT.width/2 - 240, y: 860, z: -HABITAT.length/2 + 334 },
-                description: 'Nightstand 300x668mm (rear wall to window)'
+                bounds: { width: 300, depth: 509, height: 260 },
+                position: { x: HABITAT.width / 2 - 240, y: 860, z: -HABITAT.length / 2 + 254.5 },
+                description: 'Nightstand 300x509mm (on U-shell arm)'
             },
             'ZONE-007-P-UPPER': {
                 name: 'Upper Cabinet (Pass.)',
                 color: 0xD1C4E9,
-                // Upper cabinet: from above window (1435mm) to ceiling (2160mm) = 725mm height
-                // Full bed length (2000mm) since above window clearance
                 bounds: { width: 300, depth: 2000, height: 725 },
-                position: { x: HABITAT.width/2 - 150, y: 1435, z: -HABITAT.length/2 + 1000 },
+                position: { x: HABITAT.width / 2 - 150, y: 1435, z: -HABITAT.length / 2 + 1000 },
                 description: 'Upper cabinet (above window)'
             },
             'CABINETS': {
                 name: 'Floor-to-Ceiling Cabinets',
                 color: 0xA1887F,
-                // Cabinets on passenger side, opposite kitchen: 609mm depth x 1948mm length
-                // Position: passenger-side, starts after bathroom (800mm from front)
                 bounds: { width: 609, depth: 1948, height: 2160 },
-                position: { x: HABITAT.width/2 - 304.5, y: 0, z: HABITAT.length/2 - 800 - 974 },
+                position: { x: HABITAT.width / 2 - 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
                 description: '609 x 1948mm, passenger-side'
             }
         };
 
         // ============================================================
-        // OPENINGS - Updated 2025-01-21
-        // Windows are HORIZONTAL (long edge horizontal)
-        // Passenger side layout (back to front): Hatch → Rear Window → Kitchen Window → Door
-        // cutout_width = horizontal span, cutout_height = vertical span
+        // OPENINGS
         // ============================================================
         const OPENINGS = {
             windows: [
-                // WIN-01: RA-40 on DRIVER SIDE wall, rear section (living/dinette)
-                // HORIZONTAL: 1063mm wide x 670mm tall (swapped for landscape orientation)
                 {
                     id: 'WIN-01',
                     name: 'RA-40 Driver Rear',
-                    wall: 'driver',
-                    cutout_width: 1063,   // horizontal span along wall
-                    cutout_height: 670,   // vertical height
-                    center_y: 1100,       // center height from floor
-                    center_z: -HABITAT.length/2 + 1200  // rear section, living/dinette
+                    wall: 'driver', // -X wall (Left)
+                    cutout_width: 1063,
+                    cutout_height: 670,
+                    center_y: 1100,
+                    center_z: -HABITAT.length / 2 + 1200
                 },
-                // WIN-02: RA-40 on PASSENGER SIDE wall, rear section
-                // Behind kitchen, aligned horizontally with WIN-01
-                // HORIZONTAL: 1063mm wide x 670mm tall
                 {
                     id: 'WIN-02',
                     name: 'RA-40 Passenger Rear',
-                    wall: 'passenger',
+                    wall: 'passenger', // +X wall (Right)
                     cutout_width: 1063,
                     cutout_height: 670,
                     center_y: 1100,
-                    center_z: -HABITAT.length/2 + 1200  // rear section
+                    center_z: -HABITAT.length / 2 + 1200
                 },
-                // WIN-04: RA-30 on PASSENGER side wall (bathroom - above toilet)
-                // HORIZONTAL: 673mm wide x 570mm tall
                 {
                     id: 'WIN-04',
                     name: 'RA-30 Bathroom',
-                    wall: 'passenger',
-                    cutout_width: 673,    // horizontal
-                    cutout_height: 570,   // vertical
-                    center_y: 1400,       // higher up for bathroom privacy
-                    center_z: HABITAT.length/2 - 400  // in bathroom zone
+                    wall: 'driver', // -X wall (Driver Side)
+                    cutout_width: 673,
+                    cutout_height: 570,
+                    center_y: 1400,
+                    center_z: HABITAT.length / 2 - 400
                 },
-                // WIN-05: RA-40 on DRIVER side wall (kitchen zone)
-                // Between rear window and door
-                // HORIZONTAL: 1063mm wide x 670mm tall
                 {
                     id: 'WIN-05',
                     name: 'RA-40 Kitchen',
-                    wall: 'driver',
+                    wall: 'passenger', // +X wall (Right)
                     cutout_width: 1063,
                     cutout_height: 670,
                     center_y: 1100,
-                    center_z: HABITAT.length/2 - 800 - 1000  // kitchen zone (after bathroom)
+                    center_z: HABITAT.length / 2 - 800 - 1000
                 }
             ],
             doors: [
-                // DOOR-01: Entry door on DRIVER side
-                // Front of driver wall, at bathroom area
-                // Standard RV entry door: ~700mm wide x 1800mm tall
                 {
                     id: 'DOOR-01',
-                    name: 'Entry Door',
-                    wall: 'driver',
-                    cutout_width: 700,    // door width
-                    cutout_height: 1800,  // door height (full height entry)
-                    center_y: 900,        // center from floor
-                    center_z: HABITAT.length/2 - 400  // at bathroom, front section
+                    name: 'Entry Door (Pass Side)',
+                    wall: 'passenger', // +X wall (Right)
+                    cutout_width: 700,
+                    cutout_height: 1800,
+                    center_y: 900,
+                    center_z: HABITAT.length / 2 - 400
                 }
             ],
             hatches: [
-                // HATCH-01: Driver side garage access (rear)
-                // HORIZONTAL: 600mm wide x 550mm tall
                 {
                     id: 'HATCH-01',
                     name: 'Garage Hatch Driver',
-                    wall: 'driver',
+                    wall: 'driver', // -X
                     cutout_width: 600,
                     cutout_height: 550,
                     center_y: 430,
-                    center_z: -HABITAT.length/2 + 500
+                    center_z: -HABITAT.length / 2 + 500
                 },
-                // HATCH-02: Passenger side garage access (rear-most on passenger side)
-                // HORIZONTAL: 600mm wide x 550mm tall
                 {
                     id: 'HATCH-02',
                     name: 'Garage Hatch Passenger',
-                    wall: 'passenger',
+                    wall: 'passenger', // +X
                     cutout_width: 600,
                     cutout_height: 550,
                     center_y: 430,
-                    center_z: -HABITAT.length/2 + 500
+                    center_z: -HABITAT.length / 2 + 500
                 }
             ]
+        };
+
+        // ============================================================
+        // SYSTEMS COMPONENTS
+        // ============================================================
+        const COMPONENTS = {
+            'AXLE': {
+                name: 'Rear Axle Line',
+                color: 0xFF0000, // Bright Red
+                // Visualization of the rear axle position
+                bounds: { width: 3000, depth: 50, height: 50 }, // Wider than habitat to stick out
+                position: {
+                    x: 0,
+                    y: -100, // Below floor
+                    z: -250  // -2390 (Rear) + 2140 = -250
+                }
+            },
+            'TANK-U-CUSTOM': {
+                name: 'Custom U-Tank (Absolute Coords)',
+                color: 0x0277BD, // Dark Blue
+                // CLEARANCE ADJUSTED U-TANK
+                // Coords are now ABSOLUTE (position 0,0,0) to prevent placement errors.
+                // 1. Garage Tunnel Zone: [-2390, -1790]. TANK MUST BE FORWARD OF -1790.
+                // 2. Rear Bench Zone: [-1790, -1190]. Tank Rear sits here.
+
+                bounds: { width: 2280, depth: 2500, height: 400 },
+                position: { x: 0, y: 0, z: 0 }, // Using absolute world coords for parts
+                parts: [
+                    // 1. Rear Connector
+                    // Sits inside Rear Bench, flush against Garage Tunnel wall (-1790).
+                    // Depth 150mm. Z Range: [-1790, -1640].
+                    // Center Z: -1715.
+                    // Height 380mm. Center Y: 190 (on floor).
+                    { width: 2280, depth: 150, height: 380, x: 0, y: 190, z: -1715 },
+
+                    // 2. Living Arms (Main Volume)
+                    // Connect to Rear (-1640) and extend forward 800mm.
+                    // Z Range: [-1640, -840].
+                    // Center Z: -1240.
+                    // Width 350mm. Center X +/- 965.
+                    { width: 350, depth: 800, height: 380, x: -965, y: 190, z: -1240 }, // Driver
+                    { width: 350, depth: 800, height: 380, x: 965, y: 190, z: -1240 },  // Passenger
+
+                    // 3. Forward Extensions (Low Profile)
+                    // Connect to Arms (-840) and extend forward 1500mm.
+                    // Z Range: [-840, +660].
+                    // Center Z: -90.
+                    // Height 180mm. Center Y: 90 (on floor).
+                    { width: 350, depth: 1500, height: 180, x: -965, y: 90, z: -90 }, // Driver Fwd
+                    { width: 350, depth: 1500, height: 180, x: 965, y: 90, z: -90 }   // Pass Fwd
+                ]
+            },
+            'ALDE': {
+                name: 'Alde Heater',
+                color: 0xE53935, // Red
+                // Passenger Side (+X)
+                bounds: { width: 420, depth: 500, height: 300 },
+                position: {
+                    x: HABITAT.width / 2 - 300, // +X (Passenger)
+                    y: 450,
+                    z: -790
+                }
+            },
+            'ELEC': {
+                name: 'Electrical Core',
+                color: 0x8E24AA, // Purple
+                // Driver Side (-X)
+                bounds: { width: 250, depth: 500, height: 400 },
+                position: {
+                    x: -HABITAT.width / 2 + 300, // -X (Driver)
+                    y: 650,
+                    z: 800
+                }
+            },
+            'BATTERIES': {
+                name: 'Battery Bank (300kg)',
+                color: 0xFFB300, // Amber
+                // Driver Side (-X)
+                bounds: { width: 400, depth: 600, height: 350 },
+                position: {
+                    x: -HABITAT.width / 2 + 304.5, // -X (Driver)
+                    y: 375,
+                    z: 800
+                }
+            },
+            'PLUMBING': {
+                name: 'Water Pump & Manifold',
+                color: 0x00ACC1, // Cyan
+                // Rear Bench - Dead space above low-profile tank connector
+                bounds: { width: 400, depth: 300, height: 300 },
+                position: {
+                    x: 0,
+                    y: 450, // Above tank (380mm)
+                    z: -1715 // Above rear tank connector
+                }
+            },
+            'DIESEL': {
+                name: 'Diesel Tank (Underbody Flush)',
+                color: 0x616161, // Grey
+                // MOVED: Driver Side Underbody (Flush).
+                // X: -890 (Tucked under floor. Edge aligned with wall).
+                // Position: Ends just before Rear Axle (-250).
+                bounds: { width: 500, depth: 1500, height: 600 },
+                position: {
+                    x: -HABITAT.width / 2 + 250, // -1140 + 250 = -890. Flush.
+                    y: -350,
+                    z: 500
+                }
+            }
         };
 
         // Scene setup
@@ -413,7 +568,7 @@
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.target.set(0, HABITAT.height/2, 0);
+        controls.target.set(0, HABITAT.height / 2, 0);
 
         // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
@@ -462,7 +617,7 @@
             const mesh = new THREE.Mesh(geometry, material);
 
             const pos = isDayMode && zone.positionRaised ? zone.positionRaised : zone.position;
-            mesh.position.set(pos.x, pos.y + zone.bounds.height/2, pos.z);
+            mesh.position.set(pos.x, pos.y + zone.bounds.height / 2, pos.z);
             mesh.userData = { zoneId, zone };
 
             const edges = new THREE.EdgesGeometry(geometry);
@@ -479,7 +634,7 @@
             for (const [zoneId, zone] of Object.entries(ZONES)) {
                 if (zoneId === 'ZONE-004' && isDayMode) {
                     const mesh = createZoneMesh(zoneId, zone);
-                    mesh.position.y = zone.positionRaised.y + zone.bounds.height/2;
+                    mesh.position.y = zone.positionRaised.y + zone.bounds.height / 2;
                     mesh.material.opacity = 0.3;
                     zoneMeshes[zoneId] = mesh;
                     scene.add(mesh);
@@ -488,6 +643,77 @@
 
                 const mesh = createZoneMesh(zoneId, zone);
                 zoneMeshes[zoneId] = mesh;
+                scene.add(mesh);
+            }
+        }
+
+        // ============================================================
+        // CREATE OPENINGS - Fixed orientation
+        // Side walls (driver/passenger): plane faces X direction
+        //   - geometry: PlaneGeometry(depth_along_wall, height)
+        //   - rotation: Y = PI/2 to face X direction
+        // Front/rear walls: plane faces Z direction
+        //   - geometry: PlaneGeometry(width, height)
+        //   - no Y rotation needed
+        // ============================================================
+        // System Meshes
+        const systemMeshes = {};
+
+        function createSystemMesh(sysId, sys) {
+            let mesh;
+
+            if (sys.parts) {
+                // Handle composite parts (like U-Tank)
+                mesh = new THREE.Group();
+                sys.parts.forEach(part => {
+                    const geometry = new THREE.BoxGeometry(part.width, part.height, part.depth);
+                    const material = new THREE.MeshLambertMaterial({
+                        color: sys.color,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const partMesh = new THREE.Mesh(geometry, material);
+                    partMesh.position.set(part.x, part.y, part.z);
+                    mesh.add(partMesh);
+
+                    // Wireframe for part
+                    const edges = new THREE.EdgesGeometry(geometry);
+                    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.3, transparent: true });
+                    const wireframe = new THREE.LineSegments(edges, lineMaterial);
+                    partMesh.add(wireframe);
+                });
+
+                // Position the group
+                mesh.position.set(sys.position.x, sys.position.y, sys.position.z);
+
+            } else {
+                // Standard single box
+                const geometry = new THREE.BoxGeometry(sys.bounds.width, sys.bounds.height, sys.bounds.depth);
+                const material = new THREE.MeshLambertMaterial({
+                    color: sys.color,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(sys.position.x, sys.position.y, sys.position.z);
+
+                // Wireframe
+                const edges = new THREE.EdgesGeometry(geometry);
+                const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.3, transparent: true });
+                const wireframe = new THREE.LineSegments(edges, lineMaterial);
+                mesh.add(wireframe);
+            }
+
+            mesh.userData = { sysId, sys };
+            return mesh;
+        }
+
+        function buildComponents() {
+            Object.values(systemMeshes).forEach(mesh => scene.remove(mesh));
+
+            for (const [compId, comp] of Object.entries(COMPONENTS)) {
+                const mesh = createSystemMesh(compId, comp);
+                systemMeshes[compId] = mesh;
                 scene.add(mesh);
             }
         }
@@ -518,19 +744,19 @@
             // Position based on wall
             if (opening.wall === 'driver') {
                 // Driver side is -X wall
-                mesh.position.set(-HABITAT.width/2, opening.center_y, opening.center_z);
+                mesh.position.set(-HABITAT.width / 2, opening.center_y, opening.center_z);
                 mesh.rotation.y = Math.PI / 2;  // Face X direction (rotate around Y)
             } else if (opening.wall === 'passenger') {
                 // Passenger side is +X wall
-                mesh.position.set(HABITAT.width/2, opening.center_y, opening.center_z);
+                mesh.position.set(HABITAT.width / 2, opening.center_y, opening.center_z);
                 mesh.rotation.y = Math.PI / 2;  // Face X direction
             } else if (opening.wall === 'front') {
                 const x = opening.center_x !== undefined ? opening.center_x : 0;
-                mesh.position.set(x, opening.center_y, HABITAT.length/2);
+                mesh.position.set(x, opening.center_y, HABITAT.length / 2);
                 // No rotation, faces Z
             } else if (opening.wall === 'rear') {
                 const x = opening.center_x !== undefined ? opening.center_x : 0;
-                mesh.position.set(x, opening.center_y, -HABITAT.length/2);
+                mesh.position.set(x, opening.center_y, -HABITAT.length / 2);
                 // No rotation, faces Z
             }
 
@@ -550,18 +776,82 @@
 
         // Build UI
         function buildUI() {
+            // Add Reset Button
+            if (!document.getElementById('btn-reset')) {
+                const btn = document.createElement('button');
+                btn.id = 'btn-reset';
+                btn.textContent = 'Reset Visibility';
+                btn.style.marginTop = '10px';
+                btn.style.width = '100%';
+                btn.onclick = resetVisibility;
+                // Insert after controls or inside info? Let's put it in info header or bottom
+                document.getElementById('info').appendChild(btn);
+            }
+
             const zonesList = document.getElementById('zones-list');
             zonesList.innerHTML = '<h3>Functional Zones</h3>';
 
             for (const [zoneId, zone] of Object.entries(ZONES)) {
                 const item = document.createElement('div');
                 item.className = 'zone-item';
-                item.innerHTML = `
+
+                // Checkbox
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true;
+                checkbox.style.marginRight = '8px';
+                checkbox.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleVisibility(zoneId, 'zone', checkbox.checked);
+                };
+
+                const content = document.createElement('div');
+                content.style.display = 'flex';
+                content.style.alignItems = 'center';
+                content.style.flex = '1';
+                content.innerHTML = `
                     <div class="zone-color" style="background: #${zone.color.toString(16).padStart(6, '0')}"></div>
                     <div class="zone-name">${zone.name}</div>
-                    <div class="zone-dims">${zone.description}</div>
                 `;
+
+                item.appendChild(checkbox);
+                item.appendChild(content);
                 item.onclick = () => highlightZone(zoneId);
+                zonesList.appendChild(item);
+            }
+
+            // Add Systems List
+            const systemsHeader = document.createElement('h3');
+            systemsHeader.innerText = 'Systems Components';
+            systemsHeader.style.marginTop = '15px';
+            zonesList.appendChild(systemsHeader);
+
+            for (const [compId, comp] of Object.entries(COMPONENTS)) {
+                const item = document.createElement('div');
+                item.className = 'zone-item';
+
+                // Checkbox
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true;
+                checkbox.style.marginRight = '8px';
+                checkbox.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleVisibility(compId, 'system', checkbox.checked);
+                };
+
+                const content = document.createElement('div');
+                content.style.display = 'flex';
+                content.style.alignItems = 'center';
+                content.style.flex = '1';
+                content.innerHTML = `
+                    <div class="zone-color" style="background: #${comp.color.toString(16).padStart(6, '0')}"></div>
+                    <div class="zone-name">${comp.name}</div>
+                `;
+
+                item.appendChild(checkbox);
+                item.appendChild(content);
+                // item.onclick = () => highlightSystem(compId); 
                 zonesList.appendChild(item);
             }
 
@@ -588,6 +878,32 @@
                 item.textContent = `${h.id}: ${h.name} (${h.cutout_width}x${h.cutout_height}mm)`;
                 openingsList.appendChild(item);
             });
+        }
+
+        function toggleVisibility(id, type, isVisible) {
+            if (type === 'zone' && zoneMeshes[id]) {
+                zoneMeshes[id].visible = isVisible;
+            } else if (type === 'system' && systemMeshes[id]) {
+                systemMeshes[id].visible = isVisible;
+            }
+        }
+
+        function resetVisibility() {
+            // Reset Javascript State
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+
+            // Reset Zones
+            Object.values(zoneMeshes).forEach(mesh => mesh.visible = true);
+
+            // Reset Systems
+            Object.values(systemMeshes).forEach(mesh => mesh.visible = true);
+
+            // Clear Highlights
+            Object.values(zoneMeshes).forEach(mesh => {
+                mesh.material.opacity = isWireframe ? 1.0 : 0.7;
+                mesh.material.emissive = new THREE.Color(0x000000);
+            });
+            document.querySelectorAll('.zone-item').forEach(el => el.classList.remove('active'));
         }
 
         function highlightZone(zoneId) {
@@ -636,11 +952,12 @@
 
         // Axes helper (X=red/width, Y=green/height, Z=blue/length)
         const axesHelper = new THREE.AxesHelper(1000);
-        axesHelper.position.set(-HABITAT.width/2 - 200, 0, HABITAT.length/2 + 200);
+        axesHelper.position.set(-HABITAT.width / 2 - 200, 0, HABITAT.length / 2 + 200);
         scene.add(axesHelper);
 
         // Initialize
         buildZones();
+        buildComponents();
         buildUI();
 
         // Animation loop
@@ -677,4 +994,5 @@
         });
     </script>
 </body>
+
 </html>

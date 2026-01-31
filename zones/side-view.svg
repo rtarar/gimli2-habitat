@@ -100,26 +100,27 @@
   <text x="375" y="340" text-anchor="middle" class="zone-label">(passenger side)</text>
   <text x="375" y="355" text-anchor="middle" class="zone-label">914mm counter</text>
 
-  <!-- ==================== GARAGE SHELL (ZONE-003) ==================== -->
-  <!-- From ~3500mm to rear, 860mm high -->
-  <rect x="540" y="320" width="235" height="80" class="garage"/>
-  <text x="657" y="355" text-anchor="middle" class="zone-title">GARAGE SHELL</text>
-  <text x="657" y="370" text-anchor="middle" class="zone-label">860mm high</text>
+  <!-- ==================== U-SHELL BENCH (ZONE-003) ==================== -->
+  <!-- U-shaped shell: 509mm depth, 860mm high -->
+  <!-- Houses water tanks and batteries (~184L per arm) -->
+  <!-- Scale: 660px = 4780mm, so 509mm ≈ 70px -->
+  <rect x="710" y="320" width="70" height="80" class="garage"/>
+  <text x="745" y="355" text-anchor="middle" class="zone-title">U-SHELL</text>
+  <text x="745" y="370" text-anchor="middle" class="zone-label">509mm</text>
+  <text x="745" y="383" text-anchor="middle" class="dimension">~184L</text>
 
   <!-- ==================== BEDSIDE STORAGE (ZONE-007) ==================== -->
-  <!-- Nightstands: ON garage shell (860-1120mm), from rear wall to window start (668mm) -->
+  <!-- Nightstands: ON U-shell arms (860-1120mm), 509mm deep -->
   <!-- Upper cabinets: 2000mm from rear (1435mm to ceiling) - above window -->
-  <!-- Scale: 660px = 4780mm, so 668mm ≈ 92px -->
-  <!-- Nightstand: rear face at rear wall (x=780), front face at window start -->
+  <!-- Scale: 660px = 4780mm, so 509mm ≈ 70px -->
 
-  <!-- NIGHTSTAND on garage shell (860-1120mm height, 668mm deep) -->
-  <!-- Rear face at rear wall, front face where window starts -->
-  <rect x="688" y="270" width="92" height="50" fill="#f0e6ff" stroke="#666" stroke-width="1.5"/>
-  <text x="734" y="300" text-anchor="middle" class="dimension">NIGHTSTAND</text>
+  <!-- NIGHTSTAND on U-shell arm (860-1120mm height, 509mm deep) -->
+  <rect x="710" y="270" width="70" height="50" fill="#f0e6ff" stroke="#666" stroke-width="1.5"/>
+  <text x="745" y="300" text-anchor="middle" class="dimension">NIGHTSTAND</text>
 
-  <!-- Window zone (765mm to 1435mm height) - starts where nightstand ends -->
-  <rect x="595" y="200" width="93" height="70" fill="none" stroke="#0066cc" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="641" y="240" text-anchor="middle" class="dimension" fill="#0066cc">WIN-02</text>
+  <!-- Window zone (765mm to 1435mm height) - forward of nightstand -->
+  <rect x="595" y="200" width="115" height="70" fill="none" stroke="#0066cc" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="652" y="240" text-anchor="middle" class="dimension" fill="#0066cc">WIN-02</text>
 
   <!-- Upper cabinet (2000mm deep, above window to ceiling) -->
   <rect x="504" y="105" width="276" height="95" fill="#e6d5f2" stroke="#9966cc" stroke-width="1.5"/>

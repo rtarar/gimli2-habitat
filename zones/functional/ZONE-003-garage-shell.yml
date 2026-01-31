@@ -1,83 +1,177 @@
-# Zone: Garage Shell / Rear Storage
-# Location: Rear wall, full width, floor level
+# Zone: Garage Shell / Rear Bench (U-Shell)
+# Location: Rear section, U-shaped structure
 
 id: ZONE-003
-name: Garage Shell
+name: Garage Shell (U-Bench)
 type: functional
 description: |
-  Enclosed storage structure at rear wall containing the garage/tunnel
-  with hatch access from both sides. Forms the base ledge for the lift bed
-  when lowered. Houses the dinette seating on top when bed is raised.
+  U-shaped shell structure forming the rear bench/storage.
+  The U consists of:
+  - REAR SECTION: Across the rear wall (full width)
+  - DRIVER ARM: Left side extending forward
+  - PASSENGER ARM: Right side extending forward
+
+  Houses water tanks and batteries inside the shell volume.
+  Top surface serves as bed support (when lowered) and dinette seating (when raised).
+  Hatch access from both sides for maintenance.
 
 bounds:
-  type: box
+  type: u_shell
   reference: habitat.yml coordinate system
-  # Full width of rear wall
-  width: 2280  # mm (full interior width)
-  depth: 1023  # mm (from rear wall forward)
-  height: 860  # mm (from floor)
-  position:
-    from_wall: rear
-    from_front: 3757  # mm (4780 - 1023)
-    floor_level: 0    # mm - starts at floor
+
+  # U-SHELL DIMENSIONS
+  shell_depth: 600       # mm (INCREASED from 509mm to fit batteries/water)
+  shell_height: 860      # mm (floor to top surface)
+  wall_thickness: 18     # mm (plywood/composite shell walls)
+
+  # REAR SECTION (bottom of the U)
+  rear_section:
+    width: 2280          # mm (full interior width)
+    depth: 509           # mm (same as shell depth)
+    height: 860          # mm
+    position_from_rear: 0
+    notes: Spans full width across rear wall
+
+  # DRIVER ARM (left side of U)
+  driver_arm:
+    width: 600           # mm (arm width = shell depth)
+    depth: 600           # mm (extends forward from rear)
+    height: 860          # mm
+    position:
+      from_driver_wall: 0
+      from_rear_wall: 0
+    internal_volume:
+      width: 564         # mm (600 - 2*18 wall thickness)
+      depth: 564         # mm
+      height: 824        # mm
+      volume_liters: 262 # L
+    notes: Houses batteries (mass-critical)
+
+  # PASSENGER ARM (right side of U)
+  passenger_arm:
+    width: 600           # mm (arm width = shell depth)
+    depth: 600           # mm (extends forward from rear)
+    height: 860          # mm
+    position:
+      from_passenger_wall: 0
+      from_rear_wall: 0
+    internal_volume:
+      width: 564         # mm (600 - 2*18 wall thickness)
+      depth: 564         # mm
+      height: 824        # mm (860 - 18 top - 18 bottom)
+      volume_liters: 184 # L (0.473 * 0.473 * 0.824 * 1000)
+    notes: Houses water tank or batteries
+
+  # CENTER OPENING (the open part of the U)
+  center_opening:
+    width: 1262          # mm (2280 - 509 - 509)
+    depth: 509           # mm
+    height: 860          # mm
     notes: |
-      Spans full width of rear wall.
-      Contains hatch tunnel for through-access.
-      Top surface serves as:
-      - Ledge for lift bed when lowered
-      - Base for U-shaped dinette seating when bed raised
+      Open space between the two arms.
+      Could house additional storage, hatch tunnel, or systems.
+      Access from front (living/dinette area).
+
+  # TOTAL SHELL VOLUME CALCULATION
+  volume_summary:
+    driver_arm_internal: 184    # liters
+    passenger_arm_internal: 184 # liters
+    rear_section_internal: 0    # (integrated with arms, not separate cavity)
+    total_usable_volume: 368    # liters (approximate)
+    notes: |
+      Actual usable volume depends on wall thickness and internal structure.
+      Water tanks: typical RV tanks 40-100L each
+      Batteries: LiFePO4 100Ah ≈ 30L each
 
 adjacencies:
   required:
     - ZONE-004  # Sleeping - bed lowers onto this
     - ZONE-005  # Living/dinette - seating on top
+    - ZONE-007  # Bedside nightstands sit on top of arms
   preferred: []
   forbidden: []
 
 constraints:
-  min_area: 2.33      # m² (2280x1023mm footprint)
-  min_dimension: 860  # mm (height)
+  min_area: 1.85      # m² (U-shell footprint: 2280*509 - 1262*509 + arms)
+  min_dimension: 509  # mm (shell depth)
   ceiling_height: partial  # Only 860mm high
-  floor_access: required   # Hatch tunnel access
-  wall_access: required    # Mounted to rear wall
+  floor_access: required   # Hatch access for tanks/batteries
+  wall_access: required    # Mounted to rear and side walls
   natural_light: not_needed
-  ventilation: not_needed
+  ventilation: required    # Battery ventilation
   privacy: none
   noise_level: any
 
 fixed_elements:
-  - hatch_tunnel       # Through-access tunnel
-  - storage_compartments
-  - dinette_bench_base # Cushions on top for seating
+  - u_shell_structure    # Main U-shaped frame
+  - water_tank_mounts    # In driver and/or passenger arm
+  - battery_mounts       # LiFePO4 battery housing
+  - dinette_bench_top    # Cushions on top for seating
+  - access_panels        # For tank/battery maintenance
 
-tunnel_access:
+hatch_access:
   hatches:
-    - HATCH-01  # Driver side access
-    - HATCH-02  # Passenger side access
-  tunnel_dimensions:
+    - HATCH-01  # Driver side arm access
+    - HATCH-02  # Passenger side arm access
+  hatch_dimensions:
     width: 600    # mm (hatch width)
     height: 550   # mm (hatch height)
-    notes: Allows pass-through access to garage storage
+  notes: |
+    Hatches provide access to internal volume of each arm.
+    Used for water tank filling, battery maintenance, winterizing.
+
+tank_battery_housing:
+  driver_arm:
+    available_volume: 184  # liters
+    potential_uses:
+      - fresh_water_tank   # 80-100L tank fits
+      - grey_water_tank    # 60-80L tank fits
+      - battery_bank       # 2-3x 100Ah LiFePO4
+  passenger_arm:
+    available_volume: 184  # liters
+    potential_uses:
+      - fresh_water_tank
+      - grey_water_tank
+      - battery_bank
+  notes: |
+    Typical allocation:
+    - One arm: Fresh water (100L) + grey water (60L) stacked or side-by-side
+    - Other arm: Battery bank (200-400Ah LiFePO4) + inverter
 
 utilities:
-  electrical: basic   # Interior lights, maybe 12V outlet
-  plumbing: none
+  electrical: required  # Battery connections, inverter, 12V distribution
+  plumbing: required    # Water tank connections, pump, drain
   hvac: none
-  data: none
+  data: basic           # Battery monitoring (BMS), tank level sensors
 
 requirements:
   - REQ-STORAGE-001  # Gear storage
   - REQ-BED-002      # Bed support structure
+  - REQ-WATER-001    # Fresh water storage
+  - REQ-ELEC-001     # Battery bank housing
 
 status: defined
 created: 2025-01-20
-updated: 2025-01-20
+updated: 2025-01-21
 notes: |
-  - Multi-function structure: storage + bed support + seating base
-  - Hatch tunnel provides through-access without going outside
-  - Top surface at 860mm from floor = comfortable bench height
-  - When lift bed lowers, it rests on this ledge
-  - Dinette cushions on top double as part of bed support
-  - Consider internal dividers for organized storage
-  - Ventilation slots may be needed to prevent moisture buildup
-  - Structural requirements: must support bed + 2 people (~200kg)
+  U-SHELL DESIGN (2025-01-21):
+  - Changed from solid box to U-shaped shell
+  - Shell depth: 509mm (each arm extends this far from rear)
+  - Two arms (driver + passenger) with ~184L internal volume each
+  - Center opening: 1262mm wide for living space
+
+  WATER TANK OPTIONS:
+  - 100L fresh water tank: ~500x400x500mm (fits in one arm)
+  - 60L grey water tank: ~400x300x500mm
+  - Total capacity potential: 160-200L water
+
+  BATTERY OPTIONS:
+  - LiFePO4 100Ah: ~330x175x215mm, ~30L each
+  - Can fit 4-6 batteries in one arm (400-600Ah total)
+  - Include ventilation for battery safety
+
+  STRUCTURAL:
+  - Shell walls: 18mm marine plywood or composite
+  - Must support bed + 2 people (~200kg) on top
+  - Top surface at 860mm = comfortable bench seating height
+  - Nightstands (ZONE-007) sit on top of arms
