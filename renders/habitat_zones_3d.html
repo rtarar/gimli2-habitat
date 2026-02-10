@@ -207,7 +207,25 @@
         <div class="dim">Length: <span>4780mm</span></div>
         <div class="dim">Width: <span>2280mm</span></div>
         <div class="dim">Height: <span>2160mm</span></div>
-        <div class="dim">Floor Area: <span>10.90 m2</span></div>
+        <div class="dim">Floor Area: <span>10.90 m²</span></div>
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #333;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 18px;">🚛</span>
+                <span style="color: #4CAF50; font-weight: bold; font-size: 12px;">Left-Hand Drive (LHD)</span>
+            </div>
+            <div style="margin-top: 6px; font-size: 10px; color: #888;">
+                <div style="display: flex; align-items: center; gap: 6px; margin: 2px 0;">
+                    <span
+                        style="width: 12px; height: 12px; background: rgba(255,120,50,0.7); border-radius: 2px; display: inline-block;"></span>
+                    Driver Side (Left / −X)
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; margin: 2px 0;">
+                    <span
+                        style="width: 12px; height: 12px; background: rgba(50,150,255,0.7); border-radius: 2px; display: inline-block;"></span>
+                    Passenger Side (Right / +X)
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="importmap">
@@ -245,7 +263,7 @@
                 name: 'Bathroom',
                 color: 0x4FC3F7,
                 // CORRECTED: Full width (2280mm) x 800mm deep
-                // Shower on driver/entry side, toilet on passenger side below WIN-04
+                // Toilet on Driver side (below WIN-04), Shower on Passenger side (near Door)
                 bounds: { width: 2280, depth: 800, height: 2160 },
                 position: { x: 0, y: 0, z: HABITAT.length / 2 - 400 },
                 description: 'Full width x 800mm deep'
@@ -254,10 +272,10 @@
                 name: 'Kitchen',
                 color: 0xFFB74D,
                 // Kitchen: 609mm depth (counter) x 1948mm length (along wall)
-                // Position: driver-side, starts after bathroom (800mm from front)
+                // Position: Passenger-side (+X), starts after bathroom (800mm from front)
                 bounds: { width: 609, depth: 1948, height: 2160 },
-                position: { x: -HABITAT.width / 2 + 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
-                description: '609 x 1948mm, driver-side'
+                position: { x: HABITAT.width / 2 - 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
+                description: '609 x 1948mm, Passenger-side'
             },
             // ZONE-003: U-SHELL BENCH (replaces old solid garage shell)
             // U-shaped structure: rear section + driver arm + passenger arm
@@ -364,10 +382,11 @@
                 name: 'Floor-to-Ceiling Cabinets',
                 color: 0xA1887F,
                 bounds: { width: 609, depth: 1948, height: 2160 },
-                position: { x: HABITAT.width / 2 - 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
-                description: '609 x 1948mm, passenger-side'
+                position: { x: -HABITAT.width / 2 + 304.5, y: 0, z: HABITAT.length / 2 - 800 - 974 },
+                description: '609 x 1948mm, Driver-side'
             }
         };
+
 
         // ============================================================
         // OPENINGS
@@ -558,7 +577,16 @@
         scene.background = new THREE.Color(0x1a1a2e);
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 10, 50000);
-        camera.position.set(4000, 3000, 5000);
+        // PLAN VIEW: Camera positioned ABOVE the habitat looking DOWN.
+        // CRITICAL: camera.up = (0,0,-1) is required because Three.js uses a
+        // right-handed coordinate system. With up=(0,0,1), the cross-product
+        // forces -X to the right of screen. Negating up flips this so:
+        //   • -X (Driver / Left)     → LEFT side of screen  ✓
+        //   • +X (Passenger / Right) → RIGHT side of screen ✓
+        //   • +Z (Front / Cab)       → BOTTOM of screen
+        //   • -Z (Rear)              → TOP of screen
+        camera.position.set(0, 7000, -2000);
+        camera.up.set(0, 0, -1);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -955,9 +983,143 @@
         axesHelper.position.set(-HABITAT.width / 2 - 200, 0, HABITAT.length / 2 + 200);
         scene.add(axesHelper);
 
+        // ============================================================
+        // DRIVER / PASSENGER SIDE HIGHLIGHTS
+        // Driver = Left = -X (LHD vehicle)
+        // Passenger = Right = +X
+        // ============================================================
+        function buildSideIndicators() {
+            // --- Colored wall strips ---
+            const stripHeight = HABITAT.height;
+            const stripDepth = HABITAT.length;
+            const stripThickness = 8;
+
+            // Driver side strip (left wall, -X) — warm orange-red
+            const driverStripGeo = new THREE.BoxGeometry(stripThickness, stripHeight, stripDepth);
+            const driverStripMat = new THREE.MeshBasicMaterial({
+                color: 0xFF7832,
+                transparent: true,
+                opacity: 0.18
+            });
+            const driverStrip = new THREE.Mesh(driverStripGeo, driverStripMat);
+            driverStrip.position.set(-HABITAT.width / 2 - stripThickness / 2, stripHeight / 2, 0);
+            scene.add(driverStrip);
+
+            // Passenger side strip (right wall, +X) — cool blue
+            const passStripGeo = new THREE.BoxGeometry(stripThickness, stripHeight, stripDepth);
+            const passStripMat = new THREE.MeshBasicMaterial({
+                color: 0x3296FF,
+                transparent: true,
+                opacity: 0.18
+            });
+            const passStrip = new THREE.Mesh(passStripGeo, passStripMat);
+            passStrip.position.set(HABITAT.width / 2 + stripThickness / 2, stripHeight / 2, 0);
+            scene.add(passStrip);
+
+            // --- Floating text labels using canvas textures ---
+            function makeTextSprite(text, color, fontSize) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 1024;
+                canvas.height = 256;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background pill
+                const padding = 30;
+                ctx.fillStyle = 'rgba(0,0,0,0.65)';
+                const r = 20;
+                const w = canvas.width - padding * 2;
+                const h = canvas.height - padding * 2;
+                ctx.beginPath();
+                ctx.moveTo(padding + r, padding);
+                ctx.lineTo(padding + w - r, padding);
+                ctx.quadraticCurveTo(padding + w, padding, padding + w, padding + r);
+                ctx.lineTo(padding + w, padding + h - r);
+                ctx.quadraticCurveTo(padding + w, padding + h, padding + w - r, padding + h);
+                ctx.lineTo(padding + r, padding + h);
+                ctx.quadraticCurveTo(padding, padding + h, padding, padding + h - r);
+                ctx.lineTo(padding, padding + r);
+                ctx.quadraticCurveTo(padding, padding, padding + r, padding);
+                ctx.closePath();
+                ctx.fill();
+
+                // Color accent bar at top
+                ctx.fillStyle = color;
+                ctx.fillRect(padding + 4, padding + 4, w - 8, 6);
+
+                // Text
+                ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = color;
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2 + 10);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.minFilter = THREE.LinearFilter;
+                const spriteMat = new THREE.SpriteMaterial({
+                    map: texture,
+                    transparent: true,
+                    depthTest: false
+                });
+                const sprite = new THREE.Sprite(spriteMat);
+                sprite.scale.set(1800, 450, 1);
+                return sprite;
+            }
+
+            // Driver label
+            const driverLabel = makeTextSprite('◀  DRIVER SIDE (Left)', '#FF7832', 56);
+            driverLabel.position.set(-HABITAT.width / 2 - 350, HABITAT.height * 0.75, 0);
+            scene.add(driverLabel);
+
+            // Passenger label
+            const passLabel = makeTextSprite('PASSENGER SIDE (Right)  ▶', '#3296FF', 56);
+            passLabel.position.set(HABITAT.width / 2 + 350, HABITAT.height * 0.75, 0);
+            scene.add(passLabel);
+
+            // --- FRONT indicator with direction-of-travel arrow ---
+            const frontLabel = makeTextSprite('▲  FRONT (Cab)', '#4CAF50', 52);
+            frontLabel.position.set(0, HABITAT.height + 250, HABITAT.length / 2 + 300);
+            scene.add(frontLabel);
+
+            // REAR label
+            const rearLabel = makeTextSprite('REAR  ▼', '#888888', 48);
+            rearLabel.position.set(0, HABITAT.height + 250, -HABITAT.length / 2 - 300);
+            scene.add(rearLabel);
+
+            // --- Steering wheel icon (driver-front corner) to reinforce LHD ---
+            const steeringLabel = makeTextSprite('🔘 Steering (LHD)', '#FF7832', 44);
+            steeringLabel.position.set(-HABITAT.width / 2 - 200, HABITAT.height + 250, HABITAT.length / 2 + 300);
+            steeringLabel.scale.set(1400, 350, 1);
+            scene.add(steeringLabel);
+
+            // --- Direction-of-travel arrow on the floor ---
+            const arrowDir = new THREE.Vector3(0, 0, 1); // +Z = forward
+            const arrowOrigin = new THREE.Vector3(0, 5, -HABITAT.length / 2 - 100);
+            const arrowLength = HABITAT.length + 400;
+            const arrowColor = 0x4CAF50;
+            const arrowHelper = new THREE.ArrowHelper(arrowDir, arrowOrigin, arrowLength, arrowColor, 300, 150);
+            scene.add(arrowHelper);
+
+            // --- Floor-level side edge lines for reinforcement ---
+            const edgeMatDriver = new THREE.LineBasicMaterial({ color: 0xFF7832, linewidth: 3, transparent: true, opacity: 0.6 });
+            const driverEdgeGeo = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(-HABITAT.width / 2, 2, -HABITAT.length / 2),
+                new THREE.Vector3(-HABITAT.width / 2, 2, HABITAT.length / 2)
+            ]);
+            scene.add(new THREE.Line(driverEdgeGeo, edgeMatDriver));
+
+            const edgeMatPass = new THREE.LineBasicMaterial({ color: 0x3296FF, linewidth: 3, transparent: true, opacity: 0.6 });
+            const passEdgeGeo = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(HABITAT.width / 2, 2, -HABITAT.length / 2),
+                new THREE.Vector3(HABITAT.width / 2, 2, HABITAT.length / 2)
+            ]);
+            scene.add(new THREE.Line(passEdgeGeo, edgeMatPass));
+        }
+
         // Initialize
         buildZones();
         buildComponents();
+        buildSideIndicators();
         buildUI();
 
         // Animation loop

@@ -96,8 +96,15 @@ The bedside storage cabinets are split into three vertical zones to avoid blocki
 
 ### Interactive 3D Viewer
 
-To explore the habitat in 3D, open the interactive viewer:
+To explore the habitat in 3D, you can host this repository on GitHub Pages or view it locally.
 
+**View Online (GitHub Pages):**
+1. Go to repository **Settings** > **Pages**.
+2. Select `main` branch as the source and save.
+3. Your viewer will be live at: `https://rtarar.github.io/gimli2-habitat/renders/habitat_zones_3d.html`
+
+**View Locally:**
+Open the HTML file in your browser:
 ```bash
 open renders/habitat_zones_3d.html
 ```
@@ -107,7 +114,7 @@ The 3D viewer includes:
 - Day/Night mode toggle (shows bed raised vs lowered)
 - Wireframe view option
 - Windows, doors, and hatches
-- Click zones to highlight
+- **Click zones** to highlight and identify them.
 
 ---
 

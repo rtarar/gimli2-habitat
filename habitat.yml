@@ -28,6 +28,18 @@ reference:
     process: See GOVERNANCE.md for change control protocol
     last_change: 2025-01-19
 
+# Vehicle Configuration
+vehicle_configuration:
+  drive_side: left   # Left-Hand Drive (LHD)
+  driver_side: left  # Left side of vehicle when facing forward = -X axis
+  passenger_side: right  # Right side of vehicle when facing forward = +X axis
+  notes: |
+    Mercedes-Benz 1225 AF is a Left-Hand Drive (LHD) vehicle.
+    All "driver side" / "passenger side" references in this project use
+    forward-facing orientation:
+      Driver   = Left  = -X (in 3D viewer coordinates)
+      Passenger = Right = +X (in 3D viewer coordinates)
+
 # Coordinate System
 coordinate_system:
   origin: builder_defined  # Origin as defined in STEP file
