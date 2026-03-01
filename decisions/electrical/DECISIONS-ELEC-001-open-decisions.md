@@ -31,13 +31,13 @@ These drive the load table and therefore all sizing calculations.
 
 - [ ] **B1** Build full load table (continuous + peak/surge) for all items in REQ-ELEC-001 §7
 - [ ] **B2** Calculate daily amp-hour demand (watt-hours/day → Ah at 12V or 48V bus)
-- [ ] **B3** Size battery bank — capacity (Ah) for target autonomy (how many days off-grid without solar/charge?)
+- [x] **B3** Size battery bank — **DECIDED 2026-02-28:** 4 × Victron NG 300 Ah (LFP) = 1 200 Ah total at 24 V (28.8 kWh nominal). Autonomy days TBC once load table (B1/B2) is complete.
 - [ ] **B4** Size inverter — must cover simultaneous peak loads (induction + microwave + other)
 - [ ] **B5** Size shore power charger — for both 120V/60Hz and 230V/50Hz input
 - [ ] **B6** Size solar array — panels + MPPT controller for daily recharge target
 - [ ] **B7** Define AC distribution: branch circuits, breaker sizing, GFCI/AFCI zones
 - [ ] **B8** Define DC distribution: lighting zones, fans, pumps, security, networking
-- [ ] **B9** Define battery bus voltage — 12V vs 24V vs 48V (affects cable sizing throughout)
+- [x] **B9** Define battery bus voltage — **DECIDED 2026-02-28:** 24 V bus (driven by Victron NG 300 Ah battery selection, 4S config)
 - [ ] **B10** Determine alternator charging strategy — truck alternator → DC-DC charger sizing
 
 ---
